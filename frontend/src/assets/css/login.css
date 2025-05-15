@@ -1,0 +1,121 @@
+#wrapper{
+     height: 100vh;  /* Đảm bảo chiếm hết chiều cao màn hình */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../images/offer-banner-1.jpg');
+    background-size: cover;
+    background-position-y: -60px;
+    font-size: 16px;
+}
+#form-login{
+    max-width: 300px;
+    background:rgba(255,255,255,0.8);
+    flex-grow:1;
+    padding:30px 30px 40px;
+    box-shadow:0px 0px 17px 2px rgba(255,255,255,0.8);
+}
+.form-heading{
+    font-size:25px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.form-group{
+    border-bottom: 1px solid #000;
+    margin-top:15px;
+    margin-bottom:15px;
+    display:flex;
+}
+.form-group i{
+    font-size:14px;
+    padding-top:5px;
+    padding-right:10px;
+
+}
+.form-input{
+    background: transparent;
+    border:0;
+    outline:0;
+    color:#000;
+    flex-grow: 1;
+}
+.form-input::placeholder{
+    color:#000;
+}
+#eye i{
+    padding-right:0;
+    cursor: pointer;
+}
+.form-submit{
+    background: transparent #000;
+    border:1px solid #000;
+    width: 50%;
+    text-transform: uppercase;
+    padding:6px 10px;
+    transition: 0.25s ease-in-out;
+    margin-top:10px;
+    margin: 10px auto 0 auto;
+    display: block;
+}
+.form-submit:hover{
+    border:1px solid #df2c26;
+}
+.social-login {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.social-login-text {
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-facebook,
+.btn-google {
+    flex: 1;
+    padding: 8px 10px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-facebook {
+    background-color: #3b5998;
+}
+
+.btn-google {
+    background-color: #db4437;
+}
+
+.btn-facebook:hover {
+    background-color: #2d4373;
+}
+
+.btn-google:hover {
+    background-color: #c23321;
+}
+
+.btn-facebook i,
+.btn-google i {
+    margin-right: 8px;
+}
+.forgot{
+    justify-items: center;
+    text-align: right;
+}
+.forgot:hover{
+    color: #d67719;
+}
