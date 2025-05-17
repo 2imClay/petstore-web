@@ -155,7 +155,7 @@ export default function Register(){
     return (
         <div className="wrapper">
             {contextHolder}
-            <form onSubmit={handleSubmit}  id="register-form">
+            <form class="registerForm" onSubmit={handleSubmit}  id="register-form">
                 <h1>Đăng Ký</h1>
                 <div className="group-form">
                     <label htmlFor="fullname">Họ và tên:</label>

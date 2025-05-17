@@ -306,7 +306,7 @@ function parseOptions(parent, options) {
   }
 }
 
-// Example 1 of Chart inside src/views/Admin.js (Sales value - Card)
+// Example 1 of Chart inside src/views/AdminIndex.js (Sales value - Card)
 let chartExample1 = {
   options: {
     scales: {
@@ -367,7 +367,7 @@ let chartExample1 = {
   },
 };
 
-// Example 2 of Chart inside src/views/Admin.js (Total orders - Card)
+// Example 2 of Chart inside src/views/AdminIndex.js (Total orders - Card)
 let chartExample2 = {
   options: {
     scales: {
@@ -412,8 +412,8 @@ let chartExample2 = {
 };
 
 module.exports = {
-  chartOptions, // used inside src/views/Admin.js
-  parseOptions, // used inside src/views/Admin.js
-  chartExample1, // used inside src/views/Admin.js
-  chartExample2, // used inside src/views/Admin.js
+  chartOptions, // used inside src/views/AdminIndex.js
+  parseOptions, // used inside src/views/AdminIndex.js
+  chartExample1, // used inside src/views/AdminIndex.js
+  chartExample2, // used inside src/views/AdminIndex.js
 };
