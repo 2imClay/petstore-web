@@ -6,12 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService{
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Override
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
     @Override
     public Product createProduct(Product product) {
         product.setCreatedAt(LocalDateTime.now());
@@ -27,10 +34,10 @@ public class ProductServiceImpl implements ProductService{
         existingProduct.setTitle(product.getTitle());
         existingProduct.setBrand(product.getBrand());
         existingProduct.setPrice(product.getPrice());
-        existingProduct.setDiscount(product.getDiscount());
+//        existingProduct.setDiscount(product.getDiscount());
         existingProduct.setAmount(product.getAmount());
         existingProduct.setDescription(product.getDescription());
-        existingProduct.setStatus(product.getStatus());
+//        existingProduct.setStatus(product.getStatus());
         existingProduct.setId_category(product.getId_category());
         existingProduct.setUpdatedAt(LocalDateTime.now());
 
