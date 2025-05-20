@@ -28,6 +28,24 @@ import AdminHeader from "../components/Headers/AdminProductListHeader.js";
 
 const AdminProductList = () => {
 
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/categories");
+        setCategories(res.data);
+      } catch (err) {
+        console.error("Lỗi khi lấy danh mục:", err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+  const getCategoryName = (id) => {
+    const category = categories.find((cat) => cat.id === id);
+    return category ? category.name : "Không rõ";
+  };
+
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchProducts = async () => {
@@ -105,7 +123,7 @@ const AdminProductList = () => {
                     </th>
                     <td>{product.price}</td>
                     <td>{product.brand}</td>
-                    <td>{product.id_category}</td>
+                    <td>{getCategoryName(product.id_category)}</td>
                     <td>{product.amount}</td>
                     <td className="text-left">
                       {/*<Button*/}
