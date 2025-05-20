@@ -22,14 +22,14 @@ public class Product {
     private String brand;
     @Column(name = "price")
     private float price;
-    @Column(name = "discount")
-    private float discount;
+//    @Column(name = "discount")
+//    private float discount;
     @Column(name = "amount")
     private int amount;
     @Column(name = "description")
     private String description;
-    @Column(name = "status")
-    private String status;
+//    @Column(name = "status")
+//    private String status;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
