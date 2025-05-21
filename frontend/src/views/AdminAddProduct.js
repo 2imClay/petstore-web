@@ -22,7 +22,7 @@ import AdminAddProductHeader from "../components/Headers/AdminAddProductHeader.j
 
 const AdminAddProduct = () => {
 
-
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [categories, setCategories] = useState([]);
   const [product, setProduct] = useState({
     title: "",
@@ -36,14 +36,44 @@ const AdminAddProduct = () => {
     const { id, value } = e.target;
     setProduct({ ...product, [id]: value });
   };
+  // const handleSubmit = async () => {
+  //   try {
+  //     const response = await axios.post("http://localhost:8080/api/products/create", product);
+  //     alert("Thêm sản phẩm thành công!");
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error("Lỗi thêm sản phẩm:", error.response?.data || error.message);
+  //     alert("Lỗi: " + (error.response?.data?.error || "Không thể thêm sản phẩm"));
+  //   }
+  // };
   const handleSubmit = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/api/products/create", product);
+      const formData = new FormData();
+
+      // Thêm dữ liệu sản phẩm
+      formData.append("title", product.title);
+      formData.append("brand", product.brand);
+      formData.append("price", product.price);
+      formData.append("amount", product.amount);
+      formData.append("description", product.description);
+      formData.append("id_category", product.id_category);
+
+      // Thêm ảnh
+      selectedFiles.forEach((file) => {
+        formData.append("images", file);
+      });
+
+      const res = await axios.post("http://localhost:8080/api/products/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
+      console.log(res.data)
+
       alert("Thêm sản phẩm thành công!");
-      console.log(response.data);
     } catch (error) {
-      console.error("Lỗi thêm sản phẩm:", error.response?.data || error.message);
-      alert("Lỗi: " + (error.response?.data?.error || "Không thể thêm sản phẩm"));
+      console.error("Lỗi:", error);
+      alert("Thêm sản phẩm thất bại.");
     }
   };
 
@@ -240,6 +270,26 @@ const AdminAddProduct = () => {
                           </select>
                         </FormGroup>
                       </Col>
+                    </Row>
+                  </div>
+                  <div className="pl-lg-4">
+                    <Row>
+                      <FormGroup>
+                        <label
+                            className="form-control-label"
+                            htmlFor="input-category"
+                        >
+                          Ảnh sản phẩm (tối đa 3 ảnh)
+                        </label>
+                        <Input
+                            className="form-control-alternative"
+                            type="file"
+                            id="images"
+                            multiple
+                            accept="image/*"
+                            onChange={(e) => setSelectedFiles([...e.target.files])}
+                        />
+                      </FormGroup>
                     </Row>
                   </div>
                   <hr className="my-4" />
