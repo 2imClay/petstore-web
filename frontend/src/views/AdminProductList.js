@@ -87,14 +87,14 @@ const AdminProductList = () => {
           <div className="col">
             <Card className="shadow">
               <CardHeader className="border-0">
-                <h3 className="mb-0">Card tables</h3>
+                <h3 className="mb-0">Danh sách sản phẩm</h3>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
                     <th scope="col">Tên</th>
                     <th scope="col">Giá</th>
-                    <th scope="col">Nhãn hiệu</th>
+                    <th scope="col">Thương hiệu</th>
                     <th scope="col">Loại</th>
                     <th scope="col">Số lượng</th>
                     <th scope="col">Hành động</th>
@@ -110,8 +110,14 @@ const AdminProductList = () => {
                           href=" "
                         >
                           <img
-                            alt="..."
-                            src={require("../assets/images/offer-banner-1.jpg")}
+                              alt="..."
+                              src={
+                                product.images && product.images.length > 0
+                                    ? `http://localhost:8080/uploads/${product.images[0].image}`
+                                    : require("../assets/images/offer-banner-1.jpg")
+                          }
+                              className="avatar rounded-circle mr-3"
+                              style={{ width: "50px", height: "50px", objectFit: "cover" }}
                           />
                         </a>
                         <Media>
@@ -147,58 +153,6 @@ const AdminProductList = () => {
                 ))}
                 </tbody>
               </Table>
-              {/*<CardFooter className="py-4">*/}
-              {/*  <nav aria-label="...">*/}
-              {/*    <Pagination*/}
-              {/*      className="pagination justify-content-end mb-0"*/}
-              {/*      listClassName="justify-content-end mb-0"*/}
-              {/*    >*/}
-              {/*      <PaginationItem className="disabled">*/}
-              {/*        <PaginationLink*/}
-              {/*          href=" "*/}
-              {/*          onClick={(e) => e.preventDefault()}*/}
-              {/*          tabIndex="-1"*/}
-              {/*        >*/}
-              {/*          <i className="fas fa-angle-left" />*/}
-              {/*          <span className="sr-only">Previous</span>*/}
-              {/*        </PaginationLink>*/}
-              {/*      </PaginationItem>*/}
-              {/*      <PaginationItem className="active">*/}
-              {/*        <PaginationLink*/}
-              {/*          href=" "*/}
-              {/*          onClick={(e) => e.preventDefault()}*/}
-              {/*        >*/}
-              {/*          1*/}
-              {/*        </PaginationLink>*/}
-              {/*      </PaginationItem>*/}
-              {/*      <PaginationItem>*/}
-              {/*        <PaginationLink*/}
-              {/*          href=" "*/}
-              {/*          onClick={(e) => e.preventDefault()}*/}
-              {/*        >*/}
-              {/*          2 <span className="sr-only">(current)</span>*/}
-              {/*        </PaginationLink>*/}
-              {/*      </PaginationItem>*/}
-              {/*      <PaginationItem>*/}
-              {/*        <PaginationLink*/}
-              {/*          href=" "*/}
-              {/*          onClick={(e) => e.preventDefault()}*/}
-              {/*        >*/}
-              {/*          3*/}
-              {/*        </PaginationLink>*/}
-              {/*      </PaginationItem>*/}
-              {/*      <PaginationItem>*/}
-              {/*        <PaginationLink*/}
-              {/*          href=" "*/}
-              {/*          onClick={(e) => e.preventDefault()}*/}
-              {/*        >*/}
-              {/*          <i className="fas fa-angle-right" />*/}
-              {/*          <span className="sr-only">Next</span>*/}
-              {/*        </PaginationLink>*/}
-              {/*      </PaginationItem>*/}
-              {/*    </Pagination>*/}
-              {/*  </nav>*/}
-              {/*</CardFooter>*/}
             </Card>
           </div>
         </Row>
