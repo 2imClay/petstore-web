@@ -1,7 +1,7 @@
 package com.nlu.petstore.service;
 
-import com.nlu.petstore.model.Product;
-import com.nlu.petstore.model.ProductImage;
+import com.nlu.petstore.entity.Product;
+import com.nlu.petstore.entity.ProductImage;
 import com.nlu.petstore.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

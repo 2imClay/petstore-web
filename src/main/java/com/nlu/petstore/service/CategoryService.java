@@ -1,6 +1,6 @@
 package com.nlu.petstore.service;
 
-import com.nlu.petstore.model.Category;
+import com.nlu.petstore.entity.Category;
 
 import java.util.List;
 

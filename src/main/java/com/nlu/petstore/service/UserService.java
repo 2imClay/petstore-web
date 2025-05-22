@@ -1,10 +1,13 @@
 package com.nlu.petstore.service;
 
-import com.nlu.petstore.DTO.RegisterDTO;
-import com.nlu.petstore.model.User;
+import com.nlu.petstore.entity.User;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 @Service
 public interface UserService {
-     User registerUser(RegisterDTO registerDTO);
+     List<User> findAll();
+     User findByUserName(String username);
+     void deleteUser(int id);
 }

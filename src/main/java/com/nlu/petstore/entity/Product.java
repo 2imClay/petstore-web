@@ -1,4 +1,4 @@
-package com.nlu.petstore.model;
+package com.nlu.petstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

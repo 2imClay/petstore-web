@@ -1,6 +1,6 @@
 package com.nlu.petstore.service;
 
-import com.nlu.petstore.model.Category;
+import com.nlu.petstore.entity.Category;
 import com.nlu.petstore.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
