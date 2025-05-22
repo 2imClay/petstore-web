@@ -62,14 +62,17 @@ export default function Login(){
            
            try{
                const  response = await login(user);
-               console.log("response",response);
+                console.log("response.data.message", response.data.message);
                setErrorServer(null);
                if(response.status === 200){
                 //Chuyển hướng về trang login
                     api.success({
-                        message:"Đăng nhập thành công",
-                        description : response.data.message,
-                        placement:"top"
+                        message: "Đăng nhập thành công",
+                        description: typeof response.data.message === 'string' 
+                            ? response.data.message 
+                            : "Bạn đã đăng nhập thành công!",
+                        placement: "top",
+                      
                     });
                     setTimeout(()=>{
                         navigate("/home");
