@@ -62,10 +62,11 @@ export default function Login(){
            
            try{
                const  response = await login(user);
-                console.log("response.data.message", response.data.message);
                setErrorServer(null);
+               console.log(response.data)
                if(response.status === 200){
                 //Chuyển hướng về trang login
+                const role = response.data.role?.toUpperCase();
                     api.success({
                         message: "Đăng nhập thành công",
                         description: typeof response.data.message === 'string' 
@@ -75,7 +76,11 @@ export default function Login(){
                       
                     });
                     setTimeout(()=>{
-                        navigate("/home");
+                        if (role === "ADMIN") {
+                        navigate("/admin");
+                        } else {
+                            navigate("/home");
+                        }
                     },1000);
                }
                
@@ -93,7 +98,6 @@ export default function Login(){
                 
             }
         }
-
     };
     return (
         <div id="wrapper">
