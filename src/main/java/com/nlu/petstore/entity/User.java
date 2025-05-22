@@ -1,18 +1,13 @@
-package com.nlu.petstore.model;
+package com.nlu.petstore.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "user")
-@Getter
-@Setter
 @NoArgsConstructor
+@Data
+@AllArgsConstructor
 public class User {
     @Id
     @Column(name = "id")  // Ánh xạ cột id trong bảng
@@ -36,7 +31,8 @@ public class User {
     @Column(name = "password")  // Ánh xạ cột password trong bảng
     private String password;
 
-    @Column(name = "role_id")  // Ánh xạ cột role_id trong bảng
-    private int role_id;
+    @ManyToOne
+    @JoinColumn(name = "roleId")
+    private Role role;
 
 }

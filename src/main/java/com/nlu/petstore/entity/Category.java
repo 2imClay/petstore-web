@@ -1,4 +1,4 @@
-package com.nlu.petstore.model;
+package com.nlu.petstore.entity;
 
 import jakarta.persistence.*;
 

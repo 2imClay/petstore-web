@@ -1,6 +1,6 @@
 package com.nlu.petstore.controller;
 
-import com.nlu.petstore.model.Category;
+import com.nlu.petstore.entity.Category;
 import com.nlu.petstore.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
