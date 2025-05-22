@@ -1,10 +1,13 @@
-package com.nlu.petstore.model;
+package com.nlu.petstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -22,19 +25,18 @@ public class Product {
     private String brand;
     @Column(name = "price")
     private float price;
-    @Column(name = "discount")
-    private float discount;
     @Column(name = "amount")
     private int amount;
     @Column(name = "description")
     private String description;
-    @Column(name = "status")
-    private String status;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<ProductImage> images = new ArrayList<>();
 
 
 }

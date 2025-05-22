@@ -15,9 +15,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import AdminProfile from "./views/AdminProfile.js";
-import AdminMaps from "./views/AdminMaps.js";
-import AdminTables from "./views/AdminTables.js";
+import AdminAddProduct from "./views/AdminAddProduct.js";
+// import AdminMaps from "./views/AdminMaps.js";
+import AdminProductList from "./views/AdminProductList.js";
 
 var routes = [
   // {
@@ -35,26 +35,27 @@ var routes = [
   //   layout: "/admin",
   // },
   {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: <AdminProfile />,
-    layout: "/admin",
-  },
-  {
-    path: "/tables",
-    name: "Tables",
+    path: "/productList",
+    name: "Danh sách sản phẩm",
     icon: "ni ni-bullet-list-67 text-red",
-    component: <AdminTables />,
+    component: <AdminProductList />,
     layout: "/admin",
   },
   {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: <AdminMaps />,
+    path: "/addProduct",
+    name: "Thêm sản phẩm",
+    icon: "ni ni-single-02 text-yellow",
+    component: <AdminAddProduct />,
     layout: "/admin",
   },
+
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   icon: "ni ni-pin-3 text-orange",
+  //   component: <AdminMaps />,
+  //   layout: "/admin",
+  // },
 
   // {
   //   path: "/login",
