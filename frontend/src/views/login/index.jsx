@@ -1,39 +1,155 @@
-import React from "react";
+import React, { useState } from "react";
 import '../../assets/css/login.css';
 import "@fortawesome/fontawesome-free";
+import { login } from "../../service/authService";
+import { notification } from 'antd';
+import { useNavigate } from "react-router-dom";
 
 export default function Login(){
+    const [api,contextHolder] = notification.useNotification();
+    const navigate = useNavigate();
+    const [user, setUser] = useState({
+        username: "",
+        password:""
+
+    });
+
+    const [usernameError, setUserNameError] = useState("");
+    const [passwordError,setPasswordError] = useState("");
+    const [errorServer,setErrorServer] = useState(false);
+    const validateData = (name,value) =>{
+        let isValid = true;
+        switch(name){
+            case "username":
+                if(!value){
+                    setUserNameError("Username không được để trống")
+                    isValid = false;
+                }else{
+                    setUserNameError("");
+                }
+                break;
+            case "password":
+                if(!value){
+                    setPasswordError("Mật khẩu không được để trống");
+                    isValid=false;
+                }else{                
+                    setPasswordError("");
+                }
+                break;
+            default:
+                break;
+        }
+        return isValid;
+
+    };
+     //Lấy giá trị từng ô input
+    const handleChange=(e)=>{
+        const {name,value} = e.target;
+        setUser({
+            ...user,
+            [name]:value,
+        })
+        validateData(name,value);
+
+    };
+     const handleSubmit = async (e) =>{
+        e.preventDefault();
+        const userNameValid = validateData("username", user.username);
+        const passWordValid = validateData("password", user.password);
+
+       if (userNameValid&&passWordValid){
+           
+           
+           try{
+               const  response = await login(user);
+               console.log("response",response);
+               setErrorServer(null);
+               if(response.status === 200){
+                //Chuyển hướng về trang login
+                    api.success({
+                        message:"Đăng nhập thành công",
+                        description : response.data.message,
+                        placement:"top"
+                    });
+                    setTimeout(()=>{
+                        navigate("/home");
+                    },1000);
+               }
+               
+            }catch(error){
+                console.log("error",error);
+                const responseError = error?.response?.data?.error||"Tên đăng nhập hoặc mật khẩu không đúng.";
+                setErrorServer(responseError);
+                
+                // api.error({
+                //     message:"Đăng ký thất bại.Vui lòng kiểm tra lại thông tin.",
+                //     description: error.response?.data||"Có lỗi xảy ra",
+                //     placement:"top"
+
+                // });
+                
+            }
+        }
+
+    };
     return (
         <div id="wrapper">
-            <form action="" id="form-login">
-                <h1 class="form-heading">Đăng Nhập</h1>
-                <div class="form-group">
-                    <i class="far fa-user"></i>
-                    <input type="text" class="form-input" placeholder="Tên đăng nhập"/>
+            {contextHolder}
+            <form onSubmit={handleSubmit} id="form-login">
+                <h1 className="form-heading">Đăng Nhập</h1>
+                <div className="form-group">
+                    <div className="input-wrapper">
+                        <i className="far fa-user"></i>
+                        <input type="text" 
+                        className="form-input"
+                        onChange={handleChange}
+                        status = {usernameError ? "error":""}
+                        name="username" 
+                        placeholder="Tên đăng nhập"/>
+                    </div>
+                        {usernameError &&(
+                            <span className="error-message">{usernameError}</span>
+                        )}
+                    
                 </div>
-                <div class="form-group">
-                    <i class="fas fa-key"></i>
-                    <input type="password" class="form-input" placeholder="Mật khẩu"/>
-                    <div id="eye"><i class="fas fa-eye"></i></div>
+                <div className="form-group">
+                    <div className="input-wrapper">
+                        <i className="fas fa-key"></i>
+                        <input type="password" 
+                            className="form-input" 
+                            onChange={handleChange}
+                            name="password" 
+                            status = {passwordError ? "error":""}
+                            placeholder="Mật khẩu"/>
+                        <div id="eye"><i className="fas fa-eye"></i></div>
+                    </div>
+                        {passwordError && (
+                            <span className="error-message">{passwordError}</span>
+                        )}
+                    
                 </div>
-                <div class="forgot">
+                <div className="forgot">
                     <p>Quên mật khẩu?</p>
                 </div>
-                <div class="social-login">
-                    <p class="social-login-text">Đăng nhập với</p>
-                    <div class="social-buttons">
-                        <button type="button" class="btn-facebook">
-                            <i class="fab fa-facebook-f"></i> Facebook
+                {errorServer && (
+                    <div className="login-error-message">
+                        {errorServer}
+                    </div>
+                )}
+                <div className="social-login">
+                    <p className="social-login-text">Đăng nhập với</p>
+                    <div className="social-buttons">
+                        <button type="button" className="btn-facebook">
+                            <i className="fab fa-facebook-f"></i> Facebook
                         </button>
-                        <button type="button" class="btn-google">
-                            <i class="fab fa-google"></i> Google
+                        <button type="button" className="btn-google">
+                            <i className="fab fa-google"></i> Google
                         </button>
                     </div>
                 </div>
-                <input type="submit" value="Đăng nhập" class="form-submit"/>
-                 <p style={{ textAlign: 'center' }}>Bạn chưa có tài khoản?<a href="/register"> Đăng ký</a></p>
+                <input type="submit" value="Đăng nhập" className="form-submit"/>
+                 <p style={{ textAlign: 'center' }}>Bạn chưa có tài khoản ?<a href="/register"> Đăng ký</a></p>
             </form>
         </div>
-    
     );
 }
