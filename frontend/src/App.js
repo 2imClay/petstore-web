@@ -1,11 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./views/login";
 import Register from "./views/register";
-import AdminProfile from "./views/AdminProfile";
-import AdminMaps from "./views/AdminMaps";
-import AdminTables from "./views/AdminTables";
-// import AdminIndex from "./views/AdminIndex";
-
 import AdminLayout from "./layouts/Admin.js";
 
 
