@@ -3,15 +3,19 @@ package com.nlu.petstore.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "user")
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
+@Builder
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")  // Ánh xạ cột id trong bảng
-    private int id;
+    private Integer id;
 
     @Column(name = "fullname")  // Ánh xạ cột fullname trong bảng
     private String fullname;
@@ -35,4 +39,9 @@ public class User {
     @JoinColumn(name = "roleId")
     private Role role;
 
+    @OneToOne(mappedBy = "user")
+    private RefreshToken refreshToken;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ForgotPassword> forgotPassword;
 }
