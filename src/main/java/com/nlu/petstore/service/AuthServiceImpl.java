@@ -8,6 +8,7 @@ import com.nlu.petstore.repository.RoleRepository;
 import com.nlu.petstore.repository.UserRepository;
 import com.nlu.petstore.response.AuthResponse;
 import com.nlu.petstore.security.JwtService;
+import com.nlu.petstore.security.RefreshTokenService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class AuthServiceImpl implements  AuthService {
     private final RoleRepository   roleRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
 
     @Override
     public AuthResponse login(LoginDTO loginDTO) {
@@ -35,12 +37,14 @@ public class AuthServiceImpl implements  AuthService {
             throw new BadCredentialsException("Mật khẩu không chính xác");
         }
         String token = jwtService.generateToken(user);
+        var refreshToken = refreshTokenService.createRefreshToken(loginDTO.getUsername());
         return AuthResponse.builder()
                 .userId(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .role(user.getRole().getRoleName())
                 .token(token)
+                .refreshToken(refreshToken.getRefreshToken())
                 .message("Đăng nhập thành công.").build();
     }
 
@@ -63,18 +67,18 @@ public class AuthServiceImpl implements  AuthService {
         Role userRole = roleRepository.findByRoleName("USER")
                         .orElseThrow(()->new EntityNotFoundException("Role User không tồn tại"));
         user.setRole(userRole);
-
-
         User savedUser = userRepository.save(user);
 
         //Tạo JWT
         String token =  jwtService.generateToken(savedUser);
+        var refreshToken =  refreshTokenService.createRefreshToken(savedUser.getUsername());
         return AuthResponse.builder()
                 .userId(savedUser.getId())
                 .username(savedUser.getUsername())
                 .email(savedUser.getEmail())
                 .role(savedUser.getRole().getRoleName())
                 .token(token)
+                .refreshToken(refreshToken.getRefreshToken())
                 .message("Đăng ký thành công")
                 .build();
     }

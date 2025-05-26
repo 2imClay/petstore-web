@@ -27,6 +27,15 @@ public class JwtService {
                 .signWith(SignatureAlgorithm.HS256,jwtSecret)
                 .compact();
     }
+    public String generateTokenFromEmail(String email){
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .signWith(SignatureAlgorithm.HS256, jwtSecret)
+                .compact();
+    }
+
     public String extractUserName(String token){
         return Jwts.parser()
                 .setSigningKey(jwtSecret)
@@ -37,10 +46,10 @@ public class JwtService {
 
     public boolean validateToken(String token,User user){
         final String username = extractUserName(token);
-        return username.equals(user.getUsername())&& !isTokenValid(token);
+        return username.equals(user.getUsername())&& !isTokenExpired(token);
 
     }
-    public boolean isTokenValid(String token) {
+    public boolean isTokenExpired(String token) {
         Date expiration = Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)
