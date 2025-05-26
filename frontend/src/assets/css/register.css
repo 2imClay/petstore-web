@@ -1,4 +1,4 @@
-.wrapper {
+.wrapper-register {
     background: url('../images/hero-banner.jpg') no-repeat center center;
     background-size: cover;
     height: 100vh;
@@ -21,10 +21,11 @@ h1{
 .group-form{
     margin-bottom: 12px;
 }
-label,input{
+#register-form label,input{
     display:block;
     width: 100%;
     line-height: 1.4;
+    font-weight: bold;
 }
 input{
     padding:7px;
@@ -40,21 +41,22 @@ input:focus {
 input[status="error"] {
     border: 1px solid red;
 }
-button{
-    margin:12px auto;
+
+.button-submit{
+    background-color: blue;
+    color: white;
+    border: 1px solid white;
     width: 100%;
     padding: 10px 24px;
+    border-radius: 8px;
     text-transform: uppercase;
     font-weight: 800;
-    background-color: blue;
-    color:white;
-    border: 1px solid blue;
-    border-radius: 8px;
     transition: all 0.5s;
+    text-align: center;
 }
-button:hover{
+.button-submit:hover{
     cursor: pointer;
-    background-color: white;
+    background-color: gray;
     color:blue;
 }
 

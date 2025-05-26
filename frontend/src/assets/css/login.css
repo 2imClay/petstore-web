@@ -1,4 +1,4 @@
-#wrapper{
+.wrapper-login{
      height: 100vh;  /* Đảm bảo chiếm hết chiều cao màn hình */
     display: flex;
     justify-content: center;
@@ -15,40 +15,40 @@
     padding:30px 30px 40px;
     box-shadow:0px 0px 17px 2px rgba(255,255,255,0.8);
 }
-.form-heading{
+#form-login .form-heading{
     font-size:25px;
     text-align: center;
     margin-bottom: 30px;
 }
-.form-group {
+#form-login .form-group {
     margin-top: 15px;
     margin-bottom: 15px;
     display: flex;
     flex-direction: column; 
     position: relative;
 }
-.form-group i{
+#form-login .form-group i{
     font-size:14px;
     padding-top:5px;
     padding-right:10px;
 
 }
-.form-input{
-     background: transparent;
+#form-login .form-input{
+    background: transparent;
     border: none;    /* bỏ viền */
     outline: none;   /* bỏ viền khi focus */
     color: #000;
     flex-grow: 1;
     border-radius: 0; /* không bo góc */
 }
-.form-input::placeholder{
+#form-login .form-input::placeholder{
     color:#000;
 }
 #eye i{
     padding-right:0;
     cursor: pointer;
 }
-.form-submit{
+#form-login .form-submit{
     background: transparent #000;
     border:1px solid #000;
     width: 50%;
@@ -60,8 +60,9 @@
     display: block;
     text-align: center;
 }
-.form-submit:hover{
+#form-login .form-submit:hover{
     border:1px solid #df2c26;
+    background-color: #ffdb64;
 }
 .social-login {
     text-align: center;
@@ -128,7 +129,7 @@
     margin-top: 5px;
     margin-left: 25px; /* canh lề đẹp với icon */
 }
-.input-wrapper {
+#form-login .input-wrapper {
     display: flex;
     align-items: center;
     border-bottom: 1px solid #000; /* chỉ gạch dưới */
@@ -140,4 +141,11 @@
     text-align: center;
     margin-bottom: 10px;
     font-weight: 500;
+}
+.forgot p{
+    font-weight: bold;
+    font-size: 10px;
+}
+.forgot p:hover{
+    color: #af8e21;
 }
