@@ -1,4 +1,6 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import BASE_URL from "../api/axiosIns";
+import Cookies from "js-cookie"
 
 /**
  * 
@@ -15,7 +17,13 @@ export const register = async (user) =>{
  * @param {*} user 
  * @returns 
  */
-export const login = async (user)=>{
+export const login = createAsyncThunk("/login",async (user) =>{
     const response = await BASE_URL.post("/login",user);
-    return response;
-}
+    Cookies.set("token",response.data.token)
+    return response.data
+});
+
+
+
+
+

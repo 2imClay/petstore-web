@@ -132,7 +132,7 @@ export default function Register(){
                 //Chuyển hướng về trang login
                     api.success({
                         message:"Đăng ký thành công",
-                        description : response.data,
+                        description : typeof response.data==="string"?response.data:JSON.stringify(response.data),
                         placement:"top"
                     });
                     setTimeout(()=>{
@@ -162,12 +162,12 @@ export default function Register(){
 
     };
     return (
-        <div className="wrapper">
+        <div className="wrapper-register">
             {contextHolder}
             <form className="registerForm" onSubmit={handleSubmit}  id="register-form">
                 <h1>Đăng Ký</h1>
                 <div className="group-form">
-                    <label htmlFor="fullname">Họ và tên:</label>
+                    <label htmlFor="fullname">Họ và tên :</label>
                     <input onChange={handleChange}
                             type="text" 
                             id="fullName" 
@@ -239,7 +239,7 @@ export default function Register(){
                     )}
                 </div>
                 <div className="group-form">
-                    <button type="submit">Đăng Ký</button>
+                    <button className="button-submit" type="submit">Đăng Ký</button>
                 </div>
             </form> 
         </div>      

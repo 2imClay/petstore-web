@@ -1,0 +1,36 @@
+.step-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.step {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 3px solid #ccc;
+    color: #999;
+    font-weight: 500;
+    position: relative;
+}
+
+.step.active {
+    border-color: #4096ff;
+    color: #4096ff;
+}
+
+.step::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    height: 60%;
+    width: 1px;
+    background-color: #ccc;
+    transform: translateY(-50%);
+}
+
+.step:last-child::after {
+    display: none;
+}
