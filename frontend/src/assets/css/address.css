@@ -1,0 +1,176 @@
+/****************ADDRESS*****************/
+/* :root {
+    --main-text-font: "Poppins", sans-serif;
+} */
+.address{
+    padding:100px 0;
+}
+.address-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.address-top-wrap{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.address-top{
+    height: 2px;
+    width: 70%;
+    background-color: #dddddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:50px 0 100px;
+}
+.address-top-item{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #dddddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+.address-top-item i{
+    color:#dddddd;
+}
+.address-top-address{
+    border:1px solid #0DB7EA;
+}
+.address-top-address i{
+    color: #0DB7EA;
+}
+
+.address-content-left{
+    width: 50%;
+    padding-right: 12px;
+}
+.address-content-left p{
+    font-family: var(--main-text-font);
+    font-size: 12px;
+    font-weight: bold;
+
+}
+.address-content-left label{
+    font-family: var(--main-text-font);
+    font-size: 12px;
+    margin-bottom: 6px;
+    display: block;
+}
+.address-content-left> p{
+    font-weight: bold;
+}
+.address-content-left-input-top{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap:12px;
+
+}
+.address-content-left-input-top-item{
+    width: calc(50% - 12px);
+}
+.address-content-left-input-top-item input{
+    width: 100%;
+    height: 35px;
+    border: 1px solid #dddddd;
+    padding-left:6px;
+}
+.address-content-left-input-top-item label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+.address-content-left-input-bottom input{
+    width: 100%;
+    height: 35px;
+    border: 1px solid #dddddd;
+    padding-left:6px;
+    margin-left: -13px;
+}.address-content-left-input-bottom label {
+     display: flex;
+     align-items: center;
+     gap: 4px;
+     white-space: nowrap;
+     margin-left: -10px;
+ }
+.address-content-left-button p{
+    display : inline-block;
+    font-family: var(--main-text-font);
+    font-size: 12px;
+}
+.address-content-left-button span{
+    margin-right: 12px;
+}
+.address-content-left-button{
+    display: flex;
+    justify-content: space-between;
+    padding-top:20px;
+}
+.address-content-left-button button{
+    height: 35px;
+    border:1px solid black;
+    padding-left:6px;
+    cursor:pointer;
+    transition: alt 0.3s ease;
+    text-align: center;
+    border-radius: 5px;
+}
+.address-content-left-button button:hover{
+    background-color: rgb(255, 232, 26);
+    color:#000;
+}
+.address-content-right{
+    width: 40%;
+    padding-left: 12px;
+    border-left:2px solid #dddddd;
+    height: auto;
+    margin-right: 20px;
+}
+.address-content-right table{
+    width: 100%;
+    font-family: var(--main-text-font);
+    font-size: 12px;
+    text-align: center;
+}
+.address-content-right table tr th:first-child{
+    text-align: left;
+}
+.address-content-right table tr th{
+    padding-bottom: 12px;
+    border-bottom: 2px solid #dddddd;
+}
+.address-content-right table tr th:last-child{
+    text-align: right;
+}
+.address-content-right table tr th {
+    padding: 6px 0;
+}
+.address-content-right table tr:nth-child(4){
+    border-top: 2px solid #dddddd;
+}
+.address-content-right table tr td:last-child{
+    text-align: right;
+}
+.address-content-right table tr td:first-child{
+    text-align: left;
+}
+.address-content-right p{
+    font-weight: 600;
+}
+.back-to-cart-btn {
+  display: flex;
+  align-items: center; /* căn giữa theo chiều dọc */
+  gap: 8px;            /* khoảng cách giữa mũi tên và chữ */
+  text-decoration: none;
+  color: inherit;
+}
+
+.back-to-cart-btn span {
+  font-size: 15px; /* tăng mũi tên nếu muốn */
+  line-height: 1;
+}
