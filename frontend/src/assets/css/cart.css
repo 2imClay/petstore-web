@@ -1,0 +1,178 @@
+/*****************CART*****************/
+.cart{
+    padding: 100px 0;
+}
+.cart-top-wrap {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.cart-top{
+    height: 2px;
+    width: 70%;
+    background-color: #dddddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:50px 0 100px;
+}
+.cart-top-item{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #dddddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+.cart-top-item i {
+    color:#dddddd;
+}
+.cart-top-cart{
+    border: 1px solid #0DB7EA;
+}
+.cart-top-cart i {
+    color:#0DB7EA
+}
+.cart-content{
+    display: flex;
+    justify-content: space-between;
+    gap:20px;
+}
+.cart-content-left {
+    flex:2;
+    padding-right: 12px;
+}
+.cart-content-left table {
+    width:100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+.cart-content-left table th {
+    padding-bottom: 30px;
+    font-family: var(--main-text-font);
+    font-size: 12px;
+    text-transform: uppercase;
+    color:#000;
+    border-collapse: collapse;
+    border-bottom: 3px solid #dddddd;
+}
+.cart-content-left table p {
+    font-family: var(--main-text-font);
+    font-size: 12px;
+    color:#333;
+    font-weight: 500;
+}
+.cart-content-left table input {
+    width: auto;
+    margin: auto;          /* căn giữa ngang */
+    display: block;        /* để margin auto có tác dụng */
+    min-width: 35px;  /* kích thước nhỏ nhất */
+    max-width: 100px; /* giới hạn rộng tối đa */
+    height: 30px;          /* bạn có thể chỉnh chiều cao phù hợp */
+    line-height: 30px;     /* căn chỉnh dòng cho input */
+    text-align: center;    /* căn text trong input */
+    vertical-align: middle;/* căn giữa theo chiều dọc */
+}
+.cart-content-left table span {
+    display: block;
+    width: 15px;
+    height: 20px;
+    border:1px solid #dddddd;
+    cursor: pointer;
+}
+.cart-content-left table td {
+     padding: 20px 0;
+    border-bottom: 2px solid #dddddd;
+    text-align: center;
+    vertical-align: middle; /* đảm bảo căn giữa dọc */
+}
+.cart-content-left td:first-child {
+   
+    width: 15%;
+}
+td {
+    font-weight: bold;
+    font-size: 12px;
+}
+.cart-content-left td:first-child img{
+    width: 100px;
+    display:block;
+    margin: 0 auto;
+}
+.cart-content-left td:nth-child(2){
+    max-width: 20%;
+}
+.cart-content-left td:nth-child(3) img{
+    max-width: 20%;
+}
+.cart-content-left td:nth-child(4) img{
+    max-width: 20%;
+}
+.cart-content-left td:nth-child(5) img{
+    max-width: 10%;
+}
+
+.cart-content-right {
+    flex:1;
+    padding-left: 12px;
+    border-left: 2px solid #dddddd;
+}
+.cart-content-right table{
+    width:100%;
+}
+.cart-content-right table th{
+    padding-bottom: 30px;
+    font-family: var(--main-text-font);
+    font-size: 12px;
+    color:#333;
+    border-collapse: collapse;
+    border-bottom: 2px solid #dddddd;
+
+}
+.cart-content-right table td{
+    font-family: var(--main-text-font);
+    font-size: 12px;
+    color:#333;
+    padding : 6px 0;
+
+}
+.cart-content-right tr:nth-child(4) td{
+    border-bottom: 2px solid #dddddd;
+}
+.cart-content-right tr td:last-child{
+    text-align: right;
+}
+
+.cart-content-right-button{
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-top:10px;
+}
+.cart-content-right-button button{
+    padding: 0 18px;
+    height: 25px;
+    cursor: pointer;
+}
+.cart-content-right-button button:first-child{
+    background-color: #fff;
+    border:2px solid black;
+}
+.cart-content-right-button button:first-child:hover{
+    background-color: #ddd;
+}
+.cart-content-right-button button:last-child{
+    background-color: black;
+    color:#fff;
+    border:none;
+    border:2px solid black;
+}
+.cart-content-right-button button:last-child:hover{
+    background-color: #dddddd;
+    color:black;
+}
+
+

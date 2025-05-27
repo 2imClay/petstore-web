@@ -6,6 +6,9 @@ import AdminLayout from "./layouts/Admin.js";
 import ForgotPassword from "./views/forgotPassword/forgotPassword.jsx";
 import VerifyOtp from "./views/forgotPassword/verifyOtp.jsx";
 import ChangePassword from "./views/forgotPassword/changePassword.jsx";
+import Cart from "./views/cart/cart.jsx"
+import Address from "./views/address/address.jsx"
+import Payment from "./views/payment/payment.jsx"
 
 
 
@@ -21,6 +24,9 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword/>}/>
           <Route path="/verifyOtp" element={<VerifyOtp/>}/>
           <Route path="/changePassword" element={<ChangePassword/>}/>
+          <Route path="/cart" element={<Cart/>}/>
+          <Route path="/address" element={<Address/>}/>
+          <Route path="/payment" element={<Payment/>}/>
         
         </Routes>
       </div>
