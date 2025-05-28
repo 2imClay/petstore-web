@@ -8,13 +8,13 @@ const Address = () => {
       <div className="container">
         <div className="address-top-wrap">
           <div className="address-top">
-            <a href="cart.html" className="address-top-cart address-top-item">
+            <a href="/cart" className="address-top-cart address-top-item">
               <i className="fas fa-shopping-cart"></i>
             </a>
-            <a href="address.html" className="address-top-address address-top-item">
+            <a href="/address" className="address-top-address address-top-item">
               <i className="fas fa-map-marker-alt"></i>
             </a>
-            <a href="payment.html" className="address-top-payment address-top-item">
+            <a href="/payment" className="address-top-payment address-top-item">
               <i className="fa-solid fa-money-check-dollar"></i>
             </a>
           </div>

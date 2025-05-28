@@ -606,6 +606,27 @@ body {
   color: var(--portland-orange);
 }
 
+.contact-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.contact-item address,
+.contact-item a.contact-link {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  color: var(--white);
+}
 .contact-item {
   margin-block-end: 15px;
   color: var(--white);
