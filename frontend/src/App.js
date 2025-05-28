@@ -6,9 +6,11 @@ import AdminLayout from "./layouts/Admin.js";
 import ForgotPassword from "./views/forgotPassword/forgotPassword.jsx";
 import VerifyOtp from "./views/forgotPassword/verifyOtp.jsx";
 import ChangePassword from "./views/forgotPassword/changePassword.jsx";
-import Cart from "./views/cart/cart.jsx"
-import Address from "./views/address/address.jsx"
-import Payment from "./views/payment/payment.jsx"
+import Cart from "./views/cart/cart.jsx";
+import Address from "./views/address/address.jsx";
+import Payment from "./views/payment/payment.jsx";
+import ProductPage from "./views/home/product.jsx";
+import UserLayout from "./layouts/UserLayout.jsx";
 
 
 
@@ -20,13 +22,16 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/admin/*" element={<AdminLayout />} />
-          <Route path="/home" element={<Home/>}/>
-          <Route path="/forgot-password" element={<ForgotPassword/>}/>
-          <Route path="/verifyOtp" element={<VerifyOtp/>}/>
-          <Route path="/changePassword" element={<ChangePassword/>}/>
-          <Route path="/cart" element={<Cart/>}/>
-          <Route path="/address" element={<Address/>}/>
-          <Route path="/payment" element={<Payment/>}/>
+          <Route element={<UserLayout/>}>
+              <Route path="/home" element={<Home/>}/>
+              <Route path="/forgot-password" element={<ForgotPassword/>}/>
+              <Route path="/verifyOtp" element={<VerifyOtp/>}/>
+              <Route path="/changePassword" element={<ChangePassword/>}/>
+              <Route path="/cart" element={<Cart/>}/>
+              <Route path="/address" element={<Address/>}/>
+              <Route path="/payment" element={<Payment/>}/>
+              <Route path="/products" element={<ProductPage/>}/> 
+          </Route> 
         
         </Routes>
       </div>

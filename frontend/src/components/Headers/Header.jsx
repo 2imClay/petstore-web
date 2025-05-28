@@ -1,90 +1,55 @@
-import React, { useState } from 'react';
-import "../../assets/style.css";
-// import { ... } from '@ionic/react';
+import React from "react";
+import { IonIcon } from "@ionic/react";
+import "../../assets/style.css"; 
+import { menuOutline, closeOutline, searchOutline, personOutline, bagHandleOutline } from "ionicons/icons";
 
-function Header() {
-  const [isNavOpen, setIsNavOpen] = useState(false);
-
-  const toggleNav = () => setIsNavOpen(!isNavOpen);
-
+const Header = () => {
   return (
-    <header className="header" data-header>
+    <header className="header-products" data-header>
       <div className="container">
-        <button
-          className="nav-toggle-btn"
-          aria-label="toggle menu"
-          data-nav-toggler
-          onClick={toggleNav}
-        >
-          <ion-icon
-            name={isNavOpen ? "close-outline" : "menu-outline"}
-            aria-hidden="true"
-            class={isNavOpen ? "close-icon" : "menu-icon"}
-          ></ion-icon>
+
+        <button className="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
+          <IonIcon icon={menuOutline} className="menu-icon" aria-hidden="true" />
+          <IonIcon icon={closeOutline} className="close-icon" aria-label="true" />
         </button>
 
-        <a href="#" className="logo">
-          PetStore
-        </a>
+        <a href="/" className="logo">3B</a>
 
-        <nav className={`navbar ${isNavOpen ? 'active' : ''}`} data-navbar>
+        <nav className="navbar" data-navbar>
           <ul className="navbar-list">
             <li className="navbar-item">
-              <a href="index.html" className="navbar-link" data-nav-link>
-                Trang chủ
-              </a>
+              <a href="/home" className="navbar-link" data-nav-link>Trang chủ</a>
             </li>
             <li className="navbar-item">
-              <a href="products.html" className="navbar-link" data-nav-link>
-                Sản phẩm
-              </a>
+              <a href="/products" className="navbar-link" data-nav-link>Cửa hàng</a>
             </li>
             <li className="navbar-item">
-              <a href="#" className="navbar-link" data-nav-link>
-                Về chúng tôi
-              </a>
+              <a href="/about" className="navbar-link" data-nav-link>Về chúng tôi</a>
             </li>
             <li className="navbar-item">
-              <a href="#" className="navbar-link" data-nav-link>
-                Liên hệ
-              </a>
+              <a href="/contact" className="navbar-link" data-nav-link>Liên hệ</a>
             </li>
           </ul>
-
-          <a href="login.html" className="navbar-action-btn">
-            Đăng nhập
-          </a>
+          <a href="/login" className="navbar-action-btn">Đăng nhập</a>
         </nav>
 
         <div className="header-actions">
-          <button
-            className="action-btn"
-            aria-label="Search"
-            onClick={() => window.location.href = ''}
-          >
-            <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+          <button className="action-btn" aria-label="Search" onClick={() => window.location.href = "/"}>
+            <IonIcon icon={searchOutline} aria-hidden="true" />
           </button>
 
-          <button
-            className="action-btn user"
-            aria-label="User"
-            onClick={() => window.location.href = 'login.html'}
-          >
-            <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+          <button className="action-btn user" aria-label="User" onClick={() => window.location.href = "/login"}>
+            <IonIcon icon={personOutline} aria-hidden="true" />
           </button>
 
-          <button
-            className="action-btn"
-            aria-label="cart"
-            onClick={() => window.location.href = 'cart.html'}
-          >
-            <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+          <button className="action-btn" aria-label="Cart" onClick={() => window.location.href = "/cart"}>
+            <IonIcon icon={bagHandleOutline} aria-hidden="true" />
             <span className="btn-badge">0</span>
           </button>
         </div>
       </div>
     </header>
   );
-}
+};
 
 export default Header;
