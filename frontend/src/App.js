@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import Login from "./views/login";
 import Register from "./views/register";
 import Home from "./views/home/home.jsx"
@@ -19,6 +19,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
+            <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/admin/*" element={<AdminLayout />} />

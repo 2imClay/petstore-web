@@ -67,7 +67,7 @@ import {
   chartExample2,
 } from "../variables/charts.js";
 
-import AdminHeader from "../components/Headers/AdminProductListHeader.js";
+import AdminHeader from "../components/Headers/AdminProductListHeader.jsx";
 
 ChartJS.register(
     CategoryScale,

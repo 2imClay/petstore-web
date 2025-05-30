@@ -4,9 +4,9 @@ import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
-import AdminNavbar from "../components/Navbars/AdminNavbar.js";
-import AdminFooter from "../components/Footers/AdminFooter.js";
-import AdminSidebar from "../components/Sidebar/AdminSidebar.js";
+import AdminNavbar from "../components/Navbars/AdminNavbar.jsx";
+import AdminFooter from "../components/Footers/AdminFooter.jsx";
+import AdminSidebar from "../components/Sidebar/AdminSidebar.jsx";
 
 import routes from "../routes.js";
 
