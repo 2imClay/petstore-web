@@ -25,10 +25,12 @@ const Admin = (props) => {
       if (prop.layout === "/admin") {
         return (
           <Route path={prop.path} element={prop.component} key={key} exact />
+         
         );
       } else {
-        return null;
       }
+        return null;
+    
     });
   };
 

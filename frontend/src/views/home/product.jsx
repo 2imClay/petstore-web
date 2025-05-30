@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import product1 from "../../assets/images/product-1.jpg"
 import product1_0 from "../../assets/images/product-1_0.jpg"
+
 const products = [
     {
       id: 1,
