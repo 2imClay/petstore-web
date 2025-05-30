@@ -37,107 +37,109 @@ const ProductPage = () => {
   }, []); 
 
   return (
-    <section className="section product" id="shop" aria-label="product">
-      <div className="container">
+      <div className="user-wrapper">
+        <section className="section product" id="shop" aria-label="product">
+          <div className="container">
 
-        {/* Filter Form */}
-        <div className="product-filter">
-          <form id="filter-form" onSubmit={handleFilter}>
-            <div className="filter-group">
-              <p>Loại động vật</p>
-              <div className="radio-group">
-                <label>
-                  <input
-                    type="radio"
-                    name="animal"
-                    value=""
-                    checked={animal === ""}
-                    onChange={() => setAnimal("")}
-                  /> Tất cả
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="animal"
-                    value="dog"
-                    checked={animal === "dog"}
-                    onChange={() => setAnimal("dog")}
-                  /> Chó
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="animal"
-                    value="cat"
-                    checked={animal === "cat"}
-                    onChange={() => setAnimal("cat")}
-                  /> Mèo
-                </label>
-              </div>
+            {/* Filter Form */}
+            <div className="product-filter">
+              <form id="filter-form" onSubmit={handleFilter}>
+                <div className="filter-group">
+                  <p>Loại động vật</p>
+                  <div className="radio-group">
+                    <label>
+                      <input
+                          type="radio"
+                          name="animal"
+                          value=""
+                          checked={animal === ""}
+                          onChange={() => setAnimal("")}
+                      /> Tất cả
+                    </label>
+                    <label>
+                      <input
+                          type="radio"
+                          name="animal"
+                          value="dog"
+                          checked={animal === "dog"}
+                          onChange={() => setAnimal("dog")}
+                      /> Chó
+                    </label>
+                    <label>
+                      <input
+                          type="radio"
+                          name="animal"
+                          value="cat"
+                          checked={animal === "cat"}
+                          onChange={() => setAnimal("cat")}
+                      /> Mèo
+                    </label>
+                  </div>
+                </div>
+
+                <div className="filter-group">
+                  <label htmlFor="category">Loại sản phẩm</label>
+                  <select
+                      id="category"
+                      name="category"
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                  >
+                    <option value="">Tất cả</option>
+                    <option value="1">Loại 1</option>
+                    <option value="2">Loại 2</option>
+                    <option value="3">Loại 3</option>
+                  </select>
+                  <button type="submit" className="filter-btn">Lọc</button>
+                </div>
+              </form>
             </div>
 
-            <div className="filter-group">
-              <label htmlFor="category">Loại sản phẩm</label>
-              <select
-                id="category"
-                name="category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option value="">Tất cả</option>
-                <option value="1">Loại 1</option>
-                <option value="2">Loại 2</option>
-                <option value="3">Loại 3</option>
-              </select>
-              <button type="submit" className="filter-btn">Lọc</button>
-            </div>
-          </form>
-        </div>
+            {/* Title */}
+            <h2 className="h2 section-title">
+              Tất cả <span className="span">Sản phẩm</span>
+            </h2>
 
-        {/* Title */}
-        <h2 className="h2 section-title">
-          Tất cả <span className="span">Sản phẩm</span>
-        </h2>
+            {/* Product List */}
+            <ul className="grid-list">
+              {filteredProducts.map((product) => (
+                  <li key={product.id} data-category={product.category} data-animal={product.animal}>
+                    <div className="product-card">
+                      <div className="card-banner img-holder" style={{ width: '360px', height: '360px' }}>
+                        <img
+                            src={product.image}
+                            width="360"
+                            height="360"
+                            loading="lazy"
+                            alt={product.title}
+                            className="img-cover default"
+                        />
+                        <img
+                            src={product.imageHover}
+                            width="360"
+                            height="360"
+                            loading="lazy"
+                            alt={product.title}
+                            className="img-cover hover"
+                        />
+                        <button className="card-action-btn" aria-label="add to cart" title="Add To Cart">
+                          <ion-icon name="bag-add-outline" aria-hidden="true"></ion-icon>
+                        </button>
+                      </div>
+                      <div className="card-content">
+                        <h3 className="h3">
+                          <a href={`/product/${product.id}`} className="card-title">{product.title}</a>
+                        </h3>
+                        <data className="card-price" value={product.price}>${product.price}</data>
+                      </div>
+                    </div>
+                  </li>
+              ))}
+            </ul>
 
-        {/* Product List */}
-        <ul className="grid-list">
-          {filteredProducts.map((product) => (
-            <li key={product.id} data-category={product.category} data-animal={product.animal}>
-              <div className="product-card">
-                <div className="card-banner img-holder" style={{ "--width": 360, "--height": 360 }}>
-                  <img
-                    src={product.image}
-                    width="360"
-                    height="360"
-                    loading="lazy"
-                    alt={product.title}
-                    className="img-cover default"
-                  />
-                  <img
-                    src={product.imageHover}
-                    width="360"
-                    height="360"
-                    loading="lazy"
-                    alt={product.title}
-                    className="img-cover hover"
-                  />
-                  <button className="card-action-btn" aria-label="add to cart" title="Add To Cart">
-                    <ion-icon name="bag-add-outline" aria-hidden="true"></ion-icon>
-                  </button>
-                </div>
-                <div className="card-content">
-                  <h3 className="h3">
-                    <a href={`/product/${product.id}`} className="card-title">{product.title}</a>
-                  </h3>
-                  <data className="card-price" value={product.price}>${product.price}</data>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-
+          </div>
+        </section>
       </div>
-    </section>
   );
 };
 

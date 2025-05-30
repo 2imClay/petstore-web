@@ -1,15 +1,15 @@
-import Footer from "../components/Footers/Footer.jsx";
-import Header from "../components/Headers/Header.jsx";
+import MainFooter from "../components/Footers/MainFooter.jsx";
+import MainHeader from "../components/Headers/MainHeader.jsx";
 import { Outlet } from "react-router-dom";
 
 function UserLayout() {
   return (
     <>
-    <Header/>
+    <MainHeader/>
       <main>
         <Outlet />
       </main>
-    <Footer />
+    <MainFooter />
     </>
   );
 }

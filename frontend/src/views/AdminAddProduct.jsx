@@ -1,4 +1,6 @@
-
+import "../assets/plugins/nucleo/css/nucleo.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "../assets/scss/argon-dashboard-react.scss";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -16,7 +18,7 @@ import {
   Col,
 } from "reactstrap";
 // core components
-import AdminAddProductHeader from "../components/Headers/AdminAddProductHeader.js";
+import AdminAddProductHeader from "../components/Headers/AdminAddProductHeader.jsx";
 
 
 
@@ -36,16 +38,6 @@ const AdminAddProduct = () => {
     const { id, value } = e.target;
     setProduct({ ...product, [id]: value });
   };
-  // const handleSubmit = async () => {
-  //   try {
-  //     const response = await axios.post("http://localhost:8080/api/products/create", product);
-  //     alert("Thêm sản phẩm thành công!");
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error("Lỗi thêm sản phẩm:", error.response?.data || error.message);
-  //     alert("Lỗi: " + (error.response?.data?.error || "Không thể thêm sản phẩm"));
-  //   }
-  // };
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
@@ -96,7 +88,7 @@ const AdminAddProduct = () => {
     <>
       <AdminAddProductHeader />
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--7 z-10" fluid>
         <Row>
           <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
             <Card className="card-profile shadow">
@@ -155,7 +147,7 @@ const AdminAddProduct = () => {
                   </Col>
                 </Row>
               </CardHeader>
-              <CardBody>
+              <CardBody className="bg-white border-0">
                 <Form>
                   <h6 className="heading-small text-muted mb-4">
                     Thông tin chính
