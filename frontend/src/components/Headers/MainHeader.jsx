@@ -1,6 +1,6 @@
 import React from "react";
 import { IonIcon } from "@ionic/react";
-import "../../assets/css/mainPage.css";
+import "../../assets/css/style.css";
 import { menuOutline, closeOutline, searchOutline, personOutline, bagHandleOutline } from "ionicons/icons";
 
 const MainHeader = () => {
