@@ -1,5 +1,4 @@
 import React from "react";
-// import "../../assets/style.css"; 
 import footerBg from '../../assets/images/footer-bg.jpg';
 import paymentImg from '../../assets/images/payment.png';
 

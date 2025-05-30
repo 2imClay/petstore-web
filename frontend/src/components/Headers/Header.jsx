@@ -1,6 +1,5 @@
 import React from "react";
 import { IonIcon } from "@ionic/react";
-import "../../assets/style.css"; 
 import { menuOutline, closeOutline, searchOutline, personOutline, bagHandleOutline } from "ionicons/icons";
 
 const Header = () => {
@@ -10,7 +9,7 @@ const Header = () => {
 
         <button className="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
           <IonIcon icon={menuOutline} className="menu-icon" aria-hidden="true" />
-          <IonIcon icon={closeOutline} className="close-icon" aria-label="true" />
+          <IonIcon icon={closeOutline} className="close-icon" aria-hidden="true" />
         </button>
 
         <a href="/" className="logo">3B</a>

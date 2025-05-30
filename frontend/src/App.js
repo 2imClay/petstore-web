@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./views/login";
 import Register from "./views/register";
-import Home from "./views/home/index.jsx"
+import Home from "./views/home/home.jsx"
 import AdminLayout from "./layouts/Admin.js";
 import ForgotPassword from "./views/forgotPassword/forgotPassword.jsx";
 import VerifyOtp from "./views/forgotPassword/verifyOtp.jsx";
