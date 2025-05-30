@@ -1,39 +1,22 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-/*eslint-disable*/
 import { useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
-// nodejs library to set properties for components
+
 import { PropTypes } from "prop-types";
 
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
+  // Button,
+  // Card,
+  // CardHeader,
+  // CardBody,
+  // CardTitle,
   Collapse,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  FormGroup,
+  // FormGroup,
   Form,
   Input,
   InputGroupText,
@@ -44,14 +27,14 @@ import {
   NavItem,
   NavLink,
   Nav,
-  Progress,
-  Table,
+  // Progress,
+  // Table,
   Container,
-  Row,
-  Col,
+  // Row,
+  // Col,
 } from "reactstrap";
 
-var ps;
+// var ps;
 
 const AdminSidebar = (props) => {
   const [collapseOpen, setCollapseOpen] = useState();
@@ -105,7 +88,7 @@ const AdminSidebar = (props) => {
       expand="md"
       id="sidenav-main"
     >
-      <Container fluid>
+      <Container fluid className="d-flex flex-column items-center justify-start">
         {/* Toggler */}
         <button
           className="navbar-toggler"
@@ -137,7 +120,7 @@ const AdminSidebar = (props) => {
                 </span>
               </Media>
             </DropdownToggle>
-            <DropdownMenu className="dropdown-menu-arrow" right >
+            <DropdownMenu className="dropdown-menu-arrow" end >
               <DropdownItem className="noti-title" header tag="div">
                 <h6 className="text-overflow m-0">Welcome!</h6>
               </DropdownItem>
@@ -168,9 +151,7 @@ const AdminSidebar = (props) => {
                 type="search"
               />
               <InputGroupText addonType="prepend">
-                <InputGroupText>
                   <span className="fa fa-search" />
-                </InputGroupText>
               </InputGroupText>
             </InputGroup>
           </Form>
@@ -178,7 +159,7 @@ const AdminSidebar = (props) => {
           <Nav navbar>{createLinks(routes)}</Nav>
           <Nav className="mb-md-3" navbar>
             <NavItem className="active-pro active">
-              <NavLink href="">
+              <NavLink href="/home">
                 <i className="ni ni-spaceship" />
                 Main Page
               </NavLink>
@@ -189,6 +170,8 @@ const AdminSidebar = (props) => {
     </Navbar>
   );
 };
+
+
 
 AdminSidebar.defaultProps = {
   routes: [{}],

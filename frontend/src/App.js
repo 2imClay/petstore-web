@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import Login from "./views/login";
 import Register from "./views/register";
 import Home from "./views/home/index.jsx"
-import AdminLayout from "./layouts/Admin.js";
+import AdminLayout from "./layouts/Admin.jsx";
 import ForgotPassword from "./views/forgotPassword/forgotPassword.jsx";
 import VerifyOtp from "./views/forgotPassword/verifyOtp.jsx";
 import ChangePassword from "./views/forgotPassword/changePassword.jsx";
@@ -19,6 +19,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
+            <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/admin/*" element={<AdminLayout />} />

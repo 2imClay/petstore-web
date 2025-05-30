@@ -24,7 +24,7 @@ import {
   Button,
 } from "reactstrap";
 // core components
-import AdminHeader from "../components/Headers/AdminProductListHeader.js";
+import AdminHeader from "../components/Headers/AdminProductListHeader.jsx";
 
 const AdminProductList = () => {
 

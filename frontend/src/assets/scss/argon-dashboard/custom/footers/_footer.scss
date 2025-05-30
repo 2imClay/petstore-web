@@ -1,12 +1,12 @@
 //
-// Footer
+// MainFooter
 //
 
 
 // General styles
 
 .footer {
-    background: $footer-bg;
+    background: #FFFFFF;
     padding: $footer-padding-y $footer-padding-x;
 
     .col-footer {
@@ -55,7 +55,7 @@
 }
 
 
-// Footer nav used for copyright and some links, but not limited to this
+// MainFooter nav used for copyright and some links, but not limited to this
 
 .nav-footer {
     .nav-link {
@@ -70,7 +70,7 @@
 }
 
 
-// Footer with cards over
+// MainFooter with cards over
 
 .footer.has-cards {
     overflow: hidden;
