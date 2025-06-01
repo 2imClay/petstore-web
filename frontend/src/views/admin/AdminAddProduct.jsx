@@ -1,6 +1,6 @@
-import "../assets/plugins/nucleo/css/nucleo.css";
+import "../../assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import "../assets/scss/argon-dashboard-react.scss";
+import "../../assets/scss/argon-dashboard-react.scss";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -18,7 +18,7 @@ import {
   Col,
 } from "reactstrap";
 // core components
-import AdminAddProductHeader from "../components/Headers/AdminAddProductHeader.jsx";
+import AdminAddHeader from "../../components/Headers/AdminAddHeader.jsx";
 
 
 
@@ -86,7 +86,7 @@ const AdminAddProduct = () => {
 
   return (
     <>
-      <AdminAddProductHeader />
+      <AdminAddHeader />
       {/* Page content */}
       <Container className="mt--7 z-10" fluid>
         <Row>
@@ -99,7 +99,7 @@ const AdminAddProduct = () => {
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src={require("../assets/images/offer-banner-1.jpg")}
+                        src={require("../../assets/images/offer-banner-1.jpg")}
                       />
                     </a>
                   </div>

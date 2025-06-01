@@ -5,9 +5,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-@Service
 public interface UserService {
-     List<User> findAll();
+     List<User> getAllUser();
      User findByUserName(String username);
      void deleteUser(int id);
 }

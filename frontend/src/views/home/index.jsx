@@ -1,5 +1,5 @@
 import React from 'react';
-import "../../assets/css/mainPage.css";
+import "../../assets/css/style.css";
 import banner from '../../assets/images/hero-banner.jpg';
 import pet3 from '../../assets/images/product-1.jpg';
 import pet4 from '../../assets/images/product-1_0.jpg';
