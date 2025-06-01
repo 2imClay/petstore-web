@@ -1,6 +1,6 @@
 import React ,{ useState } from "react";
 import { IonIcon } from "@ionic/react";
-import "../../assets/css/mainPage.css";
+import "../../assets/css/style.css";
 import { menuOutline, closeOutline, searchOutline, personOutline, bagHandleOutline } from "ionicons/icons";
 
 const MainHeader = () => {
@@ -20,12 +20,12 @@ const MainHeader = () => {
         <header className="header-products" data-header="">
           <div className="container">
 
-            <button className="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler="">
-              <IonIcon icon={menuOutline} className="menu-icon" aria-hidden="true" />
-              <IonIcon icon={closeOutline} className="close-icon" aria-label="true" />
+            <button className="nav-toggle-btn" data-nav-toggler="">
+              <IonIcon icon={menuOutline} className="menu-icon"/>
+              <IonIcon icon={closeOutline} className="close-icon" />
             </button>
 
-            <a href="/" className="logo">3B</a>
+            <a href="/" className="logo" style={{color:"black"}}>PetStore</a>
 
             <nav className="navbar" data-navbar="">
               <ul className="navbar-list">
@@ -46,7 +46,7 @@ const MainHeader = () => {
             </nav>
 
             <div className="header-actions">
-              <button className="action-btn" aria-label="Search" onClick={() => window.location.href = "/"}>
+              <button className="action-btn" onClick={() => window.location.href = "/"}>
                 <IonIcon icon={searchOutline} aria-hidden="true" />
               </button>
 

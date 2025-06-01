@@ -1,13 +1,12 @@
 
-
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
 
-const AdminAddProductHeader = () => {
+const UserHeader = () => {
   return (
     <>
       <div
-        className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center z-0"
+        className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
         style={{
           minHeight: "600px",
           backgroundImage:
@@ -18,20 +17,17 @@ const AdminAddProductHeader = () => {
       >
         {/* Mask */}
         <span className="mask bg-gradient-default opacity-8" />
-        {/* AdminHeader container */}
+        {/* MainHeader container */}
         <Container className="d-flex align-items-center" fluid>
-          <Row style={{width:'70%'}}>
-            <Col lg="7" md="10" style={{width:'50%'}}>
-              <h1 className="display-2 text-white" style={{marginBottom:'100px'}}>Thêm sản phẩm</h1>
-              {/*<p className="text-white mt-0 mb-5">*/}
-              {/*  Thêm sản phẩm*/}
-              {/*</p>*/}
+          <Row style={{width:'100%'}}>
+            <Col lg="7" md="10" style={{width:'100%'}}>
+              <h1 className="display-2 text-white" style={{width:'100%', marginBottom:'100px'}}>Danh sách</h1>
               <Button
                 color="info"
-                href="/admin/productList"
+                href="/admin/addProduct"
                 // onClick={(e) => e.preventDefault()}
               >
-                Danh sách sản phẩm
+                Thêm
               </Button>
             </Col>
           </Row>
@@ -41,4 +37,4 @@ const AdminAddProductHeader = () => {
   );
 };
 
-export default AdminAddProductHeader;
+export default UserHeader;

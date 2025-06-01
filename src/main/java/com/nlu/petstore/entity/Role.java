@@ -2,9 +2,7 @@ package com.nlu.petstore.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "role")
@@ -21,6 +19,19 @@ public class Role {
     private String roleName;
 
 
+    public int getRoleId() {
+        return roleId;
+    }
 
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
 
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 }

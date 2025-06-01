@@ -1,5 +1,6 @@
 package com.nlu.petstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +12,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,9 +42,11 @@ public class User {
     @JoinColumn(name = "roleId")
     private Role role;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "user")
     private RefreshToken refreshToken;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ForgotPassword> forgotPassword;
 }
