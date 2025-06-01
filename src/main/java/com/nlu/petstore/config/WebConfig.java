@@ -23,7 +23,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
-//    private final OAuth2AuthenticationSuccessHandler successHandler;
+
     @Autowired
     private  JwtAuthenticationFilter jwtAuthFilter;
 
@@ -33,11 +33,11 @@ public class WebConfig implements WebMvcConfigurer {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/**").permitAll()
+//                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/products","/api/categories","/api/auth/**","/api/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/forgotPassword/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**","/api/users").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2

@@ -1,30 +1,17 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-// reactstrap components
 import {
-  // Badge,
   Card,
   CardHeader,
-  // CardFooter,
-  // DropdownMenu,
-  // DropdownItem,
-  // UncontrolledDropdown,
-  // DropdownToggle,
   Media,
-  // Pagination,
-  // PaginationItem,
-  // PaginationLink,
-  // Progress,
   Table,
   Container,
   Row,
-  // UncontrolledTooltip,
   Button,
 } from "reactstrap";
-// core components
-import AdminHeader from "../components/Headers/AdminProductListHeader.jsx";
+
+import AdminHeader from "../../components/Headers/AdminListHeader.jsx";
 
 const AdminProductList = () => {
 
@@ -114,7 +101,7 @@ const AdminProductList = () => {
                               src={
                                 product.images && product.images.length > 0
                                     ? `http://localhost:8080/uploads/${product.images[0].image}`
-                                    : require("../assets/images/offer-banner-1.jpg")
+                                    : require("../../assets/images/offer-banner-1.jpg")
                           }
                               className="avatar rounded-circle mr-3"
                               style={{ width: "50px", height: "50px", objectFit: "cover" }}
