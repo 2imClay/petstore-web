@@ -68,6 +68,7 @@
                 const originalPromiseResult = unwrapResult(resultAction)
                 console.log("originalPromiseResult" , originalPromiseResult)
                 if(originalPromiseResult){
+                    localStorage.setItem("userName", originalPromiseResult.name || originalPromiseResult.username || "");
                     //Chuyển hướng về trang login
                     const role = originalPromiseResult.role?.toUpperCase();
                         api.success({

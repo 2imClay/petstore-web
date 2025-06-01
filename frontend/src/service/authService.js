@@ -17,10 +17,24 @@ export const register = async (user) =>{
  * @param {*} user 
  * @returns 
  */
-export const login = createAsyncThunk("/login",async (user) =>{
-    const response = await BASE_URL.post("/login",user);
-    Cookies.set("token",response.data.token)
-    return response.data
+// export const login = createAsyncThunk("/login",async (user) =>{
+//     const response = await BASE_URL.post("/login",user);
+//     Cookies.set("token",response.data.token)
+//     return response.data
+// });
+export const login = createAsyncThunk("auth/login", async (user, { rejectWithValue }) => {
+  try {
+    const response = await BASE_URL.post("/login", user);
+    const { token, refreshToken } = response.data;
+
+    // Lưu vào cookie
+    Cookies.set("token", token, { expires: 1 });
+    Cookies.set("refreshToken", refreshToken, { expires: 7 });
+
+    return response.data;
+  } catch (err) {
+    return rejectWithValue(err.response?.data || "Lỗi đăng nhập");
+  }
 });
 
 
