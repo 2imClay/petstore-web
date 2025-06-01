@@ -1,7 +1,11 @@
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import Login from "./views/login";
 import Register from "./views/register";
+<<<<<<< HEAD
 import Home from "./views/home/index.jsx"
+=======
+import Home from "./views/home/home.jsx"
+>>>>>>> fcb00575cfdba66db071c9c3513d3aa030a41e86
 import AdminLayout from "./layouts/Admin.jsx";
 import ForgotPassword from "./views/forgotPassword/forgotPassword.jsx";
 import VerifyOtp from "./views/forgotPassword/verifyOtp.jsx";
