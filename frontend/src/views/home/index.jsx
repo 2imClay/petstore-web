@@ -1,18 +1,28 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import "../../assets/css/style.css";
 import banner from '../../assets/images/hero-banner.jpg';
-import pet3 from '../../assets/images/product-1.jpg';
-import pet4 from '../../assets/images/product-1_0.jpg';
-import pet5 from '../../assets/images/product-2.jpg';
-import pet6 from '../../assets/images/product-2_0.jpg';
-import pet7 from '../../assets/images/product-3.jpg';
-import pet8 from '../../assets/images/product-3_0.jpg';
-import pet9 from '../../assets/images/product-4.jpg';
-import pet10 from '../../assets/images/product-4_0.jpg';
+
 import { Star } from 'react-ionicons';
+import axios from "axios";
 
 function MainContent() {
-  return (
+
+    const [products, setProducts] = useState([]);
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/api/products");
+                setProducts(response.data);
+            } catch (err) {
+                console.error("Lỗi khi lấy danh sách sản phẩm:", err);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+
+    return (
      <>
          <div className="user-wrapper">
              <div className="home-page">
@@ -122,229 +132,71 @@ function MainContent() {
                                  </h2>
 
                                  <ul className="grid-list">
-                                    <li>
-                                                         <div className="product-card">
-                                                            <div
-                                                                className="card-banner img-holder"
-                                                                style={{ '--width': 360, '--height': 360 }}
-                                                            >
-                                                                <img
-                                                                src={pet3}
-                                                                width="360"
-                                                                height="360"
-                                                                loading="lazy"
-                                                                alt="Commodo leo sed porta"
-                                                                className="img-cover default"
-                                                                />
-                                                                <img
-                                                                src={pet4}
-                                                                width="360"
-                                                                height="360"
-                                                                loading="lazy"
-                                                                alt="Commodo leo sed porta"
-                                                                className="img-cover hover"
-                                                                />
-                                        
-                                                             <button
-                                                             className="card-action-btn"
-                                                             aria-label="add to card"
-                                                             title="Add To Card"
-                                                             >
-                                                             <ion-icon name="bag-add-outline" aria-hidden="true"></ion-icon>
-                                                             </button>
+                                     {products.map((product) => (
+                                         <li key={product.id}>
+                                             <div className="product-card">
+                                                 <div
+                                                     className="card-banner img-holder"
+                                                     style={{ width: '360', height: '360' }}
+                                                 >
+                                                     <img
+                                                         src={
+                                                             product.images && product.images.length > 0
+                                                                 ? `http://localhost:8080/uploads/${product.images[0].image}`
+                                                                 : require("../../assets/images/offer-banner-1.jpg")
+                                                         }
+                                                         width="360"
+                                                         height="360"
+                                                         loading="lazy"
+                                                         alt="Commodo leo sed porta"
+                                                         className="img-cover default"
+                                                     />
+                                                     <img
+                                                         src={
+                                                             product.images && product.images.length > 0
+                                                                 ? `http://localhost:8080/uploads/${product.images[1].image}`
+                                                                 : require("../../assets/images/offer-banner-1.jpg")
+                                                         }
+                                                         width="360"
+                                                         height="360"
+                                                         loading="lazy"
+                                                         alt="Commodo leo sed porta"
+                                                         className="img-cover hover"
+                                                     />
+
+                                                     <button
+                                                         className="card-action-btn"
+                                                         aria-label="add to card"
+                                                         title="Add To Card"
+                                                     >
+                                                         <ion-icon name="bag-add-outline" aria-hidden="true"></ion-icon>
+                                                     </button>
+                                                 </div>
+
+                                                 <div className="card-content">
+
+                                                     <div className="wrapper">
+                                                         <div className="rating-wrapper">
+                                                             <Star />
+                                                             <Star />
+                                                             <Star />
+                                                             <Star />
+                                                             <Star />
                                                          </div>
-                                     
-                                                         <div className="card-content">
-                                     
-                                                             <div className="wrapper">
-                                                             <div className="rating-wrapper">
-                                                                 <Star />
-                                                                 <Star />
-                                                                 <Star />
-                                                                 <Star />
-                                                                 <Star />
-                                                             </div>
-                                     
-                                                             <span className="span">(1)</span>
-                                                             </div>
-                                     
-                                                             <h3 className="h3">
-                                                             <a href="https://google.com" className="card-title">Tên sp</a>
-                                                             </h3>
-                                     
-                                                             <data className="card-price" value="15">giá</data>
-                                     
-                                                         </div>
-                                                         </div>
-                                    </li>
-                                    {/* Sanp2 */}
-                                    <li>
-                                                         <div className="product-card">
-                                                         <div
-                                                             className="card-banner img-holder"
-                                                             style={{ '--width': 360, '--height': 360 }}
-                                                         >
-                                                             <img
-                                                             src={pet5}
-                                                             width="360"
-                                                             height="360"
-                                                             loading="lazy"
-                                                             alt="Commodo leo sed porta"
-                                                             className="img-cover default"
-                                                             />
-                                                             <img
-                                                             src={pet6}
-                                                             width="360"
-                                                             height="360"
-                                                             loading="lazy"
-                                                             alt="Commodo leo sed porta"
-                                                             className="img-cover hover"
-                                                             />
-                                     
-                                                             <button
-                                                             className="card-action-btn"
-                                                             aria-label="add to card"
-                                                             title="Add To Card"
-                                                             >
-                                                             <ion-icon name="bag-add-outline" aria-hidden="true"></ion-icon>
-                                                             </button>
-                                                         </div>
-                                     
-                                                         <div className="card-content">
-                                     
-                                                             <div className="wrapper">
-                                                             <div className="rating-wrapper">
-                                                                 <Star />
-                                                                 <Star />
-                                                                 <Star />
-                                                                 <Star />
-                                                                 <Star />
-                                                             </div>
-                                     
-                                                             <span className="span">(1)</span>
-                                                             </div>
-                                     
-                                                             <h3 className="h3">
-                                                             <a href="https://google.com" className="card-title">Tên sp</a>
-                                                             </h3>
-                                     
-                                                             <data className="card-price" value="15">giá</data>
-                                     
-                                                         </div>
-                                                         </div>
-                                    </li>
-                                    {/* Sanp3 */}
-                                    <li>
-                                                         <div className="product-card">
-                                                         <div
-                                                             className="card-banner img-holder"
-                                                             style={{ '--width': 360, '--height': 360 }}
-                                                         >
-                                                             <img
-                                                             src={pet7}
-                                                             width="360"
-                                                             height="360"
-                                                             loading="lazy"
-                                                             alt="Commodo leo sed porta"
-                                                             className="img-cover default"
-                                                             />
-                                                             <img
-                                                             src={pet8}
-                                                             width="360"
-                                                             height="360"
-                                                             loading="lazy"
-                                                             alt="Commodo leo sed porta"
-                                                             className="img-cover hover"
-                                                             />
-                                     
-                                                             <button
-                                                             className="card-action-btn"
-                                                             aria-label="add to card"
-                                                             title="Add To Card"
-                                                             >
-                                                             <ion-icon name="bag-add-outline" aria-hidden="true"></ion-icon>
-                                                             </button>
-                                                         </div>
-                                     
-                                                         <div className="card-content">
-                                     
-                                                             <div className="wrapper">
-                                                             <div className="rating-wrapper">
-                                                                 <Star />
-                                                                 <Star />
-                                                                 <Star />
-                                                                 <Star />
-                                                                 <Star />
-                                                             </div>
-                                     
-                                                             <span className="span">(1)</span>
-                                                             </div>
-                                     
-                                                             <h3 className="h3">
-                                                             <a href="https://google.com" className="card-title">Tên sp</a>
-                                                             </h3>
-                                     
-                                                             <data className="card-price" value="15">giá</data>
-                                     
-                                                         </div>
-                                                         </div>
-                                    </li>
-                                    {/* Sanp4 */}
-                                    <li>
-                                                         <div className="product-card">
-                                                         <div
-                                                             className="card-banner img-holder"
-                                                             style={{ '--width': 360, '--height': 360 }}
-                                                         >
-                                                             <img
-                                                             src={pet9}
-                                                             width="360"
-                                                             height="360"
-                                                             loading="lazy"
-                                                             alt="Commodo leo sed porta"
-                                                             className="img-cover default"
-                                                             />
-                                                             <img
-                                                             src={pet10}
-                                                             width="360"
-                                                             height="360"
-                                                             loading="lazy"
-                                                             alt="Commodo leo sed porta"
-                                                             className="img-cover hover"
-                                                             />
-                                     
-                                                             <button
-                                                             className="card-action-btn"
-                                                             aria-label="add to card"
-                                                             title="Add To Card"
-                                                             >
-                                                             <ion-icon name="bag-add-outline" aria-hidden="true"></ion-icon>
-                                                             </button>
-                                                         </div>
-                                     
-                                                         <div className="card-content">
-                                     
-                                                             <div className="wrapper">
-                                                             <div className="rating-wrapper">
-                                                                 <Star />
-                                                                 <Star />
-                                                                 <Star />
-                                                                 <Star />
-                                                                 <Star />
-                                                             </div>
-                                     
-                                                             <span className="span">(1)</span>
-                                                             </div>
-                                     
-                                                             <h3 className="h3">
-                                                             <a href="https://google.com" className="card-title">Tên sp</a>
-                                                             </h3>
-                                     
-                                                             <data className="card-price" value="15">giá</data>
-                                     
-                                                         </div>
-                                                         </div>
-                                    </li>                       
+
+                                                         <span className="span">(1)</span>
+                                                     </div>
+
+                                                     <h3 className="h3">
+                                                         <a href="https://google.com" className="card-title">{product.title}</a>
+                                                     </h3>
+
+                                                     <data className="card-price" value="15">{product.price} VND</data>
+
+                                                 </div>
+                                             </div>
+                                         </li>
+                                     ))}
                                  </ul>
                              </div>
                          </section>

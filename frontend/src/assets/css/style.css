@@ -773,45 +773,45 @@ a {
    * PRODUCT
    */
 
-  .product-card .card-banner { position: relative; }
+  .user-wrapper .product-card .card-banner { position: relative; }
 
-  .product-card .card-action-btn,
-  .product-card .card-banner .hover {
+  .user-wrapper .product-card .card-action-btn,
+  .user-wrapper .product-card .card-banner .hover {
     display: block;
     position: absolute;
   }
 
-  .product-card .card-banner .hover {
+  .user-wrapper .product-card .card-banner .hover {
     top: 0;
     left: 0;
   }
 
-  .product-card:is(:hover, :focus-within) .default,
-  .product-card .hover { opacity: 0; }
+  .user-wrapper .product-card:is(:hover, :focus-within) .default,
+  .user-wrapper .product-card .hover { opacity: 0; }
 
-  .product-card .default,
-  .product-card:is(:hover, :focus-within) .hover { opacity: 1; }
+  .user-wrapper .product-card .default,
+  .user-wrapper .product-card:is(:hover, :focus-within) .hover { opacity: 1; }
 
-  .product-card .card-action-btn {
+  .user-wrapper .product-card .card-action-btn {
     top: 15px;
     right: 15px;
     color: var(--eerie-black);
     font-size: 20px;
     background-color: var(--white);
     border: 1px solid var(--platinum);
-    padding: 12px;
+    padding: 15px;
     border-radius: 50%;
     transition: var(--transition-1);
     opacity: 0;
   }
 
-  .product-card .card-action-btn:is(:hover, :focus) {
+  .user-wrapper .product-card .card-action-btn:is(:hover, :focus) {
     background-color: var(--portland-orange);
     border-color: var(--portland-orange);
     color: var(--white);
   }
 
-  .product-card:is(:hover, :focus-within) .card-action-btn { opacity: 1; }
+  .user-wrapper .product-card:is(:hover, :focus-within) .card-action-btn { opacity: 1; }
 
 
 
