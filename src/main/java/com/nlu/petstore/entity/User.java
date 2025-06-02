@@ -38,6 +38,9 @@ public class User {
     @Column(name = "password")  // Ánh xạ cột password trong bảng
     private String password;
 
+    @Column(name = "provider")
+    private String provider;
+
     @ManyToOne
     @JoinColumn(name = "roleId")
     private Role role;
