@@ -25,11 +25,15 @@ export const register = async (user) =>{
 export const login = createAsyncThunk("auth/login", async (user, { rejectWithValue }) => {
   try {
     const response = await BASE_URL.post("/login", user);
-    const { token, refreshToken } = response.data;
+    const { token, refreshToken,fullname  } = response.data;
+
 
     // Lưu vào cookie
     Cookies.set("token", token, { expires: 1 });
     Cookies.set("refreshToken", refreshToken, { expires: 7 });
+
+     // Lưu fullname vào localStorage
+    localStorage.setItem("fullname", fullname);
 
     return response.data;
   } catch (err) {

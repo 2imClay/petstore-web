@@ -8,6 +8,7 @@
     import { unwrapResult } from "@reduxjs/toolkit";
 
     export default function Login(){
+        const GOOGLE_AUTH_URL = "http://localhost:8080/oauth2/authorization/google";
         const [api,contextHolder] = notification.useNotification();
         const navigate = useNavigate();
         const dispatch = useDispatch();
@@ -107,11 +108,6 @@
             setShowPassword(prev =>!prev);
 
         };
-
-        const loginGoogle=()=>{
-            
-        }
-
         return (
             <div className="wrapper-login">
                 {contextHolder}
@@ -162,12 +158,16 @@
                     <div className="social-login">
                         <p className="social-login-text">Đăng nhập với</p>
                         <div className="social-buttons">
-                            <button type="button" className="btn-facebook">
-                                <i className="fab fa-facebook-f"></i> Facebook
-                            </button>
-                            <button type="button" className="btn-google">
-                                <i className="fab fa-google" onClick={loginGoogle}></i> Google
-                            </button>
+                            <a>
+                                <button type="button" className="btn-facebook">
+                                    <i className="fab fa-facebook-f"></i> Facebook
+                                </button>
+                            </a>
+                            <a href={GOOGLE_AUTH_URL}>
+                                <button type="button" className="btn-google">
+                                    <i className="fab fa-google" ></i> Google
+                                </button>
+                            </a>
                         </div>
                     </div>
                     <input type="submit" value="Đăng nhập" className="form-submit"/>

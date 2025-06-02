@@ -1,15 +1,33 @@
-import React ,{ useState } from "react";
+import React ,{ useState,useEffect } from "react";
 import { IonIcon } from "@ionic/react";
 import "../../assets/css/style.css";
 import { menuOutline, closeOutline, searchOutline, personOutline, bagHandleOutline } from "ionicons/icons";
 
 const MainHeader = () => {
-  const userName = localStorage.getItem("userName"); // hoặc lấy tên user bạn lưu
 
+
+  const [fullname, setFullname] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
 
+   // Khi component mount hoặc localStorage thay đổi (bạn có thể lắng nghe sự kiện storage)
+  useEffect(() => {
+    const storedName = localStorage.getItem("fullname");
+    setFullname(storedName);
+    
+    // Lắng nghe event storage để cập nhật fullname khi localStorage thay đổi ở tab khác
+    const handleStorageChange = () => {
+      const updatedName = localStorage.getItem("fullname");
+      setFullname(updatedName);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
   const handleUserClick = () => {
-    if (!userName) {
+    if (!fullname) {
       window.location.href = "/login";
     } else {
       setShowMenu((prev) => !prev);
@@ -75,14 +93,14 @@ const MainHeader = () => {
                       userSelect: "none",
                     }}
                   >
-                    <div style={{ marginBottom: 10 }}>Chào, {userName || "Khách"}</div>
+                    <div style={{ marginBottom: 10 }}>Chào, {fullname || "Khách"}</div>
                     <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                       <li style={{ padding: "6px 0", cursor: "pointer" }}>Thông tin khách hàng</li>
                       <li style={{ padding: "6px 0", cursor: "pointer" }}>Đơn hàng của bạn</li>
                       <li
                         style={{ padding: "6px 0", cursor: "pointer" }}
                         onClick={() => {
-                          localStorage.removeItem("userName"); // Xóa user khi đăng xuất
+                          localStorage.removeItem("fullname"); // Xóa user khi đăng xuất
                           window.location.href = "/";
                         }}
                       >

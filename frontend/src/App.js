@@ -11,6 +11,7 @@ import Address from "./views/address/address.jsx";
 import Payment from "./views/payment/payment.jsx";
 import ProductPage from "./views/home/product.jsx";
 import UserLayout from "./layouts/UserLayout.jsx";
+import OAuth2RedirectHandler from "./views/login/OAuth2RedirectHandler.jsx";
 
 
 
@@ -32,6 +33,7 @@ function App() {
               <Route path="/address" element={<Address/>}/>
               <Route path="/payment" element={<Payment/>}/>
               <Route path="/products" element={<ProductPage/>}/> 
+              <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
           </Route> 
         
         </Routes>
