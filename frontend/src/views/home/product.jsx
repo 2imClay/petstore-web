@@ -1,41 +1,41 @@
-import React, { useState } from "react";
-import product1 from "../../assets/images/product-1.jpg"
-import product1_0 from "../../assets/images/product-1_0.jpg"
+import React, {useEffect, useState} from "react";
 
-const products = [
-    {
-      id: 1,
-      title: "Commodo leo sed porta",
-      price: 15,
-      animal: "dog",
-      category: "1",
-      image: product1,
-      imageHover: product1_0,
-    },
-    // Thêm sản phẩm nếu cần
-  ];
+import axios from "axios";
+
 const ProductPage = () => {
-  const [animal, setAnimal] = useState("");
-  const [category, setCategory] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState([]);
 
-  
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/categories");
+        setCategories(res.data);
+      } catch (err) {
+        console.error("Lỗi khi lấy danh mục:", err);
+      }
+    };
 
-  // Lọc sản phẩm khi submit
-  const handleFilter = (e) => {
-    e.preventDefault();
-    const result = products.filter((product) => {
-      const matchAnimal = animal === "" || product.animal === animal;
-      const matchCategory = category === "" || product.category === category;
-      return matchAnimal && matchCategory;
-    });
-    setFilteredProducts(result);
-  };
+    fetchCategories();
+  }, []);
 
-  // Mặc định hiển thị tất cả
-  React.useEffect(() => {
-    setFilteredProducts(products);
-  }, []); 
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/products");
+        setProducts(response.data);
+      } catch (err) {
+        console.error("Lỗi khi lấy danh sách sản phẩm:", err);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+  const filteredProducts = selectedCategory
+      ? products.filter((p) => p.id_category === parseInt(selectedCategory))
+      : products;
+
 
   return (
       <div className="user-wrapper">
@@ -44,53 +44,56 @@ const ProductPage = () => {
 
             {/* Filter Form */}
             <div className="product-filter">
-              <form id="filter-form" onSubmit={handleFilter}>
-                <div className="filter-group">
-                  <p>Loại động vật</p>
-                  <div className="radio-group">
-                    <label>
-                      <input
-                          type="radio"
-                          name="animal"
-                          value=""
-                          checked={animal === ""}
-                          onChange={() => setAnimal("")}
-                      /> Tất cả
-                    </label>
-                    <label>
-                      <input
-                          type="radio"
-                          name="animal"
-                          value="dog"
-                          checked={animal === "dog"}
-                          onChange={() => setAnimal("dog")}
-                      /> Chó
-                    </label>
-                    <label>
-                      <input
-                          type="radio"
-                          name="animal"
-                          value="cat"
-                          checked={animal === "cat"}
-                          onChange={() => setAnimal("cat")}
-                      /> Mèo
-                    </label>
-                  </div>
-                </div>
+              <form id="filter-form">
+                {/*<div className="filter-group">*/}
+                {/*  <p>Loại động vật</p>*/}
+                {/*  <div className="radio-group">*/}
+                {/*    <label>*/}
+                {/*      <input*/}
+                {/*          type="radio"*/}
+                {/*          name="animal"*/}
+                {/*          value=""*/}
+                {/*          checked={}*/}
+                {/*          onChange={}*/}
+                {/*      /> Tất cả*/}
+                {/*    </label>*/}
+                {/*    <label>*/}
+                {/*      <input*/}
+                {/*          type="radio"*/}
+                {/*          name="animal"*/}
+                {/*          value="dog"*/}
+                {/*          checked={}*/}
+                {/*          onChange={}*/}
+                {/*      /> Chó*/}
+                {/*    </label>*/}
+                {/*    <label>*/}
+                {/*      <input*/}
+                {/*          type="radio"*/}
+                {/*          name="animal"*/}
+                {/*          value="cat"*/}
+                {/*          checked={}*/}
+                {/*          onChange={}*/}
+                {/*      /> Mèo*/}
+                {/*    </label>*/}
+                {/*  </div>*/}
+                {/*</div>*/}
 
                 <div className="filter-group">
                   <label htmlFor="category">Loại sản phẩm</label>
                   <select
-                      id="category"
                       name="category"
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value)}
+                      id="id_category"
+                      value={selectedCategory}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
                   >
                     <option value="">Tất cả</option>
-                    <option value="1">Loại 1</option>
-                    <option value="2">Loại 2</option>
-                    <option value="3">Loại 3</option>
+                    {categories.map((cate) => (
+                        <option key={cate.id} value={cate.id}>
+                          {cate.name}
+                        </option>
+                    ))}
                   </select>
+
                   <button type="submit" className="filter-btn">Lọc</button>
                 </div>
               </form>
@@ -104,11 +107,15 @@ const ProductPage = () => {
             {/* Product List */}
             <ul className="grid-list">
               {filteredProducts.map((product) => (
-                  <li key={product.id} data-category={product.category} data-animal={product.animal}>
+                  <li key={product.id} data-category={product.id_category.name} >
                     <div className="product-card">
                       <div className="card-banner img-holder" style={{ width: '360px', height: '360px' }}>
                         <img
-                            src={product.image}
+                            src={
+                              product.images && product.images.length > 0
+                                  ? `http://localhost:8080/uploads/${product.images[0].image}`
+                                  : require("../../assets/images/offer-banner-1.jpg")
+                            }
                             width="360"
                             height="360"
                             loading="lazy"
@@ -116,7 +123,11 @@ const ProductPage = () => {
                             className="img-cover default"
                         />
                         <img
-                            src={product.imageHover}
+                            src={
+                              product.images && product.images.length > 0
+                                  ? `http://localhost:8080/uploads/${product.images[1].image}`
+                                  : require("../../assets/images/offer-banner-1.jpg")
+                            }
                             width="360"
                             height="360"
                             loading="lazy"
@@ -131,7 +142,7 @@ const ProductPage = () => {
                         <h3 className="h3">
                           <a href={`/product/${product.id}`} className="card-title">{product.title}</a>
                         </h3>
-                        <data className="card-price" value={product.price}>${product.price}</data>
+                        <data className="card-price" value={product.price}>{product.price} VND</data>
                       </div>
                     </div>
                   </li>
