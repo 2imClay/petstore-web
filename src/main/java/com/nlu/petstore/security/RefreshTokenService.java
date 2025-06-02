@@ -4,6 +4,7 @@ import com.nlu.petstore.entity.RefreshToken;
 import com.nlu.petstore.entity.User;
 import com.nlu.petstore.repository.RefreshTokenRepository;
 import com.nlu.petstore.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ public class RefreshTokenService {
 
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    @Value("${jwt.refresh.expiration}")
+    private long refreshTokenValidityMs;
 
     public RefreshTokenService(UserRepository userRepository, RefreshTokenRepository refreshTokenRepository) {
         this.userRepository = userRepository;
@@ -23,19 +26,32 @@ public class RefreshTokenService {
     }
 
     public RefreshToken createRefreshToken(String username){
-        long refeshTokenValidty = 5*10000;
+
         User user = userRepository.findByUsername(username)
                 .orElseThrow(()->new
                 UsernameNotFoundException("Không tìm thấy người dùng với email"+username));
         RefreshToken refreshToken = user.getRefreshToken();
-        if(refreshToken ==null){
-            refreshToken = RefreshToken.builder()
-                    .refreshToken(UUID.randomUUID().toString())
-                    .expirationTime(Instant.now().plusMillis(refeshTokenValidty))
-                    .user(user)
-                    .build();
-            refreshTokenRepository.save(refreshToken);
+        if(refreshToken ==null) {
+            refreshToken = new RefreshToken();
         }
+        refreshToken.setRefreshToken(UUID.randomUUID().toString());
+        refreshToken.setExpirationTime(Instant.now().plusMillis(refreshTokenValidityMs));
+        refreshToken.setUser(user);
+        refreshTokenRepository.save(refreshToken);
+
+        return refreshToken;
+    }
+
+    public RefreshToken createRefreshTokenWithOAuth2(User user) {
+        RefreshToken refreshToken = user.getRefreshToken();
+        if (refreshToken == null) {
+            refreshToken = new RefreshToken();
+        }
+        refreshToken.setRefreshToken(UUID.randomUUID().toString());
+        refreshToken.setExpirationTime(Instant.now().plusMillis(refreshTokenValidityMs));
+        refreshToken.setUser(user);
+        refreshTokenRepository.save(refreshToken);
+
         return refreshToken;
     }
 
@@ -48,5 +64,6 @@ public class RefreshTokenService {
        }
        return refToken;
     }
+
 
 }

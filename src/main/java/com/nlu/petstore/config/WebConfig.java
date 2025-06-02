@@ -1,6 +1,12 @@
 package com.nlu.petstore.config;
 
+import com.nlu.petstore.config.configHandler.CustomAccessDeniedHandler;
+import com.nlu.petstore.config.configHandler.CustomAuthenticationEntryPoint;
+import com.nlu.petstore.security.CustomOAuth2UserService;
 import com.nlu.petstore.security.JwtAuthenticationFilter;
+import com.nlu.petstore.security.OAuth2LoginFailureHandler;
+import com.nlu.petstore.security.OAuth2LoginSuccessHandler;
+import com.nlu.petstore.security.outh2.CustomAuthorizationRequestResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +17,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.client.RestTemplate;
@@ -26,24 +36,54 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
     private  JwtAuthenticationFilter jwtAuthFilter;
+    @Autowired
+    private OAuth2LoginSuccessHandler  oAuth2LoginSuccessHandler;
+    @Autowired
+    private OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
+    @Autowired
+    private ClientRegistrationRepository clientRegistrationRepository;
+    @Autowired
+    private CustomOAuth2UserService oAuth2UserService;
+    @Autowired
+    private CustomAuthenticationEntryPoint authenticationEntryPoint;
+
+    @Autowired
+    private CustomAccessDeniedHandler accessDeniedHandler;
+
+
+
+
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        OAuth2AuthorizationRequestResolver customAuthorizationRequestResolver =
+                new CustomAuthorizationRequestResolver(clientRegistrationRepository, "/oauth2/authorization");
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
 //                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/products","/api/categories","/api/auth/**","/api/**").permitAll()
+                        .requestMatchers("/api/products","/api/categories"
+                                ,"/api/auth/**","/api/**"
+                                , "/oauth2/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/forgotPassword/**").permitAll()
                         .requestMatchers("/admin/**","/api/users").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .oauth2Login(oauth2 -> oauth2
-                        .defaultSuccessUrl("http://localhost:3000/oauth2/redirect", true)
+                // Cấu hình xử lý khi người dùng không có quyền truy cập
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(authenticationEntryPoint) // Trả về lỗi 401 nếu không có quyền
+                        .accessDeniedHandler(accessDeniedHandler)// 403
                 )
-
+                .oauth2Login(oauth2 -> oauth2
+                        .authorizationEndpoint(endpoint -> endpoint
+                                .authorizationRequestResolver(customAuthorizationRequestResolver)
+                        )
+                        .userInfoEndpoint(user -> user.userService(oAuth2UserService))
+                        .successHandler(oAuth2LoginSuccessHandler)
+                        .failureHandler(oAuth2LoginFailureHandler)
+                )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(Customizer.withDefaults())
@@ -70,6 +110,7 @@ public class WebConfig implements WebMvcConfigurer {
     public RestTemplate getRestTemplate() {
         return new RestTemplate();
     }
+
 
 //    @Bean
 //    public AuthenticationProvider authenticationProvider(){

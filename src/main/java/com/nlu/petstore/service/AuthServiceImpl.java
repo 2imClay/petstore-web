@@ -23,7 +23,7 @@ public class AuthServiceImpl implements  AuthService {
 
     private final UserRepository userRepository;
     private final RoleRepository   roleRepository;
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
 
@@ -40,6 +40,7 @@ public class AuthServiceImpl implements  AuthService {
         var refreshToken = refreshTokenService.createRefreshToken(loginDTO.getUsername());
         return AuthResponse.builder()
                 .userId(user.getId())
+                .fullname(user.getFullname())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .role(user.getRole().getRoleName())
@@ -73,12 +74,12 @@ public class AuthServiceImpl implements  AuthService {
         String token =  jwtService.generateToken(savedUser);
         var refreshToken =  refreshTokenService.createRefreshToken(savedUser.getUsername());
         return AuthResponse.builder()
-                .userId(savedUser.getId())
-                .username(savedUser.getUsername())
-                .email(savedUser.getEmail())
-                .role(savedUser.getRole().getRoleName())
-                .token(token)
-                .refreshToken(refreshToken.getRefreshToken())
+//                .userId(savedUser.getId())
+//                .username(savedUser.getUsername())
+//                .email(savedUser.getEmail())
+//                .role(savedUser.getRole().getRoleName())
+//                .token(token)
+//                .refreshToken(refreshToken.getRefreshToken())
                 .message("Đăng ký thành công")
                 .build();
     }
