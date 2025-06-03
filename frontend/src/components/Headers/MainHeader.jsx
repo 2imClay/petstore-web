@@ -4,8 +4,6 @@ import "../../assets/css/style.css";
 import { menuOutline, closeOutline, searchOutline, personOutline, bagHandleOutline } from "ionicons/icons";
 
 const MainHeader = () => {
-
-
   const [fullname, setFullname] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
 
