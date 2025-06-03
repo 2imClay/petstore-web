@@ -20,10 +20,10 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-            <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/admin/*" element={<AdminLayout />} />
+          <Route path="/" element={<Navigate to="/home" />} />
           <Route element={<UserLayout/>}>
               <Route path="/home" element={<Home/>}/>
               <Route path="/forgot-password" element={<ForgotPassword/>}/>

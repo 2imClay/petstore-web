@@ -60,15 +60,22 @@ public class WebConfig implements WebMvcConfigurer {
         OAuth2AuthorizationRequestResolver customAuthorizationRequestResolver =
                 new CustomAuthorizationRequestResolver(clientRegistrationRepository, "/oauth2/authorization");
         return httpSecurity
+                .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/products","/api/categories"
-                                ,"/api/auth/**","/api/**"
-                                , "/oauth2/**").permitAll()
+                        .requestMatchers(
+                                "/api/products",
+                                "/api/categories"
+                                ,"/api/auth/**"
+                                , "/oauth2/**"
+                                ,"/api/**"
+                        )
+                        .permitAll()
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/forgotPassword/**").permitAll()
-                        .requestMatchers("/admin/**","/api/users").hasRole("ADMIN")
+                        .requestMatchers("/admin/**"
+                                ,"/api/users","/api/roles"
+                        ).hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 // Cấu hình xử lý khi người dùng không có quyền truy cập

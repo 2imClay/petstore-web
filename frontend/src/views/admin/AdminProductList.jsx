@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../api/axiosAdmin";
 
 import {
   Card,
@@ -19,7 +19,7 @@ const AdminProductList = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/categories");
+        const res = await axios.get("/categories");
         setCategories(res.data);
       } catch (err) {
         console.error("Lỗi khi lấy danh mục:", err);
@@ -37,7 +37,7 @@ const AdminProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/products");
+        const response = await axios.get("/products");
         setProducts(response.data);
       } catch (err) {
         console.error("Lỗi khi lấy danh sách sản phẩm:", err);
@@ -52,7 +52,7 @@ const AdminProductList = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:8080/api/products/delete/${id}`);
+      await axios.delete(`/products/delete/${id}`);
       alert("Đã xoá sản phẩm!");
 
       // Cập nhật danh sách hiển thị bằng cách xoá sản phẩm khỏi state

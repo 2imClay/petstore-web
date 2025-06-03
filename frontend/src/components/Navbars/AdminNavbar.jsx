@@ -16,8 +16,31 @@ import {
   Container,
   Media,
 } from "reactstrap";
+import {useState, useEffect} from "react";
 
 const AdminNavbar = (props) => {
+
+  const [fullname, setFullname] = useState(null);
+  const [showMenu, setShowMenu] = useState(false);
+
+  // Khi component mount hoặc localStorage thay đổi (bạn có thể lắng nghe sự kiện storage)
+  useEffect(() => {
+    const storedName = localStorage.getItem("fullname");
+    setFullname(storedName);
+
+    // Lắng nghe event storage để cập nhật fullname khi localStorage thay đổi ở tab khác
+    const handleStorageChange = () => {
+      const updatedName = localStorage.getItem("fullname");
+      setFullname(updatedName);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -50,14 +73,14 @@ const AdminNavbar = (props) => {
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Name
+                      {fullname}
                     </span>
                   </Media>
                 </Media>
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-arrow" right>
                 <DropdownItem className="noti-title" header tag="div">
-                  <h6 className="text-overflow m-0">Welcome!</h6>
+                  <h6 className="text-overflow m-0">Welcome! {fullname}</h6>
                 </DropdownItem>
                 <DropdownItem to="/admin/user-profile" tag={Link}>
                   <i className="ni ni-settings-gear-65" />
@@ -70,7 +93,12 @@ const AdminNavbar = (props) => {
                 <DropdownItem divider />
                 <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
                   <i className="ni ni-user-run" />
-                  <span>Đăng xuất</span>
+                  <span
+                      onClick={() => {
+                        localStorage.removeItem("fullname"); // Xóa user khi đăng xuất
+                        window.location.href = "/login";
+                      }}
+                  >Đăng xuất</span>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
