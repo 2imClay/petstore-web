@@ -9,6 +9,7 @@
 
     export default function Login(){
         const GOOGLE_AUTH_URL = "http://localhost:8080/oauth2/authorization/google";
+        const FACEBOOK_AUTH_URL = "http://localhost:8080/oauth2/authorization/facebook";
         const [api,contextHolder] = notification.useNotification();
         const navigate = useNavigate();
         const dispatch = useDispatch();
@@ -158,7 +159,7 @@
                     <div className="social-login">
                         <p className="social-login-text">Đăng nhập với</p>
                         <div className="social-buttons">
-                            <a>
+                            <a href={FACEBOOK_AUTH_URL}>
                                 <button type="button" className="btn-facebook">
                                     <i className="fab fa-facebook-f"></i> Facebook
                                 </button>
