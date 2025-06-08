@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login } from "../../service/authService";
+import {logout as logoutThunk, login } from "../../service/authService";
 import * as status from "../constants/status";
 import Cookies from "js-cookie"
 
@@ -11,9 +11,12 @@ const authSlice = createSlice({
         error:null,
     },
     reducers:{
-        logout:(state)=>{
+        clearAuth:(state)=>{
             Cookies.remove("token");
+            Cookies.remove("refreshToken");
             state.data = null;
+            state.status = status.IDLE;
+            state.error = null;
         },
     },
     extraReducers:(builder) =>{
@@ -28,8 +31,15 @@ const authSlice = createSlice({
              state.status = status.FAILED;
             state.data = action.payload;
         })
+        .addCase(logoutThunk.fulfilled, (state) => {
+                state.data = null;
+                state.status = status.IDLE;
+        })
+        .addCase(logoutThunk.rejected, (state, action) => {
+                state.error = action.payload;
+        });
     },
 });
 
-export const {logout} = authSlice.actions;
+export const {clearAuth} = authSlice.actions;
 export default authSlice.reducer;   

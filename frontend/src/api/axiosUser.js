@@ -37,6 +37,7 @@ USER_API.interceptors.response.use(
         // Nếu refresh thất bại => redirect về login
         Cookies.remove("token");
         Cookies.remove("refreshToken");
+        Cookies.remove("accessToken");
         // window.location.href = "/login";
         return Promise.reject(refreshError);
       }
