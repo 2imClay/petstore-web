@@ -10,6 +10,7 @@ import com.nlu.petstore.response.AuthResponse;
 import com.nlu.petstore.security.JwtService;
 import com.nlu.petstore.security.RefreshTokenService;
 import com.nlu.petstore.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -79,7 +80,12 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("error", e.getMessage()));
         }
-
-
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest httpRequest, @RequestBody Map<String, String> request) {
+        String refreshToken = request.get("refreshToken");
+        authService.logout(refreshToken);
+        httpRequest.getSession().invalidate();
+        return ResponseEntity.ok("Logout thành công");
     }
 }

@@ -2,8 +2,10 @@ package com.nlu.petstore.service;
 
 import com.nlu.petstore.DTO.LoginDTO;
 import com.nlu.petstore.DTO.RegisterDTO;
+import com.nlu.petstore.entity.RefreshToken;
 import com.nlu.petstore.entity.Role;
 import com.nlu.petstore.entity.User;
+import com.nlu.petstore.repository.RefreshTokenRepository;
 import com.nlu.petstore.repository.RoleRepository;
 import com.nlu.petstore.repository.UserRepository;
 import com.nlu.petstore.response.AuthResponse;
@@ -73,14 +75,20 @@ public class AuthServiceImpl implements  AuthService {
         //Tạo JWT
         String token =  jwtService.generateToken(savedUser);
         var refreshToken =  refreshTokenService.createRefreshToken(savedUser.getUsername());
+        savedUser.setRefreshToken(refreshToken);
         return AuthResponse.builder()
-//                .userId(savedUser.getId())
-//                .username(savedUser.getUsername())
-//                .email(savedUser.getEmail())
-//                .role(savedUser.getRole().getRoleName())
-//                .token(token)
-//                .refreshToken(refreshToken.getRefreshToken())
+                .userId(savedUser.getId())
+                .username(savedUser.getUsername())
+                .email(savedUser.getEmail())
+                .role(savedUser.getRole().getRoleName())
+                .token(token)
+                .refreshToken(refreshToken.getRefreshToken())
                 .message("Đăng ký thành công")
                 .build();
+    }
+
+    @Override
+    public void logout(String refreshToken) {
+        refreshTokenService.deleteByRefreshToken(refreshToken);
     }
 }

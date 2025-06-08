@@ -43,6 +43,10 @@ public class RefreshTokenService {
     }
 
     public RefreshToken createRefreshTokenWithOAuth2(User user) {
+
+        if (user.getId() == null) {
+            user = userRepository.save(user);
+        }
         RefreshToken refreshToken = user.getRefreshToken();
         if (refreshToken == null) {
             refreshToken = new RefreshToken();
@@ -63,6 +67,12 @@ public class RefreshTokenService {
            throw new RuntimeException("Refresh token đã hết hạn.");
        }
        return refToken;
+    }
+
+    public void deleteByRefreshToken(String refreshToken) {
+        RefreshToken token = refreshTokenRepository.findByRefreshToken(refreshToken)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy refresh token."));
+        refreshTokenRepository.delete(token);
     }
 
 
