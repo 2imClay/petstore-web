@@ -1,11 +1,33 @@
 import React, {useEffect, useState} from 'react';
 import "../../assets/css/style.css";
 import banner from '../../assets/images/hero-banner.jpg';
+import { useSelector } from "react-redux";
 
 import { Star } from 'react-ionicons';
 import axios from "axios";
+import {IonIcon} from "@ionic/react";
+import {bagAddOutline} from "ionicons/icons";
 
 function MainContent() {
+
+    const userId = useSelector((state) => state.auth.data?.userId);
+
+    const handleAddToCart = async (productId) => {
+        if (!userId) {
+            alert("Bạn cần đăng nhập để thêm vào giỏ hàng!");
+            return;
+        }
+
+        try {
+            await axios.post("http://localhost:8080/api/cart/add", null, {
+                params: { userId, productId },
+            });
+            alert("Đã thêm sản phẩm vào giỏ hàng!");
+        } catch (error) {
+            console.error("Lỗi khi thêm vào giỏ hàng:", error);
+            alert("Thêm vào giỏ hàng thất bại!");
+        }
+    };
 
     const [products, setProducts] = useState([]);
     useEffect(() => {
@@ -168,8 +190,9 @@ function MainContent() {
                                                          className="card-action-btn"
                                                          aria-label="add to card"
                                                          title="Add To Card"
+                                                         onClick={() => handleAddToCart(product.id)}
                                                      >
-                                                         <ion-icon name="bag-add-outline" aria-hidden="true"></ion-icon>
+                                                         <IonIcon icon={bagAddOutline} aria-hidden="true" />
                                                      </button>
                                                  </div>
 

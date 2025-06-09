@@ -281,7 +281,7 @@ const AdminAddProduct = () => {
                   </div>
                   <div className="pl-lg-4">
                     <Row>
-                      <Col lg="4">
+                      <Col lg="8">
                       <FormGroup>
                         <label
                             className="form-control-label"

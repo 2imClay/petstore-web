@@ -1,8 +1,30 @@
 import React, {useEffect, useState} from "react";
+import { useSelector } from "react-redux";
 
 import axios from "axios";
+import {bagAddOutline} from "ionicons/icons";
+import {IonIcon} from "@ionic/react";
 
 const ProductPage = () => {
+
+  const userId = useSelector((state) => state.auth.data?.userId);
+
+  const handleAddToCart = async (productId) => {
+    if (!userId) {
+      alert("Bạn cần đăng nhập để thêm vào giỏ hàng!");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:8080/api/cart/add", null, {
+        params: { userId, productId },
+      });
+      alert("Đã thêm sản phẩm vào giỏ hàng!");
+    } catch (error) {
+      console.error("Lỗi khi thêm vào giỏ hàng:", error);
+      alert("Thêm vào giỏ hàng thất bại!");
+    }
+  };
 
   const [selectedAnimal, setSelectedAnimal] = useState("");
   const [animals, setAnimals] = useState([]);
@@ -147,8 +169,10 @@ const ProductPage = () => {
                             alt={product.title}
                             className="img-cover hover"
                         />
-                        <button className="card-action-btn" aria-label="add to cart" title="Add To Cart">
-                          <ion-icon name="bag-add-outline" aria-hidden="true"></ion-icon>
+                        <button className="card-action-btn" aria-label="add to cart" title="Add To Cart"
+                                onClick={() => handleAddToCart(product.id)}
+                        >
+                          <IonIcon icon={bagAddOutline} aria-hidden="true" />
                         </button>
                       </div>
                       <div className="card-content">
