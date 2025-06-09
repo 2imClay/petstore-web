@@ -34,6 +34,11 @@ const OAuth2RedirectHandler = () => {
            // Thông tin user có thể nằm ở các trường như "name", "email", "picture"
           const userDisplayName = decodedToken.fullname || decodedToken.name || "User";
           localStorage.setItem("fullname", userDisplayName);
+
+           // Lưu userId nếu có trong token
+          if (decodedToken.id || decodedToken.userId) {
+            localStorage.setItem("userId", decodedToken.id || decodedToken.userId);
+          }
           console.log("Decoded token:", decodedToken);
           if (isMounted.current) {
             setNotificationInfo({
