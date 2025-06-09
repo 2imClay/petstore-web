@@ -16,7 +16,7 @@ if (accessToken) {
 // Gửi token kèm theo mỗi request nếu có
 BASE_URL.interceptors.request.use(
   (config) => {
-    const token = Cookies.get("token");
+    const token = Cookies.get("accessToken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -40,7 +40,9 @@ BASE_URL.interceptors.response.use(
 
       try {
         const refreshToken = Cookies.get("refreshToken");
-        if (!refreshToken) throw new Error("Refresh token không tồn tại");
+        if (!refreshToken) {
+            throw new Error("Refresh token không tồn tại");
+        }
 
         const res = await axios.post(
           "http://localhost:8080/api/auth/refresh-token",
@@ -51,6 +53,7 @@ BASE_URL.interceptors.response.use(
 
         Cookies.set("token", newToken, { expires: 1, path: "/" });
         Cookies.set("refreshToken", newRefreshToken, { expires: 7, path: "/" });
+
 
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return BASE_URL(originalRequest);

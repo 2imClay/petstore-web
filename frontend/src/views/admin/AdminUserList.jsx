@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../api/axiosAdmin";
 
 import {
     Card,
@@ -13,13 +13,13 @@ import {
 
 import AdminHeader from "../../components/Headers/AdminListHeader.jsx";
 
-const AdminProductList = () => {
+const AdminUserList = () => {
 
     const [roles, setRoles] = useState([]);
     useEffect(() => {
         const fetchRoles = async () => {
             try {
-                const res = await axios.get("http://localhost:8080/api/roles");
+                const res = await axios.get("/roles");
                 setRoles(res.data);
             } catch (err) {
                 console.error("Lỗi khi lấy role:", err);
@@ -33,7 +33,7 @@ const AdminProductList = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/api/users");
+                const response = await axios.get("/users");
                 setUsers(response.data);
             } catch (err) {
                 console.error("Lỗi khi lấy danh sách người dùng:", err);
@@ -48,7 +48,7 @@ const AdminProductList = () => {
         if (!confirmDelete) return;
 
         try {
-            await axios.delete(`http://localhost:8080/api/users/delete/${id}`);
+            await axios.delete(`/users/delete/${id}`);
             alert("Đã xoá người dùng!");
 
             // Cập nhật danh sách hiển thị bằng cách xoá sản phẩm khỏi state
@@ -145,4 +145,4 @@ const AdminProductList = () => {
     );
 };
 
-export default AdminProductList;
+export default AdminUserList;

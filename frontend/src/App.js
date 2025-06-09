@@ -22,6 +22,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
+
             <Route path="/" element={<Navigate to="/home" />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -41,6 +42,10 @@ function App() {
                 <Route path="profile/:id" element={<Profile />} />
                 {/* <Route path="orders" element={<OrdersPage />} /> */}
             </Route>
+
+        
+        
+
         </Routes>
       </div>
     </BrowserRouter>
