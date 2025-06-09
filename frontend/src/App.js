@@ -12,6 +12,8 @@ import Payment from "./views/payment/payment.jsx";
 import ProductPage from "./views/home/product.jsx";
 import UserLayout from "./layouts/UserLayout.jsx";
 import OAuth2RedirectHandler from "./views/login/OAuth2RedirectHandler.jsx";
+import Profile from "./views/user/profile.jsx"
+import LayoutProfile from "./views/user/LayoutProfile.jsx"
 
 
 
@@ -20,22 +22,30 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/admin/*" element={<AdminLayout />} />
-          <Route path="/" element={<Navigate to="/home" />} />
-          <Route element={<UserLayout/>}>
-              <Route path="/home" element={<Home/>}/>
-              <Route path="/forgot-password" element={<ForgotPassword/>}/>
-              <Route path="/verifyOtp" element={<VerifyOtp/>}/>
-              <Route path="/changePassword" element={<ChangePassword/>}/>
-              <Route path="/cart" element={<Cart/>}/>
-              <Route path="/address" element={<Address/>}/>
-              <Route path="/payment" element={<Payment/>}/>
-              <Route path="/products" element={<ProductPage/>}/> 
-              <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
-          </Route> 
+
+            <Route path="/" element={<Navigate to="/home" />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/admin/*" element={<AdminLayout />} />
+            <Route element={<UserLayout/>}>
+                <Route path="/home" element={<Home/>}/>
+                <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                <Route path="/verifyOtp" element={<VerifyOtp/>}/>
+                <Route path="/changePassword" element={<ChangePassword/>}/>
+                <Route path="/cart" element={<Cart/>}/>
+                <Route path="/address" element={<Address/>}/>
+                <Route path="/payment" element={<Payment/>}/>
+                <Route path="/products" element={<ProductPage/>}/> 
+                <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
+            </Route> 
+            <Route path="/" element={<LayoutProfile />}>
+                <Route path="profile/:id" element={<Profile />} />
+                {/* <Route path="orders" element={<OrdersPage />} /> */}
+            </Route>
+
         
+        
+
         </Routes>
       </div>
     </BrowserRouter>

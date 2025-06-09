@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -17,36 +18,42 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")  // Ánh xạ cột id trong bảng
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "fullname")  // Ánh xạ cột fullname trong bảng
+    @Column(name = "fullname")
     private String fullname;
 
-    @Column(name = "email")  // Ánh xạ cột email trong bảng
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "phoneNumber")  // Ánh xạ cột phoneNumber trong bảng
+    @Column(name = "phoneNumber")
     private String phoneNumber;
 
     @Column(name="username")
     private String username;
 
-    @Column(name = "address")  // Ánh xạ cột address trong bảng
+    @Column(name = "address")
     private String address;
 
-    @Column(name = "password")  // Ánh xạ cột password trong bảng
+    @Column(name = "password")
     private String password;
 
     @Column(name = "provider")
     private String provider;
+
+    @Column(name = "avatar")
+    private String avatar;
+
+    @Column(name = "birthDate")
+    private LocalDate birthDate;
 
     @ManyToOne
     @JoinColumn(name = "roleId")
     private Role role;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user" ,cascade = CascadeType.ALL, orphanRemoval = true)
     private RefreshToken refreshToken;
 
     @JsonIgnore

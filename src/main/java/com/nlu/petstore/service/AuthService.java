@@ -7,5 +7,6 @@ import com.nlu.petstore.response.AuthResponse;
 public interface AuthService {
     AuthResponse  login(LoginDTO loginDTO);
     AuthResponse  register(RegisterDTO registerDTO);
+    void logout(String refreshToken);
 
 }
