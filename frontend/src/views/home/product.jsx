@@ -1,30 +1,40 @@
 import React, {useEffect, useState} from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
-import axios from "axios";
+import axios from "../../api/axiosIns";
 import {bagAddOutline} from "ionicons/icons";
 import {IonIcon} from "@ionic/react";
 
 const ProductPage = () => {
 
-  const userId = useSelector((state) => state.auth.data?.userId);
+  // const userId = useSelector((state) => state.auth.data?.userId);
 
   const handleAddToCart = async (productId) => {
-    if (!userId) {
-      alert("Bạn cần đăng nhập để thêm vào giỏ hàng!");
-      return;
-    }
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
 
     try {
-      await axios.post("http://localhost:8080/api/cart/add", null, {
-        params: { userId, productId },
-      });
+      await axios.post(
+          "http://localhost:8080/api/cart/add",
+          {
+            userId: parseInt(userId),
+            productId: productId,
+            quantity: 1 // hoặc số lượng bạn muốn thêm
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+      );
       alert("Đã thêm sản phẩm vào giỏ hàng!");
     } catch (error) {
       console.error("Lỗi khi thêm vào giỏ hàng:", error);
       alert("Thêm vào giỏ hàng thất bại!");
     }
   };
+
 
   const [selectedAnimal, setSelectedAnimal] = useState("");
   const [animals, setAnimals] = useState([]);
@@ -140,7 +150,7 @@ const ProductPage = () => {
             </h2>
 
             {/* Product List */}
-            <ul className="grid-list">
+            <ul className="grid-list" style={{justifyContent:"center"}}>
               {filteredProducts.map((product) => (
                   <li key={product.id} data-category={product.id_category.name} >
                     <div className="product-card">

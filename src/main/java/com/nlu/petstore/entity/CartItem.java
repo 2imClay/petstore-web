@@ -14,11 +14,20 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "user_id", nullable = false)
     private int userId;
+
+    @Column(name = "product_id", nullable = false)
     private int productId;
+    @Getter
+    @Setter
+    @Column(name = "quantity", nullable = false)
     private int quantity;
 
+    @Getter
     @ManyToOne
     @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private Product product;
+
 }
+

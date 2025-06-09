@@ -1,5 +1,6 @@
 package com.nlu.petstore.controller;
 
+import com.nlu.petstore.DTO.CartItemDTO;
 import com.nlu.petstore.entity.CartItem;
 import com.nlu.petstore.service.CartItemService;
 import lombok.Getter;
@@ -24,7 +25,7 @@ public class CartItemController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<CartItem>> getCartItems(@PathVariable int userId) {
+    public ResponseEntity<List<CartItemDTO>> getCartItems(@PathVariable int userId) {
         return ResponseEntity.ok(cartItemService.getCartItems(userId));
     }
 
@@ -33,6 +34,13 @@ public class CartItemController {
         cartItemService.removeFromCart(userId, productId);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/updateQuantity")
+    public ResponseEntity<CartItem> updateQuantity(@RequestBody CartItemRequest request) {
+        CartItem updatedItem = cartItemService.updateQuantity(request.getUserId(), request.getProductId(), request.getQuantity());
+        return ResponseEntity.ok(updatedItem);
+    }
+
 }
 
 @Getter
