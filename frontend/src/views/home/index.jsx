@@ -3,9 +3,37 @@ import "../../assets/css/style.css";
 import banner from '../../assets/images/hero-banner.jpg';
 
 import { Star } from 'react-ionicons';
-import axios from "axios";
+import axios from "../../api/axiosIns";
+import {IonIcon} from "@ionic/react";
+import {bagAddOutline} from "ionicons/icons";
 
 function MainContent() {
+    const handleAddToCart = async (productId) => {
+        const userId = localStorage.getItem("userId");
+        const token = localStorage.getItem("token");
+
+        try {
+            await axios.post(
+                "http://localhost:8080/api/cart/add",
+                {
+                    userId: parseInt(userId),
+                    productId: productId,
+                    quantity: 1 // hoặc số lượng bạn muốn thêm
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            alert("Đã thêm sản phẩm vào giỏ hàng!");
+        } catch (error) {
+            console.error("Lỗi khi thêm vào giỏ hàng:", error);
+            alert("Thêm vào giỏ hàng thất bại!");
+        }
+    };
+
 
     const [products, setProducts] = useState([]);
     useEffect(() => {
@@ -168,8 +196,9 @@ function MainContent() {
                                                          className="card-action-btn"
                                                          aria-label="add to card"
                                                          title="Add To Card"
+                                                         onClick={() => handleAddToCart(product.id)}
                                                      >
-                                                         <ion-icon name="bag-add-outline" aria-hidden="true"></ion-icon>
+                                                         <IonIcon icon={bagAddOutline} aria-hidden="true" />
                                                      </button>
                                                  </div>
 
@@ -198,6 +227,41 @@ function MainContent() {
                                          </li>
                                      ))}
                                  </ul>
+                             </div>
+                         </section>
+
+                         {/* CTA */}
+                         <section
+                             className="cta has-bg-image"
+                             aria-label="cta"
+                             style={{ backgroundImage: "url(" + require("../../assets/images/cta-bg.jpg") + ")" }}
+                         >
+                             <div className="container">
+
+                                 <figure className="cta-banner">
+                                     <img
+                                         src={require("../../assets/images/cta-banner.png")}
+                                         width="900"
+                                         height="660"
+                                         loading="lazy"
+                                         alt="cat"
+                                         className="w-100"
+                                     />
+                                 </figure>
+
+                                 <div className="cta-content">
+                                     <img src={require("../../assets/images/cta-icon.png")} width="120" height="35" loading="lazy" alt="taste guarantee" className="img" />
+
+                                     <h2 className="h2 section-title">
+                                         Mang lại <span className="span">sự thoải mái</span> cho thú cưng.
+                                     </h2>
+
+                                     <p className="section-text">
+                                         Đặt bánh thì mới có bánh.
+                                     </p>
+
+                                     <a href="https://google.com" className="btn">Đặt ngay</a>
+                                 </div>
                              </div>
                          </section>
 
@@ -304,40 +368,7 @@ function MainContent() {
                              </div>
                          </section>
 
-                         {/* CTA */}
-                         <section
-                             className="cta has-bg-image"
-                             aria-label="cta"
-                             style={{ backgroundImage: "url(" + require("../../assets/images/cta-bg.jpg") + ")" }}
-                         >
-                             <div className="container">
 
-                                 <figure className="cta-banner">
-                                     <img
-                                         src={require("../../assets/images/cta-banner.png")}
-                                         width="900"
-                                         height="660"
-                                         loading="lazy"
-                                         alt="cat"
-                                         className="w-100"
-                                     />
-                                 </figure>
-
-                                 <div className="cta-content">
-                                      <img src={require("../../assets/images/cta-icon.png")} width="120" height="35" loading="lazy" alt="taste guarantee" className="img" />
-
-                                     <h2 className="h2 section-title">
-                                         Mang lại <span className="span">sự thoải mái</span> cho thú cưng.
-                                     </h2>
-
-                                     <p className="section-text">
-                                         Đặt bánh thì mới có bánh.
-                                     </p>
-
-                                     <a href="https://google.com" className="btn">Đặt ngay</a>
-                                 </div>
-                             </div>
-                         </section>
                      </article>
                  </main>
              </div>

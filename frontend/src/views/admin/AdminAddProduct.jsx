@@ -26,12 +26,14 @@ const AdminAddProduct = () => {
 
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [animals, setAnimals] = useState([]);
   const [product, setProduct] = useState({
     title: "",
     brand: "",
     price: 0,
     amount: 0,
     id_category: "",
+    id_animal: "",
     description: "",
   });
   const handleChange = (e) => {
@@ -49,6 +51,7 @@ const AdminAddProduct = () => {
       formData.append("amount", product.amount);
       formData.append("description", product.description);
       formData.append("id_category", product.id_category);
+      formData.append("id_animal", product.id_animal);
 
       // Thêm ảnh
       selectedFiles.forEach((file) => {
@@ -81,6 +84,18 @@ const AdminAddProduct = () => {
     };
 
     fetchCategories();
+  }, []);
+  useEffect(() => {
+    const fetchAnimals = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/animals");
+        setAnimals(res.data);
+      } catch (err) {
+        console.error("Lỗi khi lấy danh mục:", err);
+      }
+    };
+
+    fetchAnimals();
   }, []);
 
 
@@ -266,6 +281,7 @@ const AdminAddProduct = () => {
                   </div>
                   <div className="pl-lg-4">
                     <Row>
+                      <Col lg="8">
                       <FormGroup>
                         <label
                             className="form-control-label"
@@ -282,6 +298,33 @@ const AdminAddProduct = () => {
                             onChange={(e) => setSelectedFiles([...e.target.files])}
                         />
                       </FormGroup>
+                      </Col>
+                      <Col lg="4">
+                        <FormGroup>
+                          <label
+                              className="form-control-label"
+                              htmlFor="input-animal"
+                          >
+                            Thú cưng
+                          </label>
+                          <select
+                              className="form-control-alternative"
+                              value={product.id_animal}
+                              defaultValue="Loại"
+                              id="id_animal"
+                              onChange={handleChange}
+                              style={{height:'100%',padding:'10px',borderRadius:'5px',width:'100%'}}
+
+                          >
+                            <option value="">-- Chọn thú cưng --</option>
+                            {animals.map((animal) => (
+                                <option key={animal.id} value={animal.id}>
+                                  {animal.name}
+                                </option>
+                            ))}
+                          </select>
+                        </FormGroup>
+                      </Col>
                     </Row>
                   </div>
                   <hr className="my-4" />

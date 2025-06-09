@@ -1,38 +1,90 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import "../../assets/css/cart.css";
-import product6 from '../../assets/images/product-6.jpg';
-import product6_0 from '../../assets/images/product-6_0.jpg';
+import axios from "axios";
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Nước nhỏ mắt cho mèo",
-      image: product6,
-      quantity: 1,
-      price: 400000,
-    },
-    {
-      id: 2,
-      name: "Nước nhỏ mắt cho mèo",
-      image: product6_0,
-      quantity: 1,
-      price: 400000,
-    },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
 
-  const handleQuantityChange = (id, value) => {
-    if (value < 1) return; // Không cho số lượng nhỏ hơn 1
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: value } : item
-      )
-    );
+  useEffect(() => {
+    const fetchCart = async () => {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+
+      try {
+        const response = await axios.get(`http://localhost:8080/api/cart/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setCartItems(response.data);
+      } catch (error) {
+        console.error("Lỗi khi lấy giỏ hàng:", error);
+      }
+    };
+
+
+    fetchCart();
+  }, []);
+
+  const handleQuantityChange = async (productId, value) => {
+    if (value < 1) return;
+
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+
+    try {
+      // Gửi yêu cầu cập nhật số lượng lên backend
+      await axios.put(
+          `http://localhost:8080/api/cart/updateQuantity`,
+          {
+            userId: Number(userId),
+            productId,
+            quantity: value,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+      );
+
+      // Nếu thành công, cập nhật lại state local để UI phản ánh ngay
+      setCartItems((prevItems) =>
+          prevItems.map((item) =>
+              item.productId === productId ? { ...item, quantity: value } : item
+          )
+      );
+    } catch (error) {
+      console.error("Lỗi cập nhật số lượng:", error);
+    }
   };
 
-  const handleRemoveItem = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+
+  const handleRemoveItem = async (productId) => {
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+
+    try {
+      // Gọi API xóa sản phẩm khỏi giỏ hàng
+      await axios.delete(`http://localhost:8080/api/cart/remove`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          userId: Number(userId),
+          productId: productId,
+        },
+      });
+
+      // Cập nhật lại state để UI phản ánh ngay
+      setCartItems((prevItems) =>
+          prevItems.filter((item) => item.productId !== productId)
+      );
+    } catch (error) {
+      console.error("Lỗi khi xóa sản phẩm khỏi giỏ hàng:", error);
+    }
   };
+
 
   const getTotalQuantity = () =>
     cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -75,50 +127,54 @@ const Cart = () => {
                 </tr>
               </thead>
               <tbody>
-                {cartItems.length > 0 ? (
-                  cartItems.map((item) => (
-                    <tr key={item.id}>
-                      <td>
-                        <img
-                          src={`${item.image}`}
-                          alt={item.name}
-                          style={{ width: "100px" }}
-                        />
-                      </td>
-                      <td>{item.name}</td>
-                      <td>
-                        <input
-                          type="number"
-                          min="1"
-                          value={item.quantity}
-                          onChange={(e) =>
-                            handleQuantityChange(
-                              item.id,
-                              Number(e.target.value)
-                            )
-                          }
-                        />
-                      </td>
-                      <td>
-                        <p>{formatCurrency(item.price * item.quantity)}</p>
-                      </td>
-                      <td>
+              {cartItems.length > 0 ? (
+                  cartItems.map((item) => {
+                    // console.log(item);
+                    return (
+                        <tr key={item.productId}>
+                          <td>
+                            <img
+                                src={`http://localhost:8080/uploads/${item.image}`}
+                                alt={item.productName}
+                                style={{ width: "100px" }}
+                            />
+                          </td>
+                          <td>{item.productName}</td>
+                          <td>
+                            <input
+                                type="number"
+                                min="1"
+                                value={item.quantity}
+                                onChange={(e) =>
+                                    handleQuantityChange(
+                                        item.productId,
+                                        Number(e.target.value)
+                                    )
+                                }
+                            />
+                          </td>
+                          <td>
+                            <p>{formatCurrency(item.price * item.quantity)}</p>
+                          </td>
+                          <td>
                         <span
-                          style={{ cursor: "pointer", color: "red" }}
-                          onClick={() => handleRemoveItem(item.id)}
+                            style={{ cursor: "pointer", color: "red" }}
+                            onClick={() => handleRemoveItem(item.productId)}
                         >
                           x
                         </span>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
+                          </td>
+                        </tr>
+                    )
+                  }
+                      )
+              ) : (
                   <tr>
                     <td colSpan="5" style={{ textAlign: "center" }}>
                       Giỏ hàng của bạn đang trống.
                     </td>
                   </tr>
-                )}
+              )}
               </tbody>
             </table>
           </div>

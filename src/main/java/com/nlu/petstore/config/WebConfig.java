@@ -63,7 +63,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/api/auth/**").permitAll()
+
+                        .requestMatchers("/api/cart/**").permitAll()
                         .requestMatchers("/api/products","/api/categories"
                                 ,"/api/auth/**","/api/**"
                                 , "/oauth2/**").permitAll()

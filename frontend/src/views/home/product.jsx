@@ -1,8 +1,55 @@
 import React, {useEffect, useState} from "react";
+// import { useSelector } from "react-redux";
 
-import axios from "axios";
+import axios from "../../api/axiosIns";
+import {bagAddOutline} from "ionicons/icons";
+import {IonIcon} from "@ionic/react";
 
 const ProductPage = () => {
+
+  // const userId = useSelector((state) => state.auth.data?.userId);
+
+  const handleAddToCart = async (productId) => {
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+
+    try {
+      await axios.post(
+          "http://localhost:8080/api/cart/add",
+          {
+            userId: parseInt(userId),
+            productId: productId,
+            quantity: 1 // hoặc số lượng bạn muốn thêm
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+      );
+      alert("Đã thêm sản phẩm vào giỏ hàng!");
+    } catch (error) {
+      console.error("Lỗi khi thêm vào giỏ hàng:", error);
+      alert("Thêm vào giỏ hàng thất bại!");
+    }
+  };
+
+
+  const [selectedAnimal, setSelectedAnimal] = useState("");
+  const [animals, setAnimals] = useState([]);
+  useEffect(() => {
+    const fetchAnimals = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/animals");
+        setAnimals(res.data);
+      } catch (err) {
+        console.error("Lỗi khi lấy danh mục:", err);
+      }
+    };
+
+    fetchAnimals();
+  }, []);
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState([]);
@@ -32,9 +79,11 @@ const ProductPage = () => {
 
     fetchProducts();
   }, []);
-  const filteredProducts = selectedCategory
-      ? products.filter((p) => p.id_category === parseInt(selectedCategory))
-      : products;
+  const filteredProducts = products.filter((p) => {
+    const matchCategory = selectedCategory === "" || p.id_category === parseInt(selectedCategory);
+    const matchAnimal = selectedAnimal === "" || p.id_animal === parseInt(selectedAnimal);
+    return matchCategory && matchAnimal;
+  });
 
 
   return (
@@ -45,38 +94,34 @@ const ProductPage = () => {
             {/* Filter Form */}
             <div className="product-filter">
               <form id="filter-form">
-                {/*<div className="filter-group">*/}
-                {/*  <p>Loại động vật</p>*/}
-                {/*  <div className="radio-group">*/}
-                {/*    <label>*/}
-                {/*      <input*/}
-                {/*          type="radio"*/}
-                {/*          name="animal"*/}
-                {/*          value=""*/}
-                {/*          checked={}*/}
-                {/*          onChange={}*/}
-                {/*      /> Tất cả*/}
-                {/*    </label>*/}
-                {/*    <label>*/}
-                {/*      <input*/}
-                {/*          type="radio"*/}
-                {/*          name="animal"*/}
-                {/*          value="dog"*/}
-                {/*          checked={}*/}
-                {/*          onChange={}*/}
-                {/*      /> Chó*/}
-                {/*    </label>*/}
-                {/*    <label>*/}
-                {/*      <input*/}
-                {/*          type="radio"*/}
-                {/*          name="animal"*/}
-                {/*          value="cat"*/}
-                {/*          checked={}*/}
-                {/*          onChange={}*/}
-                {/*      /> Mèo*/}
-                {/*    </label>*/}
-                {/*  </div>*/}
-                {/*</div>*/}
+
+                <div className="filter-group">
+                  <p>Loại động vật</p>
+                  <div className="radio-group">
+                    <label>
+                      <input
+                          type="radio"
+                          name="animal"
+                          value=""
+                          checked={selectedAnimal === ""}
+                          onChange={(e) => setSelectedAnimal(e.target.value)}
+                      />
+                      <text style={{width:"70px"}}>Tất cả</text>
+                    </label>
+                    {animals.map((animal) => (
+                        <label key={animal.id}>
+                          <input
+                              type="radio"
+                              name="animal"
+                              value={animal.id}
+                              checked={selectedAnimal === animal.id.toString()}
+                              onChange={(e) => setSelectedAnimal(e.target.value)}
+                          /> <text style={{width:"70px"}}>{animal.name}</text>
+                        </label>
+                    ))}
+                  </div>
+                </div>
+
 
                 <div className="filter-group">
                   <label htmlFor="category">Loại sản phẩm</label>
@@ -94,7 +139,7 @@ const ProductPage = () => {
                     ))}
                   </select>
 
-                  <button type="submit" className="filter-btn">Lọc</button>
+                  {/*<button type="submit" className="filter-btn">Lọc</button>*/}
                 </div>
               </form>
             </div>
@@ -105,7 +150,7 @@ const ProductPage = () => {
             </h2>
 
             {/* Product List */}
-            <ul className="grid-list">
+            <ul className="grid-list" style={{justifyContent:"center"}}>
               {filteredProducts.map((product) => (
                   <li key={product.id} data-category={product.id_category.name} >
                     <div className="product-card">
@@ -134,8 +179,10 @@ const ProductPage = () => {
                             alt={product.title}
                             className="img-cover hover"
                         />
-                        <button className="card-action-btn" aria-label="add to cart" title="Add To Cart">
-                          <ion-icon name="bag-add-outline" aria-hidden="true"></ion-icon>
+                        <button className="card-action-btn" aria-label="add to cart" title="Add To Cart"
+                                onClick={() => handleAddToCart(product.id)}
+                        >
+                          <IonIcon icon={bagAddOutline} aria-hidden="true" />
                         </button>
                       </div>
                       <div className="card-content">

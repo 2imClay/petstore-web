@@ -78,7 +78,7 @@ const AdminNavbar = (props) => {
                   </Media>
                 </Media>
               </DropdownToggle>
-              <DropdownMenu className="dropdown-menu-arrow" right>
+              <DropdownMenu className="dropdown-menu-arrow" end>
                 <DropdownItem className="noti-title" header tag="div">
                   <h6 className="text-overflow m-0">Welcome! {fullname}</h6>
                 </DropdownItem>
