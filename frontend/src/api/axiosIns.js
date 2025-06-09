@@ -51,17 +51,11 @@ BASE_URL.interceptors.response.use(
 
         const { newToken, refreshToken: newRefreshToken } = res.data;
 
-<<<<<<< HEAD
-        // Lưu lại token mới
-        Cookies.set("accessToken", newToken, { expires: 1 });
-        Cookies.set("refreshToken", newRefreshToken, { expires: 7 });
 
-          // Gắn token mới vào header và gửi lại request cũ
-=======
         Cookies.set("token", newToken, { expires: 1, path: "/" });
         Cookies.set("refreshToken", newRefreshToken, { expires: 7, path: "/" });
 
->>>>>>> extra
+
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return BASE_URL(originalRequest);
       } catch (refreshError) {
