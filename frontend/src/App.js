@@ -22,24 +22,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
-<<<<<<< HEAD
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/admin/*" element={<AdminLayout />} />
-          <Route path="/" element={<Navigate to="/home" />} />
-          <Route element={<UserLayout/>}>
-              <Route path="/home" element={<Home/>}/>
-              <Route path="/forgot-password" element={<ForgotPassword/>}/>
-              <Route path="/verifyOtp" element={<VerifyOtp/>}/>
-              <Route path="/changePassword" element={<ChangePassword/>}/>
-              <Route path="/cart" element={<Cart/>}/>
-              <Route path="/address" element={<Address/>}/>
-              <Route path="/payment" element={<Payment/>}/>
-              <Route path="/products" element={<ProductPage/>}/> 
-              <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
-          </Route> 
-        
-=======
+
             <Route path="/" element={<Navigate to="/home" />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -59,7 +42,7 @@ function App() {
                 <Route path="profile/:id" element={<Profile />} />
                 {/* <Route path="orders" element={<OrdersPage />} /> */}
             </Route>
->>>>>>> extra
+
         </Routes>
       </div>
     </BrowserRouter>
