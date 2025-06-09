@@ -4,6 +4,21 @@ import axios from "axios";
 
 const ProductPage = () => {
 
+  const [selectedAnimal, setSelectedAnimal] = useState("");
+  const [animals, setAnimals] = useState([]);
+  useEffect(() => {
+    const fetchAnimals = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/animals");
+        setAnimals(res.data);
+      } catch (err) {
+        console.error("Lỗi khi lấy danh mục:", err);
+      }
+    };
+
+    fetchAnimals();
+  }, []);
+
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState([]);
   useEffect(() => {
@@ -32,9 +47,11 @@ const ProductPage = () => {
 
     fetchProducts();
   }, []);
-  const filteredProducts = selectedCategory
-      ? products.filter((p) => p.id_category === parseInt(selectedCategory))
-      : products;
+  const filteredProducts = products.filter((p) => {
+    const matchCategory = selectedCategory === "" || p.id_category === parseInt(selectedCategory);
+    const matchAnimal = selectedAnimal === "" || p.id_animal === parseInt(selectedAnimal);
+    return matchCategory && matchAnimal;
+  });
 
 
   return (
@@ -45,38 +62,34 @@ const ProductPage = () => {
             {/* Filter Form */}
             <div className="product-filter">
               <form id="filter-form">
-                {/*<div className="filter-group">*/}
-                {/*  <p>Loại động vật</p>*/}
-                {/*  <div className="radio-group">*/}
-                {/*    <label>*/}
-                {/*      <input*/}
-                {/*          type="radio"*/}
-                {/*          name="animal"*/}
-                {/*          value=""*/}
-                {/*          checked={}*/}
-                {/*          onChange={}*/}
-                {/*      /> Tất cả*/}
-                {/*    </label>*/}
-                {/*    <label>*/}
-                {/*      <input*/}
-                {/*          type="radio"*/}
-                {/*          name="animal"*/}
-                {/*          value="dog"*/}
-                {/*          checked={}*/}
-                {/*          onChange={}*/}
-                {/*      /> Chó*/}
-                {/*    </label>*/}
-                {/*    <label>*/}
-                {/*      <input*/}
-                {/*          type="radio"*/}
-                {/*          name="animal"*/}
-                {/*          value="cat"*/}
-                {/*          checked={}*/}
-                {/*          onChange={}*/}
-                {/*      /> Mèo*/}
-                {/*    </label>*/}
-                {/*  </div>*/}
-                {/*</div>*/}
+
+                <div className="filter-group">
+                  <p>Loại động vật</p>
+                  <div className="radio-group">
+                    <label>
+                      <input
+                          type="radio"
+                          name="animal"
+                          value=""
+                          checked={selectedAnimal === ""}
+                          onChange={(e) => setSelectedAnimal(e.target.value)}
+                      />
+                      <text style={{width:"70px"}}>Tất cả</text>
+                    </label>
+                    {animals.map((animal) => (
+                        <label key={animal.id}>
+                          <input
+                              type="radio"
+                              name="animal"
+                              value={animal.id}
+                              checked={selectedAnimal === animal.id.toString()}
+                              onChange={(e) => setSelectedAnimal(e.target.value)}
+                          /> <text style={{width:"70px"}}>{animal.name}</text>
+                        </label>
+                    ))}
+                  </div>
+                </div>
+
 
                 <div className="filter-group">
                   <label htmlFor="category">Loại sản phẩm</label>
@@ -94,7 +107,7 @@ const ProductPage = () => {
                     ))}
                   </select>
 
-                  <button type="submit" className="filter-btn">Lọc</button>
+                  {/*<button type="submit" className="filter-btn">Lọc</button>*/}
                 </div>
               </form>
             </div>

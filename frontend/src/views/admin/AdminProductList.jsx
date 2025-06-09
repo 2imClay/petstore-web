@@ -33,6 +33,24 @@ const AdminProductList = () => {
     return category ? category.name : "Không rõ";
   };
 
+  const [animals, setAnimals] = useState([]);
+  useEffect(() => {
+    const fetchAnimals = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/animals");
+        setAnimals(res.data);
+      } catch (err) {
+        console.error("Lỗi khi lấy danh mục:", err);
+      }
+    };
+
+    fetchAnimals();
+  }, []);
+  const getAnimalName = (id) => {
+    const animal = animals.find((animal) => animal.id === id);
+    return animal ? animal.name : "Không rõ";
+  };
+
   const [products, setProducts] = useState([]);
   useEffect(() => {
     const fetchProducts = async () => {
@@ -80,9 +98,10 @@ const AdminProductList = () => {
                 <thead className="thead-light">
                   <tr>
                     <th scope="col">Tên</th>
+                    <th scope="col">Loại thú cưng</th>
                     <th scope="col">Giá</th>
                     <th scope="col">Thương hiệu</th>
-                    <th scope="col">Loại</th>
+                    <th scope="col">Loại sản phẩm</th>
                     <th scope="col">Số lượng</th>
                     <th scope="col">Hành động</th>
                   </tr>
@@ -114,6 +133,7 @@ const AdminProductList = () => {
                         </Media>
                       </Media>
                     </th>
+                    <td>{getAnimalName(product.id_animal)}</td>
                     <td>{product.price}</td>
                     <td>{product.brand}</td>
                     <td>{getCategoryName(product.id_category)}</td>
