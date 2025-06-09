@@ -230,6 +230,41 @@ function MainContent() {
                              </div>
                          </section>
 
+                         {/* CTA */}
+                         <section
+                             className="cta has-bg-image"
+                             aria-label="cta"
+                             style={{ backgroundImage: "url(" + require("../../assets/images/cta-bg.jpg") + ")" }}
+                         >
+                             <div className="container">
+
+                                 <figure className="cta-banner">
+                                     <img
+                                         src={require("../../assets/images/cta-banner.png")}
+                                         width="900"
+                                         height="660"
+                                         loading="lazy"
+                                         alt="cat"
+                                         className="w-100"
+                                     />
+                                 </figure>
+
+                                 <div className="cta-content">
+                                     <img src={require("../../assets/images/cta-icon.png")} width="120" height="35" loading="lazy" alt="taste guarantee" className="img" />
+
+                                     <h2 className="h2 section-title">
+                                         Mang lại <span className="span">sự thoải mái</span> cho thú cưng.
+                                     </h2>
+
+                                     <p className="section-text">
+                                         Đặt bánh thì mới có bánh.
+                                     </p>
+
+                                     <a href="https://google.com" className="btn">Đặt ngay</a>
+                                 </div>
+                             </div>
+                         </section>
+
                          {/* SERVICE */}
                          <section className="section service" aria-label="service">
                              <div className="container">
@@ -333,40 +368,7 @@ function MainContent() {
                              </div>
                          </section>
 
-                         {/* CTA */}
-                         <section
-                             className="cta has-bg-image"
-                             aria-label="cta"
-                             style={{ backgroundImage: "url(" + require("../../assets/images/cta-bg.jpg") + ")" }}
-                         >
-                             <div className="container">
 
-                                 <figure className="cta-banner">
-                                     <img
-                                         src={require("../../assets/images/cta-banner.png")}
-                                         width="900"
-                                         height="660"
-                                         loading="lazy"
-                                         alt="cat"
-                                         className="w-100"
-                                     />
-                                 </figure>
-
-                                 <div className="cta-content">
-                                      <img src={require("../../assets/images/cta-icon.png")} width="120" height="35" loading="lazy" alt="taste guarantee" className="img" />
-
-                                     <h2 className="h2 section-title">
-                                         Mang lại <span className="span">sự thoải mái</span> cho thú cưng.
-                                     </h2>
-
-                                     <p className="section-text">
-                                         Đặt bánh thì mới có bánh.
-                                     </p>
-
-                                     <a href="https://google.com" className="btn">Đặt ngay</a>
-                                 </div>
-                             </div>
-                         </section>
                      </article>
                  </main>
              </div>
