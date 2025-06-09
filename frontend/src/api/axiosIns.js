@@ -51,7 +51,6 @@ BASE_URL.interceptors.response.use(
 
         const { newToken, refreshToken: newRefreshToken } = res.data;
 
-
         Cookies.set("token", newToken, { expires: 1, path: "/" });
         Cookies.set("refreshToken", newRefreshToken, { expires: 7, path: "/" });
 
