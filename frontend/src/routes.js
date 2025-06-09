@@ -1,23 +1,8 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import AdminProfile from "./views/AdminProfile.js";
-import AdminMaps from "./views/AdminMaps.js";
-import AdminTables from "./views/AdminTables.js";
+import AdminAddProduct from "./views/admin/AdminAddProduct.jsx";
+// import AdminMaps from "./views/AdminMaps.jsx";
+import AdminProductList from "./views/admin/AdminProductList.jsx";
+import AdminUserList from "./views/admin/AdminUserList";
 
 var routes = [
   // {
@@ -35,26 +20,35 @@ var routes = [
   //   layout: "/admin",
   // },
   {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: <AdminProfile />,
-    layout: "/admin",
-  },
-  {
-    path: "/tables",
-    name: "Tables",
+    path: "/userList",
+    name: "Danh sách người dùng",
     icon: "ni ni-bullet-list-67 text-red",
-    component: <AdminTables />,
+    component: <AdminUserList />,
     layout: "/admin",
   },
   {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: <AdminMaps />,
+    path: "/productList",
+    name: "Danh sách sản phẩm",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: <AdminProductList />,
     layout: "/admin",
   },
+  {
+    path: "/addProduct",
+    name: "Thêm sản phẩm",
+    icon: "ni ni-single-02 text-yellow",
+    component: <AdminAddProduct />,
+    layout: "/admin",
+  },
+
+
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   icon: "ni ni-pin-3 text-orange",
+  //   component: <AdminMaps />,
+  //   layout: "/admin",
+  // },
 
   // {
   //   path: "/login",

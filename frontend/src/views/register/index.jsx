@@ -3,7 +3,7 @@ import '../../assets/css/register.css';
 import '../../utils/validate'
 import '@fortawesome/fontawesome-free';
 import { validateEmail } from "../../utils/validate";
-import { register } from "../../service/userService";
+import { register } from "../../service/authService";
 import { notification } from 'antd';
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +23,7 @@ export default function Register(){
     const [usernameError,setUserNameError] = useState("");
     const [phoneNumberError,setPhoneNumberError] = useState("");
     const [passwordError,setPasswordError] = useState("");
-    const [confirmPasswordError,setConfirmPassword] =useState("");
+    const [confirmPasswordError,setConfirmPasswordError] =useState("");
 
     const validateDate = (name,value)=>{
         let isValid = true;
@@ -74,7 +74,7 @@ export default function Register(){
                     setPasswordError("Mật khẩu không được để trống");
                     isValid=false;
                 }else{
-                    if(value.lenght <8){
+                    if(value.length <8){
                         setPasswordError("Mật khẩu  dài tối thiểu 8 ký tự");
                         isValid = false;
                     }else{
@@ -84,14 +84,14 @@ export default function Register(){
                 break;
             case "confirmPassword":
                 if(!value){
-                    setConfirmPassword("Mật khẩu không được để trống");
+                    setConfirmPasswordError("Mật khẩu không được để trống");
                     isValid = false;
                 }else{
                     if(value!== user.password){
-                        setConfirmPassword("Mật khẩu phải trùng với mật khẩu ở trên.");
+                        setConfirmPasswordError("Mật khẩu phải trùng với mật khẩu ở trên.");
                         isValid= false;
                     }else{
-                        setConfirmPassword("");
+                        setConfirmPasswordError("");
                     }
                 }
                 break;
@@ -132,7 +132,7 @@ export default function Register(){
                 //Chuyển hướng về trang login
                     api.success({
                         message:"Đăng ký thành công",
-                        description : response.data,
+                        description : typeof response.data==="string"?response.data:JSON.stringify(response.data),
                         placement:"top"
                     });
                     setTimeout(()=>{
@@ -141,9 +141,18 @@ export default function Register(){
                }
                
             }catch(error){
+                let description = "Có lỗi xảy ra";
+                if(error.response?.data){
+                const data = error.response.data;
+                    if(typeof data === "string"){
+                        description = data;
+                    } else if(typeof data === "object"){
+                        description = Object.values(data).join(", ");
+                    }
+                }
                 api.error({
                     message:"Đăng ký thất bại.Vui lòng kiểm tra lại thông tin.",
-                    description: error.response?.data||"Có lỗi xảy ra",
+                    description,
                     placement:"top"
 
                 });
@@ -153,12 +162,12 @@ export default function Register(){
 
     };
     return (
-        <div className="wrapper">
+        <div className="wrapper-register">
             {contextHolder}
-            <form class="registerForm" onSubmit={handleSubmit}  id="register-form">
+            <form className="registerForm" onSubmit={handleSubmit}  id="register-form">
                 <h1>Đăng Ký</h1>
                 <div className="group-form">
-                    <label htmlFor="fullname">Họ và tên:</label>
+                    <label htmlFor="fullname">Họ và tên :</label>
                     <input onChange={handleChange}
                             type="text" 
                             id="fullName" 
@@ -230,7 +239,7 @@ export default function Register(){
                     )}
                 </div>
                 <div className="group-form">
-                    <button type="submit">Đăng Ký</button>
+                    <button className="button-submit" type="submit">Đăng Ký</button>
                 </div>
             </form> 
         </div>      
