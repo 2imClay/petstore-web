@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 
@@ -33,125 +33,128 @@ const ProductPage = () => {
     fetchProducts();
   }, []);
   const filteredProducts = selectedCategory
-      ? products.filter((p) => p.id_category === parseInt(selectedCategory))
-      : products;
+    ? products.filter((p) => p.id_category === parseInt(selectedCategory))
+    : products;
 
 
   return (
-      <div className="user-wrapper">
-        <section className="section product" id="shop" aria-label="product">
-          <div className="container">
+    <div className="user-wrapper">
+      <section className="section product" id="shop" aria-label="product">
+        <div className="container">
 
-            {/* Filter Form */}
-            <div className="product-filter">
-              <form id="filter-form">
-                {/*<div className="filter-group">*/}
-                {/*  <p>Loại động vật</p>*/}
-                {/*  <div className="radio-group">*/}
-                {/*    <label>*/}
-                {/*      <input*/}
-                {/*          type="radio"*/}
-                {/*          name="animal"*/}
-                {/*          value=""*/}
-                {/*          checked={}*/}
-                {/*          onChange={}*/}
-                {/*      /> Tất cả*/}
-                {/*    </label>*/}
-                {/*    <label>*/}
-                {/*      <input*/}
-                {/*          type="radio"*/}
-                {/*          name="animal"*/}
-                {/*          value="dog"*/}
-                {/*          checked={}*/}
-                {/*          onChange={}*/}
-                {/*      /> Chó*/}
-                {/*    </label>*/}
-                {/*    <label>*/}
-                {/*      <input*/}
-                {/*          type="radio"*/}
-                {/*          name="animal"*/}
-                {/*          value="cat"*/}
-                {/*          checked={}*/}
-                {/*          onChange={}*/}
-                {/*      /> Mèo*/}
-                {/*    </label>*/}
-                {/*  </div>*/}
-                {/*</div>*/}
+          {/* Filter Form */}
+          <div className="product-filter">
+            <form id="filter-form">
+              {/*<div className="filter-group">*/}
+              {/*  <p>Loại động vật</p>*/}
+              {/*  <div className="radio-group">*/}
+              {/*    <label>*/}
+              {/*      <input*/}
+              {/*          type="radio"*/}
+              {/*          name="animal"*/}
+              {/*          value=""*/}
+              {/*          checked={}*/}
+              {/*          onChange={}*/}
+              {/*      /> Tất cả*/}
+              {/*    </label>*/}
+              {/*    <label>*/}
+              {/*      <input*/}
+              {/*          type="radio"*/}
+              {/*          name="animal"*/}
+              {/*          value="dog"*/}
+              {/*          checked={}*/}
+              {/*          onChange={}*/}
+              {/*      /> Chó*/}
+              {/*    </label>*/}
+              {/*    <label>*/}
+              {/*      <input*/}
+              {/*          type="radio"*/}
+              {/*          name="animal"*/}
+              {/*          value="cat"*/}
+              {/*          checked={}*/}
+              {/*          onChange={}*/}
+              {/*      /> Mèo*/}
+              {/*    </label>*/}
+              {/*  </div>*/}
+              {/*</div>*/}
 
-                <div className="filter-group">
-                  <label htmlFor="category">Loại sản phẩm</label>
-                  <select
-                      name="category"
-                      id="id_category"
-                      value={selectedCategory}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                  >
-                    <option value="">Tất cả</option>
-                    {categories.map((cate) => (
-                        <option key={cate.id} value={cate.id}>
-                          {cate.name}
-                        </option>
-                    ))}
-                  </select>
+              <div className="filter-group">
+                <label htmlFor="category">Loại sản phẩm</label>
+                <select
+                  name="category"
+                  id="id_category"
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                >
+                  <option value="">Tất cả</option>
+                  {categories.map((cate) => (
+                    <option key={cate.id} value={cate.id}>
+                      {cate.name}
+                    </option>
+                  ))}
+                </select>
 
-                  <button type="submit" className="filter-btn">Lọc</button>
-                </div>
-              </form>
-            </div>
-
-            {/* Title */}
-            <h2 className="h2 section-title">
-              Tất cả <span className="span">Sản phẩm</span>
-            </h2>
-
-            {/* Product List */}
-            <ul className="grid-list">
-              {filteredProducts.map((product) => (
-                  <li key={product.id} data-category={product.id_category.name} >
-                    <div className="product-card">
-                      <div className="card-banner img-holder" style={{ width: '360px', height: '360px' }}>
-                        <img
-                            src={
-                              product.images && product.images.length > 0
-                                  ? `http://localhost:8080/uploads/${product.images[0].image}`
-                                  : require("../../assets/images/offer-banner-1.jpg")
-                            }
-                            width="360"
-                            height="360"
-                            loading="lazy"
-                            alt={product.title}
-                            className="img-cover default"
-                        />
-                        <img
-                            src={
-                              product.images && product.images.length > 0
-                                  ? `http://localhost:8080/uploads/${product.images[1].image}`
-                                  : require("../../assets/images/offer-banner-1.jpg")
-                            }
-                            width="360"
-                            height="360"
-                            loading="lazy"
-                            alt={product.title}
-                            className="img-cover hover"
-                        />
-                        <button className="card-action-btn" aria-label="add to cart" title="Add To Cart">
-                          <ion-icon name="bag-add-outline" aria-hidden="true"></ion-icon>
-                        </button>
-                      </div>
-                      <div className="card-content">
-                        <h3 className="h3">
-                          <a href={`/product/${product.id}`} className="card-title">{product.title}</a>
-                        </h3>
-                        <data className="card-price" value={product.price}>{product.price} VND</data>
-                      </div>
-                    </div>
-                  </li>
-              ))}
-            </ul>
-
+                <button type="submit" className="filter-btn">Lọc</button>
+              </div>
+            </form>
           </div>
-        </section>
-      </div>
+
+          {/* Title */}
+          <h2 className="h2 section-title">
+            Tất cả <span className="span">Sản phẩm</span>
+          </h2>
+
+          {/* Product List */}
+          <ul className="grid-list">
+            {filteredProducts.map((product) => (
+              <li key={product.id} data-category={product.id_category.name} >
+                <div className="product-card">
+                  <a href={`/products/${product.id}`}>
+                    <div className="card-banner img-holder" style={{ width: '360px', height: '360px' }}>
+                      <img
+                        src={
+                          product.images && product.images.length > 0
+                            ? `http://localhost:8080/uploads/${product.images[0].image}`
+                            : require("../../assets/images/offer-banner-1.jpg")
+                        }
+                        width="360"
+                        height="360"
+                        loading="lazy"
+                        alt={product.title}
+                        className="img-cover default"
+                      />
+                      <img
+                        src={
+                          product.images && product.images.length > 0
+                            ? `http://localhost:8080/uploads/${product.images[1].image}`
+                            : require("../../assets/images/offer-banner-1.jpg")
+                        }
+                        width="360"
+                        height="360"
+                        loading="lazy"
+                        alt={product.title}
+                        className="img-cover hover"
+                      />
+                      <button className="card-action-btn" aria-label="add to cart" title="Add To Cart">
+                        <ion-icon name="bag-add-outline" aria-hidden="true"></ion-icon>
+                      </button>
+                    </div>
+                  </a>
+                  <div className="card-content">
+                    <h3 className="h3">
+                      <a href={`/product/${product.id}`} className="card-title">{product.title}</a>
+                    </h3>
+                    <data className="card-price" value={product.price}>{product.price} VND</data>
+                  </div>
+
+                </div>
+              </li>
+            ))}
+          </ul>
+
+        </div>
+      </section>
+    </div>
   );
 };
 
