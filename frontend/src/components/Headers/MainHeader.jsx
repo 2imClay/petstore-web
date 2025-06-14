@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { menuOutline, closeOutline, searchOutline, personOutline, bagHandleOutline } from "ionicons/icons";
 import { logout as logoutThunk } from "../../service/authService";
+import axios from "axios";
 
 const MainHeader = () => {
   const [fullname, setFullname] = useState(null);
@@ -47,6 +48,27 @@ const MainHeader = () => {
       setShowMenu((prev) => !prev);
     }
   };
+
+  const [cartItems, setCartItems] = useState([]);
+  useEffect(() => {
+    const fetchCart = async () => {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+      try {
+        const response = await axios.get(`http://localhost:8080/api/cart/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setCartItems(response.data);
+      } catch (error) {
+        console.error("Lỗi khi lấy giỏ hàng:", error);
+      }
+    };
+    fetchCart();
+  }, []);
+
+
   return (
     <div className="user-wrapper">
       <header className="header-products" data-header="">
@@ -127,7 +149,7 @@ const MainHeader = () => {
             )}
             <button className="action-btn" aria-label="Cart" onClick={() => window.location.href = "/cart"}>
               <IonIcon icon={bagHandleOutline} aria-hidden="true" />
-              <span className="btn-badge">0</span>
+              <span className="btn-badge">{cartItems.length}</span>
             </button>
           </div>
         </div>

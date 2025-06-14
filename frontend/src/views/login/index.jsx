@@ -70,6 +70,10 @@ export default function Login() {
                 const originalPromiseResult = unwrapResult(resultAction)
                 console.log("originalPromiseResult", originalPromiseResult)
                 if (originalPromiseResult) {
+                    // Lưu token
+                    if (originalPromiseResult.token) {
+                        localStorage.setItem("token", originalPromiseResult.token);
+                    }
                     if (originalPromiseResult.fullname) {
                         localStorage.setItem("fullname", originalPromiseResult.fullname);
                     }

@@ -19,6 +19,8 @@ public class Product {
     private int id;
     @Column(name = "id_category")
     private int id_category;
+    @Column(name = "id_animal")
+    private int id_animal;
     @Column(name = "title")
     private String title;
     @Column(name = "brand")
