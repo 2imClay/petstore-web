@@ -14,6 +14,7 @@ import UserLayout from "./layouts/UserLayout.jsx";
 import OAuth2RedirectHandler from "./views/login/OAuth2RedirectHandler.jsx";
 import Profile from "./views/user/profile.jsx"
 import LayoutProfile from "./views/user/LayoutProfile.jsx"
+import ProductDetails from "./views/product/product-detail.jsx";
 
 
 
@@ -37,6 +38,7 @@ function App() {
                 <Route path="/payment" element={<Payment/>}/>
                 <Route path="/products" element={<ProductPage/>}/> 
                 <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
+                <Route path="/products/:id" element={<ProductDetails />} />
             </Route> 
             <Route path="/" element={<LayoutProfile />}>
                 <Route path="profile/:id" element={<Profile />} />
