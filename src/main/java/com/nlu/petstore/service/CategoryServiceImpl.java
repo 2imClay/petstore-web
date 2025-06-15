@@ -21,4 +21,12 @@ public class CategoryServiceImpl implements CategoryService{
     public Category createCategory(Category category) {
         return categoryRepository.save(category);
     }
+
+    @Override
+    public String getCategoryNameById(int id) {
+        return categoryRepository.findById(id)
+                .map(Category::getName)
+                .orElse("Unknown Category");
+
+    }
 }
