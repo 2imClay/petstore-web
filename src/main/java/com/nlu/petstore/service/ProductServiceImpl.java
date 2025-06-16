@@ -68,7 +68,8 @@ public class ProductServiceImpl implements ProductService{
                     Files.write(filePath, file.getBytes());
 
                     ProductImage img = new ProductImage();
-                    img.setImage(fileName);
+                    String baseUrl = "http://localhost:8080/uploads/";
+                    img.setImage(baseUrl + fileName);
                     img.setProduct(product);  // gắn ngược lại
 
                     productImages.add(img);
