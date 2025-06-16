@@ -86,7 +86,6 @@ public class UserController {
         } else {
             username = authentication.getName(); // fallback
         }
-
         boolean success = userService.changePassword(username, request);
         if (success) {
             return ResponseEntity.ok("Đổi mật khẩu thành công.");

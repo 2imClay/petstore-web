@@ -2,6 +2,7 @@ package com.nlu.petstore.service;
 
 import com.nlu.petstore.DTO.ProductDTO;
 import com.nlu.petstore.DTO.ProductDetailDTO;
+import com.nlu.petstore.DTO.ProductSearchDTO;
 import com.nlu.petstore.entity.Product;
 import com.nlu.petstore.entity.ProductImage;
 import com.nlu.petstore.repository.ProductRepository;
@@ -195,5 +196,19 @@ public class ProductServiceImpl implements ProductService{
         response.put("pageSize", productPage.getSize());
 
         return response;
+    }
+
+    @Override
+    public List<ProductSearchDTO> searchProducts(String keyword) {
+        List<Product> products = productRepository.findByTitleContainingIgnoreCase(keyword);
+
+        return products.stream().map(product -> {
+            String image = null;
+            if (product.getImages() != null && !product.getImages().isEmpty()) {
+                image = product.getImages().get(1).getImage();
+            }
+
+            return new ProductSearchDTO(product.getId(), product.getTitle(), image);
+        }).collect(Collectors.toList());
     }
 }
