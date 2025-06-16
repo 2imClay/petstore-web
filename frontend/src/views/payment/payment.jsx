@@ -1,8 +1,9 @@
 import React from 'react';
 import "../../assets/css/payment.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import momo from "../../assets/images/Vi-Momo.jpg"
-import vnpay from "../../assets/images/cong-thanh-toan-vnpay-va-cach-tich-hop-vao-website-wordpress.jpg"
+import momo from "../../assets/images/Vi-Momo.jpg";
+import paypal from "../../assets/images/images (1).jpg";
+
 
 const Payment = () => {
   return (
@@ -26,68 +27,50 @@ const Payment = () => {
       <div className="container">
         <div className="payment-content row">
           <div className="payment-content-left">
-            <div className="payment-content-left-method-address">
-              <p style={{ fontWeight: 'bold' }}>Phương thức giao hàng</p>
-
-              <div className="payment-content-left-method-address-item">
-                <input type="radio" name="shipping-method" />
-                <label>Giao hàng chuyển phát nhanh</label>
+            <div className="payment-content-box">
+              <p className="section-title">Phương thức giao hàng</p>
+              <div className="payment-radio">
+                <label htmlFor="fast">Giao hàng hỏa tốc (30.000đ)</label>
+                <input type="radio" name="shipping-method" id="fast" />
+              </div>
+              <div className="payment-radio">
+                <label htmlFor="normal">Giao hàng thường</label>
+                <input type="radio" name="shipping-method" id="normal" />
               </div>
 
-              <div className="payment-content-left-method-address-item">
-                <input type="radio" name="shipping-method" />
-                <label>Giao hàng thường</label>
+              <p className="section-title" style={{ marginTop: "30px" }}>Phương thức thanh toán</p>
+
+              <div className="payment-radio">
+                <label htmlFor="vnpay">Thanh toán qua PayPal</label>
+                <input type="radio" name="payment-method" id="paypal" />
               </div>
+              <img src={paypal} alt="PAYPAL" className="payment-img" />
 
-              <div className="payment-content-left-method-payment">
-                <p style={{ fontWeight: 'bold' }}>Phương thức thanh toán</p>
+              <div className="payment-radio">
+                <label htmlFor="momo">Thanh toán bằng Momo</label>
+                <input type="radio" name="payment-method" id="momo" />
+              </div>
+              <img src={momo} alt="Momo" className="payment-img" />
 
-                <div className="payment-content-left-method-payment-item">
-                  <input type="radio" name="payment-method" />
-                  <label>Thanh toán bằng thẻ tín dụng (OnePay)</label>
-                </div>
-
-                <div className="payment-content-left-method-payment-item-img">
-                  <img
-                    src={vnpay}
-                    alt="VNPAY"
-                    style={{ height: '100px', width: '100px' }}
-                  />
-                </div>
-
-                <div className="payment-content-left-method-payment-item">
-                  <input type="radio" name="payment-method" />
-                  <label>Thanh toán bằng Momo</label>
-                </div>
-
-                <div className="payment-content-left-method-payment-item-img">
-                  <img
-                    src={momo}
-                    alt="Momo"
-                    style={{ height: '100px', width: '100px' }}
-                  />
-                </div>
-
-                <div className="payment-content-left-method-payment-item">
-                  <input type="radio" name="payment-method" />
-                  <label>Thanh toán bằng tiền mặt</label>
-                </div>
+              <div className="payment-radio">
+                <label htmlFor="cod">Thanh toán khi nhận hàng</label>
+                <input type="radio" name="payment-method" id="cod" />
               </div>
             </div>
           </div>
 
           <div className="payment-content-right">
             <div className="payment-content-right-button">
-              <input type="text" placeholder="Mã giảm giá/Quà tặng" />
+              <input type="text" placeholder="Mã giảm giá / Quà tặng" />
               <button>
                 <i className="fas fa-check"></i>
               </button>
             </div>
-          </div>
-        </div>
 
-        <div className="payment-content-right-payment">
-          <button>TIẾP TỤC THANH TOÁN</button>
+            <div className="payment-content-right-payment">
+              <button>TIẾP TỤC THANH TOÁN</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

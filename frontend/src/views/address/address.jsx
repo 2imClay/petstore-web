@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../assets/css/address.css";
 
 
 const Address = () => {
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    const storedItems = localStorage.getItem("cartItems");
+    if (storedItems) {
+      setCartItems(JSON.parse(storedItems));
+    }
+  }, []);
+
   return (
     <section className="address" style={{ marginTop: "30px" }}>
       <div className="container">
@@ -34,25 +43,17 @@ const Address = () => {
                 <label>Điện Thoại<span style={{ color: "red" }}>*</span></label>
                 <input type="text" />
               </div>
-              <div className="address-content-left-input-top-item">
-                <label>Tỉnh/TP<span style={{ color: "red" }}>*</span></label>
-                <input type="text" />
-              </div>
-              <div className="address-content-left-input-top-item">
-                <label>Quận/Huyện<span style={{ color: "red" }}>*</span></label>
-                <input type="text" />
-              </div>
             </div>
             <div className="address-content-left-input-bottom">
-              <label>Địa chỉ<span style={{ color: "red"}}>*</span></label>
+              <label>Địa chỉ (Ghi đầy đủ tỉnh, quận, phường...)<span style={{ color: "red" }}>*</span></label>
               <input type="text" />
             </div>
-            <div className="address-content-left-button row">
+            <div className="address-content-left-button">
               <a href="/cart" className="back-to-cart-btn">
-                <span>&#171;<p> Quay lại giỏ hàng</p></span> 
+                &#171; Quay lại giỏ hàng
               </a>
               <button>
-                <p style={{ fontWeight: "bold" }}>THANH TOÁN HÓA ĐƠN</p>
+                THANH TOÁN HÓA ĐƠN
               </button>
             </div>
           </div>
@@ -68,25 +69,22 @@ const Address = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Thức ăn cho mèo(hạt)</td>
-                  <td>20%</td>
-                  <td>3</td>
-                  <td><p>400.000<sup>đ</sup></p></td>
-                </tr>
-                <tr>
-                  <td>Vòng cổ cho mèo</td>
-                  <td>10%</td>
-                  <td>2</td>
-                  <td><p>200.000<sup>đ</sup></p></td>
-                </tr>
+                {cartItems.map((item) => (
+                  <tr key={item.productId}>
+                    <td>{item.productName}</td>
+                    <td>0%</td> {/* Nếu có giảm giá bạn có thể thay thế động */}
+                    <td>{item.quantity}</td>
+                    <td><p>{(item.price * item.quantity).toLocaleString("vi-VN")}<sup>đ</sup></p></td>
+                  </tr>
+                ))}
                 <tr>
                   <td colSpan="3" style={{ fontWeight: "bold" }}>Tổng</td>
-                  <td style={{ fontWeight: "bold" }}><p>600.000<sup>đ</sup></p></td>
-                </tr>
-                <tr>
-                  <td colSpan="3" style={{ fontWeight: "bold" }}>Tổng Tiền Hàng</td>
-                  <td style={{ fontWeight: "bold" }}><p>600.000<sup>đ</sup></p></td>
+                  <td style={{ fontWeight: "bold" }}>
+                    <p>
+                      {cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0).toLocaleString("vi-VN")}
+                      <sup>đ</sup>
+                    </p>
+                  </td>
                 </tr>
               </tbody>
             </table>
