@@ -6,6 +6,18 @@ const USER_API = axios.create({
     headers : { "Content-Type": "application/json" },
 });
 
+// ✅ Gắn token cho tất cả request
+USER_API.interceptors.request.use(
+  (config) => {
+    const token = Cookies.get("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 // Tự động xử lý refresh token nếu 401
 USER_API.interceptors.response.use(
   (res) => res,
