@@ -12,8 +12,12 @@ import {
 } from "reactstrap";
 
 import AdminHeader from "../../components/Headers/AdminListHeader.jsx";
+import {toast} from "react-toastify";
 
 const AdminProductList = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const pageSize = 9;
 
   const [categories, setCategories] = useState([]);
   useEffect(() => {
@@ -55,15 +59,22 @@ const AdminProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("/products");
-        setProducts(response.data);
+        const animalParam = -1;
+        const categoryParam = -1;
+
+        const response = await axios.get(
+            `http://localhost:8080/api/products/filter?page=${currentPage}&size=${pageSize}&category=${categoryParam}&animal=${animalParam}`
+        );
+        setProducts(response.data.products);
+        setTotalPages(response.data.totalPages);
       } catch (err) {
         console.error("Lỗi khi lấy danh sách sản phẩm:", err);
       }
     };
 
     fetchProducts();
-  }, []);
+  }, [currentPage]);
+
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Bạn có chắc chắn muốn xoá sản phẩm này?");
@@ -71,13 +82,13 @@ const AdminProductList = () => {
 
     try {
       await axios.delete(`/products/delete/${id}`);
-      alert("Đã xoá sản phẩm!");
+      toast.success("Đã xoá sản phẩm!");
 
       // Cập nhật danh sách hiển thị bằng cách xoá sản phẩm khỏi state
       setProducts((prev) => prev.filter((p) => p.id !== id));
     } catch (err) {
       console.error("Lỗi khi xoá sản phẩm:", err);
-      alert("Lỗi khi xoá sản phẩm!");
+      toast.error("Lỗi khi xoá sản phẩm!");
     }
   };
 
@@ -117,17 +128,13 @@ const AdminProductList = () => {
                         >
                           <img
                               alt="..."
-                              src={
-                                product.images && product.images.length > 0
-                                    ? `http://localhost:8080/uploads/${product.images[0].image}`
-                                    : require("../../assets/images/offer-banner-1.jpg")
-                          }
+                              src={product.images[0]}
                               className="avatar rounded-circle mr-3"
                               style={{ width: "50px", height: "50px", objectFit: "cover" }}
                           />
                         </a>
                         <Media>
-                          <span className="mb-0 text-sm">
+                          <span className="mb-0 text-sm" >
                             {product.title}
                           </span>
                         </Media>
@@ -160,6 +167,18 @@ const AdminProductList = () => {
                 ))}
                 </tbody>
               </Table>
+              {/* Pagination */}
+              <div className="pagination" style={{marginBottom : '15px'}}>
+                {Array.from({ length: totalPages }, (_, i) => (
+                    <button
+                        key={i}
+                        onClick={() => setCurrentPage(i + 1)}
+                        className={`page-button ${currentPage === i + 1 ? "active" : ""}`}
+                    >
+                      {i + 1}
+                    </button>
+                ))}
+              </div>
             </Card>
           </div>
         </Row>

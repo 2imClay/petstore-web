@@ -37,6 +37,7 @@ public class ProductController {
             @RequestParam("amount") int amount,
             @RequestParam("description") String description,
             @RequestParam("id_category") Integer id_category,
+            @RequestParam("id_animal") int id_animal,
             @RequestParam(value = "images", required = false) List<MultipartFile> images
     ) {
         Product product = new Product();
@@ -46,6 +47,7 @@ public class ProductController {
         product.setAmount(amount);
         product.setDescription(description);
         product.setId_category(id_category);
+        product.setId_animal(id_animal);
 
         Product created = productService.createProduct(product, images);
 

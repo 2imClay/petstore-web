@@ -15,6 +15,7 @@ import OAuth2RedirectHandler from "./views/login/OAuth2RedirectHandler.jsx";
 import Profile from "./views/user/profile.jsx"
 import LayoutProfile from "./views/user/LayoutProfile.jsx"
 import ProductDetails from "./views/product/product-detail.jsx";
+import {ToastContainer} from "react-toastify";
 import ChangePasswordUser from "./views/user/change-password.jsx";
 
 
@@ -23,6 +24,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
+          <ToastContainer position="top-center" autoClose={2000} hideProgressBar />
         <Routes>
 
             <Route path="/" element={<Navigate to="/home" />} />
