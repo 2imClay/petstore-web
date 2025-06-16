@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "../../assets/css/cart.css";
 import axios from "axios";
 
@@ -35,24 +35,24 @@ const Cart = () => {
     try {
       // Gửi yêu cầu cập nhật số lượng lên backend
       await axios.put(
-          `http://localhost:8080/api/cart/updateQuantity`,
-          {
-            userId: Number(userId),
-            productId,
-            quantity: value,
+        `http://localhost:8080/api/cart/updateQuantity`,
+        {
+          userId: Number(userId),
+          productId,
+          quantity: value,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+        }
       );
 
       // Nếu thành công, cập nhật lại state local để UI phản ánh ngay
       setCartItems((prevItems) =>
-          prevItems.map((item) =>
-              item.productId === productId ? { ...item, quantity: value } : item
-          )
+        prevItems.map((item) =>
+          item.productId === productId ? { ...item, quantity: value } : item
+        )
       );
     } catch (error) {
       console.error("Lỗi cập nhật số lượng:", error);
@@ -77,7 +77,7 @@ const Cart = () => {
       });
 
       setCartItems((prevItems) =>
-          prevItems.filter((item) => item.productId !== productId)
+        prevItems.filter((item) => item.productId !== productId)
       );
     } catch (error) {
       console.error("Lỗi khi xóa sản phẩm khỏi giỏ hàng:", error);
@@ -126,54 +126,54 @@ const Cart = () => {
                 </tr>
               </thead>
               <tbody>
-              {cartItems.length > 0 ? (
+                {cartItems.length > 0 ? (
                   cartItems.map((item) => {
                     // console.log(item);
                     return (
-                        <tr key={item.productId}>
-                          <td>
-                            <img
-                                src={item.image}
-                                alt={item.productName}
-                                style={{ width: "100px" }}
-                            />
-                          </td>
-                          <td>{item.productName}</td>
-                          <td>
-                            <input
-                                type="number"
-                                min="1"
-                                value={item.quantity}
-                                onChange={(e) =>
-                                    handleQuantityChange(
-                                        item.productId,
-                                        Number(e.target.value)
-                                    )
-                                }
-                            />
-                          </td>
-                          <td>
-                            <p>{formatCurrency(item.price * item.quantity)}</p>
-                          </td>
-                          <td>
-                        <span
+                      <tr key={item.productId}>
+                        <td>
+                          <img
+                            src={item.image}
+                            alt={item.productName}
+                            style={{ width: "100px" }}
+                          />
+                        </td>
+                        <td>{item.productName}</td>
+                        <td>
+                          <input
+                            type="number"
+                            min="1"
+                            value={item.quantity}
+                            onChange={(e) =>
+                              handleQuantityChange(
+                                item.productId,
+                                Number(e.target.value)
+                              )
+                            }
+                          />
+                        </td>
+                        <td>
+                          <p>{formatCurrency(item.price * item.quantity)}</p>
+                        </td>
+                        <td>
+                          <span
                             style={{ cursor: "pointer", color: "red" }}
                             onClick={() => handleRemoveItem(item.productId)}
-                        >
-                          x
-                        </span>
-                          </td>
-                        </tr>
+                          >
+                            x
+                          </span>
+                        </td>
+                      </tr>
                     )
                   }
-                      )
-              ) : (
+                  )
+                ) : (
                   <tr>
                     <td colSpan="5" style={{ textAlign: "center" }}>
                       Giỏ hàng của bạn đang trống.
                     </td>
                   </tr>
-              )}
+                )}
               </tbody>
             </table>
           </div>
@@ -209,8 +209,15 @@ const Cart = () => {
               </tbody>
             </table>
             <div className="cart-content-right-button">
-              <button onClick={() => window.location.href = '/products'} style={{color : 'black'}}>TIẾP TỤC MUA SẮM</button>
-              <button>THANH TOÁN</button>
+              <button onClick={() => window.location.href = '/products'} style={{ color: 'black' }}>TIẾP TỤC MUA SẮM</button>
+              <button
+                onClick={() => {
+                  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                  window.location.href = "/address"; // hoặc dùng navigate('/address')
+                }}
+              >
+                THANH TOÁN
+              </button>
             </div>
           </div>
         </div>
