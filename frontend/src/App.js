@@ -16,6 +16,7 @@ import Profile from "./views/user/profile.jsx"
 import LayoutProfile from "./views/user/LayoutProfile.jsx"
 import ProductDetails from "./views/product/product-detail.jsx";
 import {ToastContainer} from "react-toastify";
+import ChangePasswordUser from "./views/user/change-password.jsx";
 
 
 
@@ -44,6 +45,7 @@ function App() {
             </Route> 
             <Route path="/" element={<LayoutProfile />}>
                 <Route path="profile/:id" element={<Profile />} />
+                <Route path="change-password" element={<ChangePasswordUser />} />
                 {/* <Route path="orders" element={<OrdersPage />} /> */}
             </Route>
 

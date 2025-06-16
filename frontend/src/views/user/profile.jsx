@@ -87,7 +87,8 @@ const Profile = () => {
         onClick={handleAvatarClick}
         style={{ cursor: isEditing ? "pointer" : "default" }}
       >
-        <img src={user.avatar} alt="Avatar" className="profile-avatar" />
+        <img src={user.avatar  || "https://cdn-icons-png.flaticon.com/512/847/847969.png"} 
+        alt="Avatar" className="profile-avatar" />
         <div className="camera-icon">&#128247;</div>
         <input
           type="file"

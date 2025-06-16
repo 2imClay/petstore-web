@@ -16,6 +16,7 @@
   padding: 20px;
   justify-items: center;
   border-right: 1px solid #ddd;
+  border-radius: 20px;
   align-items: center; 
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
@@ -37,7 +38,7 @@
 }
 
 .profile-menu-item.active {
-  background-color: #007bff;
+  background-color: #ff9100;
   color: #fff;
   font-weight: 600;
 }

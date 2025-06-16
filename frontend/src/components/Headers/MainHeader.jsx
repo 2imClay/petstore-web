@@ -16,6 +16,12 @@ const MainHeader = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [username, setUsername] = useState(null);
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    setUsername(storedUsername);
+  }, []);
   // Khi component mount hoặc localStorage thay đổi (bạn có thể lắng nghe sự kiện storage)
   useEffect(() => {
     const storedName = localStorage.getItem("fullname");
@@ -116,11 +122,19 @@ const MainHeader = () => {
                 <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                   <li style={{ padding: "6px 0", cursor: "pointer" }}>
                     <Link to={userId ? `/profile/${userId}` : "/login"}
-                     style={{ textDecoration: "none", color: "inherit" }}>
+                      style={{ textDecoration: "none", color: "inherit" }}>
                       Thông tin khách hàng
                     </Link>
                   </li>
                   <li style={{ padding: "6px 0", cursor: "pointer" }}>Đơn hàng của bạn</li>
+                  {username && (
+                    <li style={{ padding: "6px 0", cursor: "pointer" }}>
+                      <Link to="/change-password"
+                        style={{ textDecoration: "none", color: "inherit" }}>
+                        Đổi mật khẩu
+                      </Link>
+                    </li>
+                  )}
                   <li
                     style={{ padding: "6px 0", cursor: "pointer" }}
                     onClick={handleLogout}
