@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { IonIcon } from "@ionic/react";
 import "../../assets/css/style.css";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { menuOutline, closeOutline, searchOutline, personOutline, bagHandleOutline } from "ionicons/icons";
 import { logout as logoutThunk } from "../../service/authService";
 import axios from "axios";
+import {CartContext} from "../../contexts/CartContext";
 
 const MainHeader = () => {
   const [fullname, setFullname] = useState(null);
@@ -49,25 +50,7 @@ const MainHeader = () => {
     }
   };
 
-  const [cartItems, setCartItems] = useState([]);
-  useEffect(() => {
-    const fetchCart = async () => {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
-      try {
-        const response = await axios.get(`http://localhost:8080/api/cart/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setCartItems(response.data);
-      } catch (error) {
-        console.error("Lỗi khi lấy giỏ hàng:", error);
-      }
-    };
-    fetchCart();
-  }, []);
-
+  const { cartCount } = useContext(CartContext);
 
   return (
     <div className="user-wrapper">
@@ -147,9 +130,19 @@ const MainHeader = () => {
                 </ul>
               </div>
             )}
-            <button className="action-btn" aria-label="Cart" onClick={() => window.location.href = "/cart"}>
-              <IonIcon icon={bagHandleOutline} aria-hidden="true" />
-              <span className="btn-badge">{cartItems.length}</span>
+            <button
+                className="action-btn"
+                aria-label="Cart"
+                onClick={() => window.location.href = "/cart"}
+            >
+              <IonIcon
+                  icon={bagHandleOutline}
+                  aria-hidden="true"
+              />
+              <span
+                  className="btn-badge"
+              >{cartCount}</span>
+
             </button>
           </div>
         </div>

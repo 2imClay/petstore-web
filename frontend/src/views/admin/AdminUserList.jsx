@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 
 import AdminHeader from "../../components/Headers/AdminListHeader.jsx";
+import {toast} from "react-toastify";
 
 const AdminUserList = () => {
 
@@ -49,13 +50,13 @@ const AdminUserList = () => {
 
         try {
             await axios.delete(`/users/delete/${id}`);
-            alert("Đã xoá người dùng!");
+            toast.success("Đã xoá người dùng!");
 
             // Cập nhật danh sách hiển thị bằng cách xoá sản phẩm khỏi state
             setUsers((prev) => prev.filter((p) => p.id !== id));
         } catch (err) {
             console.error("Lỗi khi xoá người dùng:", err);
-            alert("Lỗi khi xoá người dùng!");
+            toast.error("Lỗi khi xoá người dùng!");
         }
     };
 

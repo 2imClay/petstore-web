@@ -19,6 +19,7 @@ import {
 } from "reactstrap";
 // core components
 import AdminAddHeader from "../../components/Headers/AdminAddHeader.jsx";
+import {toast} from "react-toastify";
 
 
 
@@ -65,10 +66,10 @@ const AdminAddProduct = () => {
       });
       console.log(res.data)
 
-      alert("Thêm sản phẩm thành công!");
+      toast.success("Thêm sản phẩm thành công!");
     } catch (error) {
       console.error("Lỗi:", error);
-      alert("Thêm sản phẩm thất bại.");
+      toast.error("Thêm sản phẩm thất bại.");
     }
   };
 

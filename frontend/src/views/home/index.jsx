@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import "../../assets/css/style.css";
 import banner from '../../assets/images/hero-banner.jpg';
 
@@ -6,8 +6,12 @@ import { Star } from 'react-ionicons';
 import axios from "../../api/axiosIns";
 import {IonIcon} from "@ionic/react";
 import {bagAddOutline} from "ionicons/icons";
+import {CartContext} from "../../contexts/CartContext";
+import {toast} from "react-toastify";
 
 function MainContent() {
+
+    const { fetchCartCount } = useContext(CartContext);
     const handleAddToCart = async (productId) => {
         const userId = localStorage.getItem("userId");
         const token = localStorage.getItem("token");
@@ -27,10 +31,11 @@ function MainContent() {
                     },
                 }
             );
-            alert("Đã thêm sản phẩm vào giỏ hàng!");
+            toast.success("Đã thêm sản phẩm vào giỏ hàng!");
+            fetchCartCount();
         } catch (error) {
             console.error("Lỗi khi thêm vào giỏ hàng:", error);
-            alert("Thêm vào giỏ hàng thất bại!");
+            toast.error("Thêm vào giỏ hàng thất bại!");
         }
     };
 
@@ -39,7 +44,9 @@ function MainContent() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get("http://localhost:8080/api/products");
+                const response = await axios.get(
+                    "http://localhost:8080/api/products"
+                );
                 setProducts(response.data);
             } catch (err) {
                 console.error("Lỗi khi lấy danh sách sản phẩm:", err);
@@ -99,7 +106,7 @@ function MainContent() {
                                              </figure>
 
                                              <h3 className="h3">
-                                                 <a href="https://google.com" className="card-title">Thức ăn cho mèo</a>
+                                                 <a href="/products" className="card-title">Thức ăn cho mèo</a>
                                              </h3>
                                          </div>
                                      </li>
@@ -121,7 +128,7 @@ function MainContent() {
                                              </figure>
 
                                              <h3 className="h3">
-                                                 <a href="https://google.com" className="card-title">Thức ăn cho chó</a>
+                                                 <a href="/products" className="card-title">Thức ăn cho chó</a>
                                              </h3>
                                          </div>
                                      </li>
@@ -143,7 +150,7 @@ function MainContent() {
                                              </figure>
 
                                              <h3 className="h3">
-                                                 <a href="https://google.com" className="card-title">Đồ chơi</a>
+                                                 <a href="/products" className="card-title">Đồ chơi</a>
                                              </h3>
                                          </div>
                                      </li>
@@ -160,68 +167,51 @@ function MainContent() {
                                  </h2>
 
                                  <ul className="grid-list">
-                                     {products.map((product) => (
+                                     {products.slice(0, 9).map((product) => (
                                          <li key={product.id}>
                                              <div className="product-card">
-                                                 <div
-                                                     className="card-banner img-holder"
-                                                     style={{ width: '360', height: '360' }}
-                                                 >
-                                                     <img
-                                                         src={
-                                                             product.images && product.images.length > 0
-                                                                 ? `http://localhost:8080/uploads/${product.images[0].image}`
-                                                                 : require("../../assets/images/offer-banner-1.jpg")
-                                                         }
-                                                         width="360"
-                                                         height="360"
-                                                         loading="lazy"
-                                                         alt="Commodo leo sed porta"
-                                                         className="img-cover default"
-                                                     />
-                                                     <img
-                                                         src={
-                                                             product.images && product.images.length > 0
-                                                                 ? `http://localhost:8080/uploads/${product.images[1].image}`
-                                                                 : require("../../assets/images/offer-banner-1.jpg")
-                                                         }
-                                                         width="360"
-                                                         height="360"
-                                                         loading="lazy"
-                                                         alt="Commodo leo sed porta"
-                                                         className="img-cover hover"
-                                                     />
+                                                 <div className="card-banner img-holder">
+                                                     {product.images && product.images.length > 0 ? (
 
+                                                         <>
+                                                             <img
+                                                                 src={product.images[0]}
+                                                                 alt={product.title}
+                                                                 className="img-cover default"
+                                                             />
+                                                             {product.images.length > 3 ? (
+                                                                 <img
+                                                                     src={product.images[2]}
+                                                                     alt={product.title}
+                                                                     className="img-cover hover"
+                                                                 />
+                                                             ) : (
+                                                                 <img
+                                                                     src={product.images[1]}
+                                                                     alt={product.title}
+                                                                     className="img-cover hover"
+                                                                 />
+                                                             )}
+                                                         </>
+                                                     ) : (
+                                                         <div className="no-image">Không có ảnh</div>
+                                                     )}
                                                      <button
                                                          className="card-action-btn"
-                                                         aria-label="add to card"
-                                                         title="Add To Card"
+                                                         aria-label="add to cart"
+                                                         title="Add To Cart"
                                                          onClick={() => handleAddToCart(product.id)}
                                                      >
                                                          <IonIcon icon={bagAddOutline} aria-hidden="true" />
                                                      </button>
                                                  </div>
-
                                                  <div className="card-content">
-
-                                                     <div className="wrapper">
-                                                         <div className="rating-wrapper">
-                                                             <Star />
-                                                             <Star />
-                                                             <Star />
-                                                             <Star />
-                                                             <Star />
-                                                         </div>
-
-                                                         <span className="span">(1)</span>
-                                                     </div>
-
                                                      <h3 className="h3">
-                                                         <a href="https://google.com" className="card-title">{product.title}</a>
+                                                         <a href={`/products/${product.id}`} className="card-title">{product.title}</a>
                                                      </h3>
-
-                                                     <data className="card-price" value="15">{product.price} VND</data>
-
+                                                     <data className="card-price" value={product.price}>
+                                                         {product.price.toLocaleString("vi-VN")} VND
+                                                     </data>
                                                  </div>
                                              </div>
                                          </li>
