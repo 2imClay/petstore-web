@@ -1,11 +1,15 @@
 package com.nlu.petstore.controller;
 
+import com.nlu.petstore.DTO.ChangePasswordDTO;
 import com.nlu.petstore.DTO.UserProfileDTO;
 import com.nlu.petstore.entity.User;
 import com.nlu.petstore.security.JwtService;
 import com.nlu.petstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,6 +75,23 @@ public class UserController {
             return ResponseEntity.badRequest().body("Upload thất bại: " + e.getMessage());
         }
     }
+    @PutMapping("/change-password")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDTO request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
 
+        String username;
+        if (principal instanceof com.nlu.petstore.entity.User) {
+            username = ((com.nlu.petstore.entity.User) principal).getUsername();
+        } else {
+            username = authentication.getName(); // fallback
+        }
 
+        boolean success = userService.changePassword(username, request);
+        if (success) {
+            return ResponseEntity.ok("Đổi mật khẩu thành công.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mật khẩu hiện tại không đúng.");
+        }
+    }
 }

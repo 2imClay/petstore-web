@@ -1,5 +1,6 @@
 package com.nlu.petstore.controller;
 
+import com.nlu.petstore.DTO.ChangePasswordDTO;
 import com.nlu.petstore.DTO.LoginDTO;
 import com.nlu.petstore.DTO.RefreshTokenDTO;
 import com.nlu.petstore.DTO.RegisterDTO;
@@ -15,6 +16,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -88,4 +90,6 @@ public class AuthController {
         httpRequest.getSession().invalidate();
         return ResponseEntity.ok("Logout thành công");
     }
+
+
 }

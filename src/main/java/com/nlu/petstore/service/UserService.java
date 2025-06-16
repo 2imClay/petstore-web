@@ -1,5 +1,6 @@
 package com.nlu.petstore.service;
 
+import com.nlu.petstore.DTO.ChangePasswordDTO;
 import com.nlu.petstore.DTO.UserProfileDTO;
 import com.nlu.petstore.entity.User;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -17,6 +18,7 @@ public interface UserService {
      UserProfileDTO getUserProfileByID (Integer userID);
      UserProfileDTO updateUserProfile(Integer userID, UserProfileDTO userProfileDTO);
      String uploadAvatar(Integer userID, MultipartFile file) throws IOException;
+     boolean changePassword(String username, ChangePasswordDTO req);
 
 
 }
