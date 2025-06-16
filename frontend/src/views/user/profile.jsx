@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import USER_API from "../../api/axiosUser";
+import {toast} from "react-toastify";
 
 const Profile = () => {
   const fileInputRef = useRef(null);
@@ -57,10 +58,10 @@ const Profile = () => {
         avatar: imageUrl,
       }));
 
-      alert("Cập nhật avatar thành công!");
+      toast.success("Cập nhật avatar thành công!");
     } catch (err) {
       console.error("Lỗi khi upload avatar:", err);
-      alert("Tải ảnh lên thất bại!");
+      toast.error("Tải ảnh lên thất bại!");
     }
 
   };
@@ -70,12 +71,12 @@ const Profile = () => {
   const handleUpdateClick = () => {
     USER_API.put(`/update/${userId}`, user)
       .then(() => {
-        alert("Cập nhật thông tin thành công!");
+        toast.success("Cập nhật thông tin thành công!");
         setIsEditing(false);
       })
       .catch((err) => {
         console.error("Lỗi khi cập nhật:", err);
-        alert("Cập nhật thất bại!");
+        toast.error("Cập nhật thất bại!");
       });
   };
 

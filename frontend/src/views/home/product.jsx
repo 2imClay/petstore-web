@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 // import { useSelector } from "react-redux";
 import "../../assets/css/product-page.css";
 
 import axios from "../../api/axiosIns";
 import { bagAddOutline } from "ionicons/icons";
 import { IonIcon } from "@ionic/react";
+import {useLocation} from "react-router-dom";
+import {CartContext} from "../../contexts/CartContext";
+import {toast} from "react-toastify";
 
 const ProductPage = () => {
 
-  // const userId = useSelector((state) => state.auth.data?.userId);
-
+  const { fetchCartCount } = useContext(CartContext);
   const handleAddToCart = async (productId) => {
     const userId = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
@@ -29,10 +31,11 @@ const ProductPage = () => {
           },
         }
       );
-      alert("Đã thêm sản phẩm vào giỏ hàng!");
+      toast.success("Đã thêm sản phẩm vào giỏ hàng!");
+      fetchCartCount();
     } catch (error) {
       console.error("Lỗi khi thêm vào giỏ hàng:", error);
-      alert("Thêm vào giỏ hàng thất bại!");
+      toast.error("Thêm vào giỏ hàng thất bại!");
     }
   };
 
@@ -178,12 +181,18 @@ const ProductPage = () => {
                           alt={product.title}
                           className="img-cover default"
                         />
-                        {product.images[1] && (
-                          <img
-                            src={product.images[1]}
-                            alt={product.title}
-                            className="img-cover hover"
-                          />
+                        {product.images.length > 3 ? (
+                            <img
+                                src={product.images[2]}
+                                alt={product.title}
+                                className="img-cover hover"
+                            />
+                        ) : (
+                            <img
+                                src={product.images[1]}
+                                alt={product.title}
+                                className="img-cover hover"
+                            />
                         )}
                       </>
                     ) : (
