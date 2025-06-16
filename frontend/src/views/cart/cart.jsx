@@ -76,7 +76,6 @@ const Cart = () => {
         },
       });
 
-      // Cập nhật lại state để UI phản ánh ngay
       setCartItems((prevItems) =>
           prevItems.filter((item) => item.productId !== productId)
       );
@@ -134,7 +133,7 @@ const Cart = () => {
                         <tr key={item.productId}>
                           <td>
                             <img
-                                src={`http://localhost:8080/uploads/${item.image}`}
+                                src={item.image}
                                 alt={item.productName}
                                 style={{ width: "100px" }}
                             />
@@ -210,7 +209,7 @@ const Cart = () => {
               </tbody>
             </table>
             <div className="cart-content-right-button">
-              <button>TIẾP TỤC MUA SẮM</button>
+              <button onClick={() => window.location.href = '/products'} style={{color : 'black'}}>TIẾP TỤC MUA SẮM</button>
               <button>THANH TOÁN</button>
             </div>
           </div>
