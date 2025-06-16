@@ -2,12 +2,14 @@ package com.nlu.petstore.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.nlu.petstore.DTO.ChangePasswordDTO;
 import com.nlu.petstore.DTO.UserProfileDTO;
 import com.nlu.petstore.entity.User;
 import com.nlu.petstore.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,8 +26,14 @@ public class UserServiceImpl implements  UserService {
     @Autowired
     private UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Value("${cloudinary.folder.avatar}")
     private String avatarFolder;
+
+    public UserServiceImpl(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public List<User> getAllUser() {
@@ -106,5 +114,18 @@ public class UserServiceImpl implements  UserService {
         userRepository.save(user);
 
         return imageUrl;
+    }
+
+    @Override
+    public boolean changePassword(String username, ChangePasswordDTO req) {
+        return userRepository.findByUsername(username)
+                .filter(user -> passwordEncoder.matches(req.getCurrentPassword(), user.getPassword()))
+                .map(user -> {
+                    user.setPassword(passwordEncoder.encode(req.getNewPassword()));
+                    userRepository.save(user);
+                    return true;
+                })
+                .orElse(false);
+
     }
 }
