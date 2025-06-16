@@ -2,6 +2,7 @@ package com.nlu.petstore.controller;
 
 import com.nlu.petstore.DTO.ProductDTO;
 import com.nlu.petstore.DTO.ProductDetailDTO;
+import com.nlu.petstore.DTO.ProductSearchDTO;
 import com.nlu.petstore.entity.Product;
 import com.nlu.petstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,5 +89,10 @@ public class ProductController {
     ) {
         Map<String, Object> result = productService.getProductsByPageFilter(page - 1, size, category, animal);
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductSearchDTO>> searchProducts(@RequestParam String keyword) {
+        return ResponseEntity.ok(productService.searchProducts(keyword));
     }
 }
