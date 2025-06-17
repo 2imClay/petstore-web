@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Data
+@Getter
+@Setter
 
 public class Order {
 

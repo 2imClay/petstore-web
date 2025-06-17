@@ -1,7 +1,9 @@
-  import React, { useState, useEffect } from "react";
+  import React, {useState, useEffect, useContext} from "react";
   import "../../assets/css/product-detail.css";
   import { useParams } from "react-router-dom";
   import axios from "axios";
+  import {CartContext} from "../../contexts/CartContext";
+  import {toast} from "react-toastify";
 
   const ProductDetail = () => {
     const { id } = useParams();
@@ -11,7 +13,11 @@
     const [quantity, setQuantity] = useState(1);
     const [activeTab, setActiveTab] = useState("description");
 
+    const { fetchCartCount } = useContext(CartContext);
 
+    const handleQuantityChange = (amount) => {
+      setQuantity((prevQty) => Math.max(1, prevQty + amount));
+    };
     const handleAddToCart = async (productId) => {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("token");
@@ -22,7 +28,7 @@
           {
             userId: parseInt(userId),
             productId: productId,
-            quantity: 1 // hoặc số lượng bạn muốn thêm
+            quantity: quantity
           },
           {
             headers: {
@@ -31,14 +37,14 @@
             },
           }
         );
-        alert("Đã thêm sản phẩm vào giỏ hàng!");
+        toast.success("Đã thêm sản phẩm vào giỏ hàng!");
+        fetchCartCount();
       } catch (error) {
         console.error("Lỗi khi thêm vào giỏ hàng:", error);
-        alert("Thêm vào giỏ hàng thất bại!");
+        toast.error("Thêm vào giỏ hàng thất bại!");
       }
     };
     useEffect(() => {
-      // Giả sử productId là 1, bạn có thể lấy từ URL thực tế
       axios.get(`http://localhost:8080/api/products/${id}`)
         .then(response => {
           setProduct(response.data);
@@ -64,11 +70,6 @@
         prevIndex === product.images.length - 1 ? 0 : prevIndex + 1
       );
     };
-
-    const handleQuantityChange = (amount) => {
-      setQuantity((prevQty) => Math.max(1, prevQty + amount));
-    };
-
 
     if (!product || !product.images) {
       return <div>Đang tải sản phẩm...</div>;

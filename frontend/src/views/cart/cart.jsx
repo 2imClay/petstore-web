@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "../../assets/css/cart.css";
 import axios from "axios";
+import {CartContext} from "../../contexts/CartContext";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -26,6 +27,7 @@ const Cart = () => {
     fetchCart();
   }, []);
 
+  const { fetchCartCount } = useContext(CartContext);
   const handleQuantityChange = async (productId, value) => {
     if (value < 1) return;
 
@@ -33,7 +35,6 @@ const Cart = () => {
     const token = localStorage.getItem("token");
 
     try {
-      // Gửi yêu cầu cập nhật số lượng lên backend
       await axios.put(
         `http://localhost:8080/api/cart/updateQuantity`,
         {
@@ -48,7 +49,8 @@ const Cart = () => {
         }
       );
 
-      // Nếu thành công, cập nhật lại state local để UI phản ánh ngay
+      fetchCartCount();
+
       setCartItems((prevItems) =>
         prevItems.map((item) =>
           item.productId === productId ? { ...item, quantity: value } : item
@@ -138,7 +140,7 @@ const Cart = () => {
                             style={{ width: "100px" }}
                           />
                         </td>
-                        <td>{item.productName}</td>
+                        <td><a href={`/products/${item.productId}`}>{item.productName}</a></td>
                         <td>
                           <input
                             type="number"

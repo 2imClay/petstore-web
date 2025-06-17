@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import '../../assets/css/login.css';
 import "@fortawesome/fontawesome-free";
 import { login } from "../../service/authService";
@@ -6,6 +6,7 @@ import { notification } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
+import {CartContext} from "../../contexts/CartContext";
 
 export default function Login() {
     const GOOGLE_AUTH_URL = "http://localhost:8080/oauth2/authorization/google";
@@ -58,6 +59,7 @@ export default function Login() {
         validateData(name, value);
 
     };
+    const { fetchCartCount } = useContext(CartContext);
     const handleSubmit = async (e) => {
         e.preventDefault();
         const userNameValid = validateData("username", user.username);
@@ -85,6 +87,10 @@ export default function Login() {
                     if (originalPromiseResult.username) {
                         localStorage.setItem("username", originalPromiseResult.username);
                     }
+
+                    //lấy số lượng sản phẩm trong giỏ hàng
+                    fetchCartCount();
+
                     //Chuyển hướng về trang login
                     const role = originalPromiseResult.role?.toUpperCase();
                     api.success({
