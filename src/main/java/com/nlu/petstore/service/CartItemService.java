@@ -9,6 +9,6 @@ public interface CartItemService {
     CartItem addToCart(int userId, int productId, int quantity);
     List<CartItemDTO> getCartItems(int userId);
     void removeFromCart(int userId, int productId);
-
+    public void clearCart(int userId);
     CartItem updateQuantity(int userId, int productId, int quantity);
 }

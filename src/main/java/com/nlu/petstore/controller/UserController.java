@@ -3,6 +3,7 @@ package com.nlu.petstore.controller;
 import com.nlu.petstore.DTO.ChangePasswordDTO;
 import com.nlu.petstore.DTO.UserProfileDTO;
 import com.nlu.petstore.entity.User;
+import com.nlu.petstore.repository.UserRepository;
 import com.nlu.petstore.security.JwtService;
 import com.nlu.petstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +24,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private JwtService jwtService;
@@ -92,5 +97,13 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mật khẩu hiện tại không đúng.");
         }
+    }
+    @GetMapping("/{userId}/name")
+    public Map<String, String> getUserName(@PathVariable int userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Map<String, String> response = new HashMap<>();
+        response.put("name", user.getFullname());
+        return response;
     }
 }
