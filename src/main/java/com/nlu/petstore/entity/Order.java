@@ -33,6 +33,9 @@ public class Order {
     @Column(name = "total_money", nullable = false)
     private float total_money;
 
+    @Column(name = "phone", length = 20)
+    private String phone;
+
     @Column(name = "discount", nullable = false)
     private float  discount;
 
@@ -45,7 +48,7 @@ public class Order {
     @Column(name = "order_date", nullable = false)
     private LocalDateTime order_date;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updated_at;
 
 }
