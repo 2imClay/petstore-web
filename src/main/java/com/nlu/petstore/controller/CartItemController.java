@@ -40,6 +40,11 @@ public class CartItemController {
         CartItem updatedItem = cartItemService.updateQuantity(request.getUserId(), request.getProductId(), request.getQuantity());
         return ResponseEntity.ok(updatedItem);
     }
+    @DeleteMapping("/clear/{userId}")
+    public ResponseEntity<Void> clearCart(@PathVariable int userId) {
+        cartItemService.clearCart(userId);
+        return ResponseEntity.noContent().build();
+    }
 
 }
 

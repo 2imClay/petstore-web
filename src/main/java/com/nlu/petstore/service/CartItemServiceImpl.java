@@ -58,6 +58,11 @@ public class CartItemServiceImpl implements CartItemService {
         cartItemRepository.findByUserIdAndProductId(userId, productId)
                 .ifPresent(cartItemRepository::delete);
     }
+    @Transactional
+    @Override
+    public void clearCart(int userId) {
+        cartItemRepository.deleteByUserId(userId);
+    }
 
     @Transactional
     @Override
