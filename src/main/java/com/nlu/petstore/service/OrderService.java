@@ -9,6 +9,11 @@ import java.util.List;
 
 @Service
 public interface OrderService {
+//    List<OrderResponse> getAllOrders();
+
     OrderResponse createOrder(OrderRequestDTO orderRequestDTO);
     List<OrderResponse> getOrdersByUserId(Integer userId);
+
+    void updateOrderStatus(int orderId, String statusName);
+
 }

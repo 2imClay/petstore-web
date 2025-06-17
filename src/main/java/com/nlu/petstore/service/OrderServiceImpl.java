@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -139,6 +140,20 @@ public class OrderServiceImpl implements OrderService{
         }
 
         return responses;
+    }
+
+    @Override
+    public void updateOrderStatus(int orderId, String statusName) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+
+        Status status = statusRepository.findByName(statusName)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy trạng thái"));
+
+        order.setStatus_id(status);
+        order.setUpdated_at(LocalDateTime.now());
+
+        orderRepository.save(order);
     }
 
 
