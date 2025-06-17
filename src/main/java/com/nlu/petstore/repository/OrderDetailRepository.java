@@ -1,0 +1,8 @@
+package com.nlu.petstore.repository;
+
+import com.nlu.petstore.entity.OrderDetail;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+public interface OrderDetailRepository extends JpaRepository<OrderDetail, Integer> {
+}
