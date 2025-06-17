@@ -18,24 +18,25 @@
     const handleQuantityChange = (amount) => {
       setQuantity((prevQty) => Math.max(1, prevQty + amount));
     };
-    const handleAddToCart = async (productId) => {
+    const handleAddToCart = async (product) => {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("token");
 
       try {
         await axios.post(
-          "http://localhost:8080/api/cart/add",
-          {
-            userId: parseInt(userId),
-            productId: productId,
-            quantity: quantity
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
+            "http://localhost:8080/api/cart/add",
+            {
+              userId: parseInt(userId),
+              productId: product.id,
+              productName: product.title,
+              quantity: 1 // hoặc số lượng bạn muốn thêm
             },
-          }
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
         );
         toast.success("Đã thêm sản phẩm vào giỏ hàng!");
         fetchCartCount();
@@ -118,7 +119,7 @@
               <button onClick={() => handleQuantityChange(1)}>+</button>
             </div>
 
-            <button className="add-to-cart"  onClick={() => handleAddToCart(product.id)}>Thêm vào giỏ hàng</button>
+            <button className="add-to-cart"  onClick={() => handleAddToCart(product)}>Thêm vào giỏ hàng</button>
 
             <div className="shipping-info">
               <p><strong>Miễn phí vận chuyển</strong> cho đơn hàng từ 2 triệu trở lên.</p>

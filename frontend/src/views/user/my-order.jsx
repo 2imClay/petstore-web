@@ -35,7 +35,7 @@
                 <th>Mã đơn hàng</th>
                 <th>Phương thức vận chuyển</th>
                 <th>Phương thức thanh toán</th>
-                <th>Trạng thái giao hàng</th> {/* Thêm cột trạng thái giao hàng */}
+                <th>Trạng thái giao hàng</th>
                 <th>Ngày đặt</th>
                 <th>Sản phẩm</th>
                 <th>Tiền ship</th>

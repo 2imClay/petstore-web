@@ -3,22 +3,10 @@ import AdminAddProduct from "./views/admin/AdminAddProduct.jsx";
 // import AdminMaps from "./views/AdminMaps.jsx";
 import AdminProductList from "./views/admin/AdminProductList.jsx";
 import AdminUserList from "./views/admin/AdminUserList";
+import AdminOrderList from "./views/admin/AdminOrderList";
 
 var routes = [
-  // {
-  //   path: "/index",
-  //   name: "Dashboard",
-  //   icon: "ni ni-tv-2 text-primary",
-  //   component: <AdminIndex />,
-  //   layout: "/admin",
-  // },
-  // {
-  //   path: "/icons",
-  //   name: "Icons",
-  //   icon: "ni ni-planet text-blue",
-  //   component: <Icons />,
-  //   layout: "/admin",
-  // },
+
   {
     path: "/userList",
     name: "Danh sách người dùng",
@@ -40,29 +28,13 @@ var routes = [
     component: <AdminAddProduct />,
     layout: "/admin",
   },
+  {
+    path: "/orderList",
+    name: "Danh sách đơn hàng",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: <AdminOrderList />,
+    layout: "/admin",
+  },
 
-
-  // {
-  //   path: "/maps",
-  //   name: "Maps",
-  //   icon: "ni ni-pin-3 text-orange",
-  //   component: <AdminMaps />,
-  //   layout: "/admin",
-  // },
-
-  // {
-  //   path: "/login",
-  //   name: "Login",
-  //   icon: "ni ni-key-25 text-info",
-  //   component: <Login />,
-  //   layout: "/auth",
-  // },
-  // {
-  //   path: "/register",
-  //   name: "Register",
-  //   icon: "ni ni-circle-08 text-pink",
-  //   component: <Register />,
-  //   layout: "/auth",
-  // },
 ];
 export default routes;
