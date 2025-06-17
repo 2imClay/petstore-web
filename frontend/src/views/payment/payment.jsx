@@ -32,6 +32,8 @@ const Payment = () => {
       paymentStatus: "Chưa thanh toán",
       shippingMethod: shippingMethod,
       discount: 0,
+      totalMoney: shippingInfo.totalMoney || 0,
+      statusId: 1,
       items: shippingInfo.cartItems.map(item => ({
         productId: item.productId,
         price: item.price,
@@ -43,7 +45,7 @@ const Payment = () => {
 
 
     try {
-      const response = await fetch("http://localhost:8080/api/orders", {
+      const response = await fetch("http://localhost:8080/api/orders/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
