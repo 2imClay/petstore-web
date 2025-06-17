@@ -1,6 +1,5 @@
 package com.nlu.petstore.response;
 
-import com.nlu.petstore.DTO.OrderItemDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,17 +12,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderResponse {
+public class OrderDetailResponse {
     private int orderId;
     private String transactionId;
-    private String shippingMethod;
-    private float shippingFee;
-    private float totalProductMoney;
+    private String address;
+    private String note;
+    private String statusName;
+    private float totalMoney;
+    private String phone;
     private float discount;
-    private float finalTotal;
+    private String shippingMethod;
     private String paymentMethod;
     private String paymentStatus;
-    private String statusName;
     private LocalDateTime orderDate;
-    private List<OrderItemDTO> items;
+    private List<OrderItemResponse> items;
 }
