@@ -218,7 +218,7 @@ const Cart = () => {
                   window.location.href = "/address"; // hoặc dùng navigate('/address')
                 }}
               >
-                THANH TOÁN
+                TIẾP TỤC ĐẶT HÀNG
               </button>
             </div>
           </div>
