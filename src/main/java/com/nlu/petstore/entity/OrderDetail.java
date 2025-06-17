@@ -23,6 +23,8 @@ public class OrderDetail {
 
     @Column(name = "product_id", nullable = false)
     private int product_id;
+    @Column(name = "productName", nullable = false)
+    private String productName;
 
     @Column(name = "price", nullable = false)
     private float price;

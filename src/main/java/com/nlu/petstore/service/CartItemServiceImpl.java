@@ -19,7 +19,7 @@ public class CartItemServiceImpl implements CartItemService {
     private CartItemRepository cartItemRepository;
 
     @Override
-    public CartItem addToCart(int userId, int productId, int quantity) {
+    public CartItem addToCart(int userId, int productId, String productName, int quantity) {
         Optional<CartItem> optional = cartItemRepository.findByUserIdAndProductId(userId, productId);
         if (optional.isPresent()) {
             CartItem item = optional.get();
@@ -29,6 +29,7 @@ public class CartItemServiceImpl implements CartItemService {
         CartItem newItem = new CartItem();
         newItem.setUserId(userId);
         newItem.setProductId(productId);
+        newItem.setProductName(productName);
         newItem.setQuantity(quantity);
         return cartItemRepository.save(newItem);
     }
@@ -66,7 +67,7 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Transactional
     @Override
-    public CartItem updateQuantity(int userId, int productId, int quantity) {
+    public CartItem updateQuantity(int userId, int productId, String productName, int quantity) {
         CartItem cartItem = cartItemRepository.findByUserIdAndProductId(userId, productId)
                 .orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại trong giỏ hàng"));
 

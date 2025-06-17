@@ -36,6 +36,7 @@ const Payment = () => {
       statusId: 1,
       items: shippingInfo.cartItems.map(item => ({
         productId: item.productId,
+        productName: item.productName,
         price: item.price,
         quantity: item.quantity
       }))

@@ -12,7 +12,8 @@ import {toast} from "react-toastify";
 const ProductPage = () => {
 
   const { fetchCartCount } = useContext(CartContext);
-  const handleAddToCart = async (productId) => {
+  let productName = "";
+  const handleAddToCart = async (product) => {
     const userId = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
 
@@ -21,7 +22,8 @@ const ProductPage = () => {
         "http://localhost:8080/api/cart/add",
         {
           userId: parseInt(userId),
-          productId: productId,
+          productId: product.id,
+          productName: product.title,
           quantity: 1 // hoặc số lượng bạn muốn thêm
         },
         {
@@ -202,7 +204,7 @@ const ProductPage = () => {
                       className="card-action-btn"
                       aria-label="add to cart"
                       title="Add To Cart"
-                      onClick={() => handleAddToCart(product.id)}
+                      onClick={() => handleAddToCart(product)}
                     >
                       <IonIcon icon={bagAddOutline} aria-hidden="true" />
                     </button>

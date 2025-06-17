@@ -1,17 +1,18 @@
 package com.nlu.petstore.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class OrderItemDTO {
     private int productId;
+    private String productName;
     private float price;
     private int quantity;
+
 
 }

@@ -21,6 +21,10 @@ public class CartItem {
     private int productId;
     @Getter
     @Setter
+    @Column(name = "productName", nullable = false)
+    private String productName;
+    @Getter
+    @Setter
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
