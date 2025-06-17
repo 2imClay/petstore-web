@@ -1,0 +1,58 @@
+/* File: MyOrders.css */
+
+.myorders-container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 15px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.myorders-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.myorders-empty {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+}
+
+.myorders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.myorders-table th,
+.myorders-table td {
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.myorders-table th {
+  background-color: #bb7b14;
+  font-weight: 600;
+  color: #222;
+}
+
+.myorders-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.myorders-product-list {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.myorders-product-list li {
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #444;
+}

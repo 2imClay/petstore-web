@@ -4,15 +4,19 @@ import com.nlu.petstore.DTO.OrderItemDTO;
 import com.nlu.petstore.DTO.OrderRequestDTO;
 import com.nlu.petstore.entity.Order;
 import com.nlu.petstore.entity.OrderDetail;
+import com.nlu.petstore.entity.Product;
 import com.nlu.petstore.entity.Status;
 import com.nlu.petstore.repository.OrderDetailRepository;
 import com.nlu.petstore.repository.OrderRepository;
 import com.nlu.petstore.repository.StatusRepository;
+import com.nlu.petstore.response.OrderDetailResponse;
 import com.nlu.petstore.response.OrderResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -59,6 +63,7 @@ public class OrderServiceImpl implements OrderService{
                 .total_money(finalTotal)
                 .phone(orderRequestDTO.getPhone())
                 .discount(orderRequestDTO.getDiscount())
+                .shippingMethod(orderRequestDTO.getShippingMethod())
                 .payment_method(orderRequestDTO.getPaymentMethod())
                 .payment_status(orderRequestDTO.getPaymentStatus())
                 .order_date(LocalDateTime.now())
@@ -94,7 +99,45 @@ public class OrderServiceImpl implements OrderService{
         response.setPaymentStatus(orderRequestDTO.getPaymentStatus());
         response.setOrderDate(order.getOrder_date());
         response.setItems(orderRequestDTO.getItems());
+        response.setStatusName(defaultStatus.getName());
 
         return response;
     }
+
+    @Override
+    public List<OrderResponse> getOrdersByUserId(Integer userId) {
+        List<Order> orders = orderRepository.findAllOrdersByUser_id(userId);
+
+        List<OrderResponse> responses = new ArrayList<>();
+
+        for (Order order : orders) {
+            List<OrderDetail> details = orderDetailRepository.findByOrder_id(order.getId());
+
+            List<OrderItemDTO> items = details.stream()
+                    .map(d -> OrderItemDTO.builder()
+                            .productId(d.getProduct_id())
+                            .price(d.getPrice())
+                            .quantity(d.getQuantity())
+                            .build())
+                    .toList();
+
+            String statusName = order.getStatus_id() != null ? order.getStatus_id().getName() : "Không xác định";
+            OrderResponse resp = OrderResponse.builder()
+                    .orderId(order.getId())
+                    .transactionId(order.getTransaction_id())
+                    .shippingMethod(order.getShippingMethod())
+                    .paymentMethod(order.getPayment_method())
+                    .paymentStatus(order.getPayment_status())
+                    .orderDate(order.getOrder_date())
+                    .items(items)
+                    .statusName(statusName)
+                    .build();
+
+            responses.add(resp);
+        }
+
+        return responses;
+    }
+
+
 }
