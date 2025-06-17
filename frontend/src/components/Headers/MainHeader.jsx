@@ -246,7 +246,12 @@ const MainHeader = () => {
                       Thông tin khách hàng
                     </Link>
                   </li>
-                  <li style={{ padding: "6px 0", cursor: "pointer" }}>Đơn hàng của bạn</li>
+                  <li style={{ padding: "6px 0", cursor: "pointer" }}>
+                    <Link to={userId ? `/orders/${userId}` : "/login"}
+                      style={{ textDecoration: "none", color: "inherit" }}>
+                      Đơn hàng của tôi
+                    </Link>
+                  </li>
                   {username && (
                     <li style={{ padding: "6px 0", cursor: "pointer" }}>
                       <Link to="/change-password"
