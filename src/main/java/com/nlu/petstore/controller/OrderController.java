@@ -4,10 +4,10 @@ import com.nlu.petstore.DTO.OrderRequestDTO;
 import com.nlu.petstore.response.OrderResponse;
 import com.nlu.petstore.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -17,5 +17,10 @@ public class OrderController {
     @PostMapping
     public OrderResponse createOrder(@RequestBody OrderRequestDTO dto) {
         return orderService.createOrder(dto);
+    }
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<OrderResponse>> getOrdersByUser(@PathVariable Integer userId) {
+        List<OrderResponse> orders = orderService.getOrdersByUserId(userId);
+        return ResponseEntity.ok(orders);
     }
 }

@@ -42,6 +42,9 @@ public class Order {
     @Column(name = "discount", nullable = false)
     private float  discount;
 
+    @Column(name = "shipping_method", length = 20)
+    private String shippingMethod;
+
     @Column(name = "payment_method", length = 20)
     private String payment_method;
 
