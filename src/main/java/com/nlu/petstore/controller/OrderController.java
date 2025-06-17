@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
-    @PostMapping
+    @PostMapping("/create")
     public OrderResponse createOrder(@RequestBody OrderRequestDTO dto) {
         return orderService.createOrder(dto);
     }

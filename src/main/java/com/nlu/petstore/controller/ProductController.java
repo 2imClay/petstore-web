@@ -22,10 +22,6 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-//    @GetMapping
-//    public List<Product> getAllProducts() {
-//        return productService.getAllProducts();
-//    }
     @GetMapping
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());

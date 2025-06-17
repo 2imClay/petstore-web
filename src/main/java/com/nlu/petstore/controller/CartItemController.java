@@ -20,7 +20,7 @@ public class CartItemController {
 
     @PostMapping("/add")
     public ResponseEntity<CartItem> addToCart(@RequestBody CartItemRequest request) {
-        CartItem item = cartItemService.addToCart(request.getUserId(), request.getProductId(), request.getQuantity());
+        CartItem item = cartItemService.addToCart(request.getUserId(), request.getProductId(), request.getProductName(), request.getQuantity());
         return ResponseEntity.ok(item);
     }
 
@@ -37,7 +37,7 @@ public class CartItemController {
 
     @PutMapping("/updateQuantity")
     public ResponseEntity<CartItem> updateQuantity(@RequestBody CartItemRequest request) {
-        CartItem updatedItem = cartItemService.updateQuantity(request.getUserId(), request.getProductId(), request.getQuantity());
+        CartItem updatedItem = cartItemService.updateQuantity(request.getUserId(), request.getProductId(), request.getProductName(), request.getQuantity());
         return ResponseEntity.ok(updatedItem);
     }
     @DeleteMapping("/clear/{userId}")
@@ -53,5 +53,6 @@ public class CartItemController {
 class CartItemRequest {
     private int userId;
     private int productId;
+    private String productName;
     private int quantity;
 }

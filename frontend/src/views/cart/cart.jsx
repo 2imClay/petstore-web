@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import "../../assets/css/cart.css";
 import axios from "axios";
 import {CartContext} from "../../contexts/CartContext";
+import {toast} from "react-toastify";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -214,8 +215,12 @@ const Cart = () => {
               <button onClick={() => window.location.href = '/products'} style={{ color: 'black' }}>TIẾP TỤC MUA SẮM</button>
               <button
                 onClick={() => {
-                  localStorage.setItem("cartItems", JSON.stringify(cartItems));
-                  window.location.href = "/address"; // hoặc dùng navigate('/address')
+                  if (getTotalQuantity()>0) {
+                    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                    window.location.href = "/address";
+                  } else {
+                    toast.error("Vui lòng thêm sản phẩm vào giỏ hàng")
+                  }
                 }}
               >
                 TIẾP TỤC ĐẶT HÀNG
