@@ -72,6 +72,7 @@ public class WebConfig implements WebMvcConfigurer {
                                 , "/api/auth/logout").permitAll()
 
                         .requestMatchers("/uploads/**").permitAll()
+                        .requestMatchers("/api/reviews/**").authenticated()
                         .requestMatchers("/forgotPassword/**").permitAll()
                         .requestMatchers("/admin/**"
                                 ,"/api/users","/api/roles"
