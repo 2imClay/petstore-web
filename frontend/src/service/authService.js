@@ -7,9 +7,9 @@ import Cookies from "js-cookie"
  * @param {*} user 
  * @returns 
  */
-export const register = async (user) =>{
-    const response  = await BASE_URL.post("/register",user);
-    return response;
+export const register = async (user) => {
+  const response = await BASE_URL.post("/register", user);
+  return response;
 };
 
 /**
@@ -25,14 +25,14 @@ export const register = async (user) =>{
 export const login = createAsyncThunk("auth/login", async (user, { rejectWithValue }) => {
   try {
     const response = await BASE_URL.post("/login", user);
-    const { token, refreshToken,fullname,userId,username } = response.data;
+    const { token, refreshToken, fullname, userId, username } = response.data;
 
 
     // Lưu vào cookie
     Cookies.set("token", token, { expires: 1, path: "/" });
-    Cookies.set("refreshToken", refreshToken, { expires: 7 ,path: "/" });
+    Cookies.set("refreshToken", refreshToken, { expires: 7, path: "/" });
 
-      // Lưu fullname vào localStorage nếu có
+    // Lưu fullname vào localStorage nếu có
     if (fullname) {
       localStorage.setItem("fullname", fullname);
     }
@@ -51,13 +51,12 @@ export const login = createAsyncThunk("auth/login", async (user, { rejectWithVal
   }
 });
 
-export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) =>{
-   try {
-     const refreshToken = Cookies.get("refreshToken"); // lấy refreshToken từ Cookie
-     if (!refreshToken) return rejectWithValue("Không tìm thấy refresh token");
-     console.log("RefreshTokeRefreshToke",refreshToken);
-
-    const response = await BASE_URL.post("/logout", { refreshToken });
+export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
+  try {
+    const refreshToken = Cookies.get("refreshToken"); // lấy refreshToken từ Cookie
+    const response = refreshToken
+      ? await BASE_URL.post("/logout", { refreshToken })
+      : { data: "No refreshToken, forced logout" };
 
     // Xoá cookies và localStorage
     Cookies.remove("token");
