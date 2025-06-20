@@ -70,9 +70,9 @@ public class WebConfig implements WebMvcConfigurer {
                                 , "/oauth2/**").permitAll()
                         .requestMatchers("/api/auth/login", "/api/auth/register"
                                 , "/api/auth/logout").permitAll()
-
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/api/reviews/**").authenticated()
+                        .requestMatchers("/api/paypal/**").authenticated()
                         .requestMatchers("/forgotPassword/**").permitAll()
                         .requestMatchers("/admin/**"
                                 ,"/api/users","/api/roles"
