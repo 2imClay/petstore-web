@@ -1,6 +1,7 @@
 .payment {
-  padding: 100px 0;
-  font-family: Arial, sans-serif;
+  padding: 80px 0; /* giảm padding trên dưới để gọn hơn */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fafafa;
 }
 
 .payment-top-wrap {
@@ -12,27 +13,30 @@
 .payment-top {
   height: 2px;
   width: 70%;
-  background-color: #dddddd;
+  background-color: #ddd;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 50px 0 100px;
+  margin: 40px 0 80px;
   position: relative;
 }
 
 .payment-top-item {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  border: 1px solid #dddddd;
+  border: 1.5px solid #ddd;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #fff;
+  transition: border-color 0.3s ease;
 }
 
 .payment-top-item i {
-  color: #dddddd;
+  color: #bbb;
+  font-size: 18px;
+  transition: color 0.3s ease;
 }
 
 .payment-top-payment {
@@ -43,119 +47,152 @@
   color: #0DB7EA;
 }
 
+.payment-top-item:hover {
+  border-color: #0DB7EA;
+}
+
+.payment-top-item:hover i {
+  color: #0DB7EA;
+}
+
 .payment-content {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 
 .payment-content-left {
-  width: 60%;
+  flex: 1 1 60%;
   padding-right: 20px;
+  min-width: 320px;
 }
 
 .payment-content-box {
-  background-color: #f9f9f9;
-  padding: 24px;
-  border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  padding: 28px 32px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
   border: 1px solid #e0e0e0;
 }
 
 .section-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #333;
 }
 
 .payment-radio {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 14px;
+  font-size: 15px;
   background-color: #fff;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #e0e0e0;
-  transition: background-color 0.3s ease;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #e0e0e0;
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .payment-radio:hover {
-  background-color: #f3f3f3;
+  background-color: #f7f9fc;
+  border-color: #0DB7EA;
 }
 
 .payment-radio label {
-   width: 300px; /* hoặc 60%, tuỳ theo thiết kế */
+  width: 300px;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  user-select: none;
 }
 
 .payment-radio input[type="radio"] {
-  margin-left: 12px;
-  transform: scale(1.2);
+  margin-left: 14px;
+  transform: scale(1.3);
   cursor: pointer;
 }
 
 .payment-img {
-  height: 100px;
+  height: 90px;
   width: auto;
-  margin-bottom: 24px;
-  border-radius: 6px;
+  margin-bottom: 28px;
+  border-radius: 8px;
   border: 1px solid #ddd;
+  display: block;
+  object-fit: contain;
 }
 
 .payment-content-right {
-  width: 38%;
-  padding-left: 24px;
+  flex: 1 1 35%;
+  padding-left: 28px;
   border-left: 2px solid #ddd;
-  
+  min-width: 280px;
 }
 
 .payment-content-right-button {
   display: flex;
-  padding: 12px 0;
-  border-bottom: 1px dashed #dddddd;
+  padding: 16px 0;
+  border-bottom: 1px dashed #ddd;
   align-items: center;
+  gap: 12px;
 }
 
 .payment-content-right-button input {
-  height: 34px;
-  width: 70%;
-  padding-left: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 12px;
+  height: 38px;
+  width: 100%;
+  padding-left: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.25s ease;
+}
+
+.payment-content-right-button input:focus {
+  border-color: #0DB7EA;
 }
 
 .payment-content-right-button button {
-  height: 34px;
-  width: 45px;
-  background-color: rgb(218, 145, 18);
+  height: 38px;
+  width: 48px;
+  background-color: #DA9112;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.payment-content-right-button button:hover {
+  background-color: #b97f0d;
 }
 
 .payment-content-right-payment {
-  margin-top: 40px;
+  margin-top: 48px;
   display: flex;
   justify-content: center;
 }
 
 .payment-content-right-payment button {
-  height: 40px;
-  padding: 0 24px;
-  font-size: 14px;
-  font-weight: bold;
+  height: 44px;
+  padding: 0 28px;
+  font-size: 16px;
+  font-weight: 700;
   color: black;
-  border: 2px solid black;
-  background-color: rgb(232, 141, 75);
+  border: 2.5px solid black;
+  background-color: #E88D4B;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 6px;
   transition: all 0.3s ease;
 }
 
@@ -163,6 +200,7 @@
   background-color: black;
   color: #fff;
 }
+
 .payment-success-popup {
   position: fixed;
   top: 20%;
@@ -170,9 +208,10 @@
   transform: translateX(-50%);
   background-color: #4BB543;
   color: white;
-  padding: 15px 30px;
-  border-radius: 8px;
-  font-size: 18px;
+  padding: 18px 36px;
+  border-radius: 10px;
+  font-size: 20px;
   z-index: 9999;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  box-shadow: 0 0 15px rgba(0,0,0,0.35);
+  font-weight: 600;
 }

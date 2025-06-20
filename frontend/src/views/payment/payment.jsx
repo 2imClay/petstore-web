@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../assets/css/payment.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import momo from "../../assets/images/Vi-Momo.jpg";
 import paypal from "../../assets/images/images (1).jpg";
 
 const Payment = () => {
@@ -10,13 +9,58 @@ const Payment = () => {
   const [shippingMethod, setShippingMethod] = useState("normal");
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [success, setSuccess] = useState(false);
+  const [paypalStatus, setPaypalStatus] = useState("");
 
   useEffect(() => {
     const storedInfo = localStorage.getItem("shippingInfo");
     if (storedInfo) {
-      setShippingInfo(JSON.parse(storedInfo));
+      const info = JSON.parse(storedInfo);
+      const cartTotal = info.cartItems.reduce((sum, item) => {
+        return sum + item.price * item.quantity;
+      }, 0);
+
+      const shippingCost = shippingMethod === "fast" ? 50000 : 20000;
+
+      const totalMoney = cartTotal + shippingCost;
+      setShippingInfo({
+        ...info,
+        totalMoney: totalMoney
+      });
     }
-  }, []);
+  }, [shippingMethod]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get("paypalStatus");
+    if (status === "success") {
+      setPaypalStatus("success");
+      localStorage.removeItem("cartItems");
+      localStorage.removeItem("shippingInfo");
+
+      const clearCart = async () => {
+        try {
+          await fetch(`http://localhost:8080/api/cart/clear/${userId}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+          });
+          console.log("Đã clear cart sau khi PayPal success");
+        } catch (err) {
+          console.error("Lỗi khi clear cart sau PayPal:", err);
+        }
+      };
+
+      clearCart();
+
+      setTimeout(() => {
+        window.location.href = "/home";
+      }, 2000);
+    } else if (status === "cancel") {
+      setPaypalStatus("cancel");
+    }
+  }, [userId]);
   const handlePayment = async () => {
     if (!shippingInfo) {
       alert("Vui lòng nhập địa chỉ giao hàng.");
@@ -29,7 +73,7 @@ const Payment = () => {
       phone: shippingInfo.phone,
       note: shippingInfo.note || "",
       paymentMethod: paymentMethod,
-      paymentStatus: "Chưa thanh toán",
+      paymentStatus: paymentMethod === "paypal" ? "Đã thanh toán" : "Chưa thanh toán",
       shippingMethod: shippingMethod,
       discount: 0,
       totalMoney: shippingInfo.totalMoney || 0,
@@ -42,8 +86,6 @@ const Payment = () => {
       }))
     };
     console.log("orderData gửi lên:", orderData);
-    console.log("paymentMethod:", paymentMethod);
-
 
     try {
       const response = await fetch("http://localhost:8080/api/orders/create", {
@@ -59,20 +101,16 @@ const Payment = () => {
         const data = await response.json();
         console.log("Order success:", data);
 
-        // Lưu thông tin order vào localStorage
         localStorage.setItem("lastOrder", JSON.stringify(data));
-
-        // Xóa giỏ hàng
         localStorage.removeItem("cartItems");
         localStorage.removeItem("shippingInfo");
 
-
-        // Xóa giỏ hàng SERVER (backend)
         try {
           await fetch(`http://localhost:8080/api/cart/clear/${userId}`, {
             method: "DELETE",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
           });
           console.log("Đã clear cart ở server");
@@ -80,7 +118,6 @@ const Payment = () => {
           console.error("Lỗi khi clear cart ở server:", err);
         }
 
-        // Chuyển về trang chủ
         setTimeout(() => {
           window.location.href = "/home";
         }, 2000);
@@ -93,13 +130,79 @@ const Payment = () => {
       alert("Có lỗi xảy ra khi đặt hàng.");
     }
   };
+
+  const handleCheckoutClick = async () => {
+    if (paymentMethod === "paypal") {
+      if (!shippingInfo) {
+        alert("Vui lòng nhập địa chỉ giao hàng.");
+        return;
+      }
+
+      const orderData = {
+        userId: userId,
+        address: shippingInfo.address,
+        phone: shippingInfo.phone,
+        note: shippingInfo.note || "",
+        paymentMethod: "paypal",
+        paymentStatus: "Đã thanh toán",
+        shippingMethod: shippingMethod,
+        discount: 0,
+        totalMoney: shippingInfo.totalMoney || 0,
+        statusId: 1,
+        items: shippingInfo.cartItems.map(item => ({
+          productId: item.productId,
+          productName: item.productName,
+          price: item.price,
+          quantity: item.quantity
+        }))
+      };
+
+      console.log("orderData gửi lên:", orderData);
+      try {
+
+        const res = await fetch(`http://localhost:8080/api/paypal/create-payment`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+
+          },
+          body: JSON.stringify(orderData)
+        });
+
+        const url = await res.text();
+        console.log("Redirect to PayPal URL:", url);
+
+        if (url && url.startsWith("https://")) {
+          window.location.href = url;
+        } else {
+          alert("Lỗi tạo thanh toán PayPal!");
+        }
+      } catch (err) {
+        console.error("Error PayPal payment:", err);
+        alert("Có lỗi khi thanh toán PayPal.");
+      }
+    } else {
+      handlePayment();
+    }
+  };
   return (
     <>
-      {/* Phần form thanh toán của bạn */}
-
       {success && (
         <div className="payment-success-popup">
           <p>🎉 Thanh toán thành công! Đang chuyển về trang chủ...</p>
+        </div>
+      )}
+
+      {paypalStatus === "success" && (
+        <div className="payment-success-popup">
+          <p>🎉 Thanh toán PayPal thành công! Đang chuyển về trang chủ...</p>
+        </div>
+      )}
+
+      {paypalStatus === "cancel" && (
+        <div className="payment-error-popup">
+          <p>❌ Thanh toán PayPal thất bại hoặc bị huỷ.</p>
         </div>
       )}
 
@@ -166,19 +269,6 @@ const Payment = () => {
                 <img src={paypal} alt="PAYPAL" className="payment-img" />
 
                 <div className="payment-radio">
-                  <label htmlFor="momo">Thanh toán bằng Momo</label>
-                  <input
-                    type="radio"
-                    name="payment-method"
-                    id="momo"
-                    value="momo"
-                    checked={paymentMethod === "momo"}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
-                </div>
-                <img src={momo} alt="Momo" className="payment-img" />
-
-                <div className="payment-radio">
                   <label htmlFor="cod">Thanh toán khi nhận hàng</label>
                   <input
                     type="radio"
@@ -201,7 +291,9 @@ const Payment = () => {
               </div>
 
               <div className="payment-content-right-payment">
-                <button onClick={handlePayment}>ĐẶT HÀNG</button>
+                <button onClick={handleCheckoutClick}>
+                  {paymentMethod === "paypal" ? "THANH TOÁN" : "ĐẶT HÀNG"}
+                </button>
               </div>
             </div>
           </div>
@@ -210,5 +302,4 @@ const Payment = () => {
     </>
   );
 };
-
 export default Payment;
