@@ -217,58 +217,62 @@ const MainHeader = () => {
               className="action-btn user"
               aria-label="User"
               onClick={handleUserClick}
+              style={{position:"relative"}}
             >
               <IonIcon icon={personOutline} aria-hidden="true" />
+              {showMenu && (
+                  <div
+                      style={{
+                        position: "absolute",
+                        top: "100%",
+                        right: "-450%",
+                        backgroundColor: "white",
+                        border: "1px solid #ccc",
+                        borderRadius: "6px",
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                        width: "500%",
+                        padding: "10px",
+                        zIndex: 999,
+                        color: "black",
+                        userSelect: "none",
+                      }}
+                  >
+                    <div style={{ marginBottom: 10 }}>Chào, {fullname || "Khách"}</div>
+                    <hr/>
+                    <ul style={{ listStyle: "none", padding: "2px", margin: 0 }}>
+                      <li style={{ padding: "6px 0", cursor: "pointer"}}>
+                        <Link to={userId ? `/profile/${userId}` : "/login"}
+                              style={{ textDecoration: "none", color: "inherit" }}>
+                          Thông tin khách hàng
+                        </Link>
+                      </li>
+                      <li style={{ padding: "6px 0", cursor: "pointer"}}>
+                        <Link to={userId ? `/orders/${userId}` : "/login"}
+                              style={{ textDecoration: "none", color: "inherit" }}>
+                          Đơn hàng của tôi
+                        </Link>
+                      </li>
+                      {username && (
+                          <li style={{ padding: "6px 0", cursor: "pointer"}}>
+                            <Link to="/change-password"
+                                  style={{ textDecoration: "none", color: "inherit" }}>
+                              Đổi mật khẩu
+                            </Link>
+                          </li>
+                      )}
+                      <hr/>
+                      <li
+                          style={{ padding: "6px 0", cursor: "pointer"}}
+                          onClick={handleLogout}
+                      >
+                        Đăng xuất
+                      </li>
+                    </ul>
+                  </div>
+              )}
             </button>
 
-            {showMenu && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "110%",
-                  right: 0,
-                  backgroundColor: "white",
-                  border: "1px solid #ccc",
-                  borderRadius: "6px",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-                  width: "150px",
-                  padding: "10px",
-                  zIndex: 999,
-                  color: "black",
-                  userSelect: "none",
-                }}
-              >
-                <div style={{ marginBottom: 10 }}>Chào, {fullname || "Khách"}</div>
-                <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                  <li style={{ padding: "6px 0", cursor: "pointer" }}>
-                    <Link to={userId ? `/profile/${userId}` : "/login"}
-                      style={{ textDecoration: "none", color: "inherit" }}>
-                      Thông tin khách hàng
-                    </Link>
-                  </li>
-                  <li style={{ padding: "6px 0", cursor: "pointer" }}>
-                    <Link to={userId ? `/orders/${userId}` : "/login"}
-                      style={{ textDecoration: "none", color: "inherit" }}>
-                      Đơn hàng của tôi
-                    </Link>
-                  </li>
-                  {username && (
-                    <li style={{ padding: "6px 0", cursor: "pointer" }}>
-                      <Link to="/change-password"
-                        style={{ textDecoration: "none", color: "inherit" }}>
-                        Đổi mật khẩu
-                      </Link>
-                    </li>
-                  )}
-                  <li
-                    style={{ padding: "6px 0", cursor: "pointer" }}
-                    onClick={handleLogout}
-                  >
-                    Đăng xuất
-                  </li>
-                </ul>
-              </div>
-            )}
+
             <button
               className="action-btn"
               aria-label="Cart"

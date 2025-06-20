@@ -79,7 +79,7 @@ const AdminProductList = () => {
                     <div className="col">
                         <Card className="shadow">
                             <CardHeader className="border-0">
-                                <h3 className="mb-0">Danh sách sản phẩm</h3>
+                                <h3 className="mb-0">Danh sách đơn hàng</h3>
                             </CardHeader>
                             <div className="px-4 py-2">
                                 <label>Chọn người dùng:</label>
