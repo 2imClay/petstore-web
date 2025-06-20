@@ -18,6 +18,8 @@ import ProductDetails from "./views/product/product-detail.jsx";
 import {ToastContainer} from "react-toastify";
 import ChangePasswordUser from "./views/user/change-password.jsx";
 import MyOrder from "./views/user/my-order.jsx";
+import AboutPage from "./views/home/about.jsx";
+import ContactPage from "./views/contact/contact.jsx";
 
 
 
@@ -43,6 +45,8 @@ function App() {
                 <Route path="/products" element={<ProductPage/>}/> 
                 <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
                 <Route path="/products/:id" element={<ProductDetails />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/contact" element={<ContactPage />} />
             </Route> 
             <Route path="/" element={<LayoutProfile />}>
                 <Route path="profile/:id" element={<Profile />} />

@@ -77,13 +77,16 @@
 
 .social-buttons {
     display: flex;
-    justify-content: space-between;
+    gap: 15px; /* Khoảng cách giữa 2 button */
+    justify-content: center; /* Canh giữa */
+    margin-top: 10px;
 }
 
 .btn-facebook,
 .btn-google {
-    flex: 1;
-    padding: 8px 10px;
+    flex: none;
+    width: 160px; 
+    padding: 10px 15px;
     border: none;
     cursor: pointer;
     color: white;
