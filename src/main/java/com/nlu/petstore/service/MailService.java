@@ -18,8 +18,8 @@ public class MailService {
         this.mailSender = mailSender;
         this.beanNameUrlHandlerMapping = beanNameUrlHandlerMapping;
     }
-    
-    public void sendSimpleMessage(MailBody mailBody){
+
+    public void sendSimpleMessage(MailBody mailBody) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mailBody.to());
         message.setSubject(mailBody.subject());
