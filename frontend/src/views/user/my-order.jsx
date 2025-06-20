@@ -35,6 +35,7 @@
                 <th>Mã đơn hàng</th>
                 <th>Phương thức vận chuyển</th>
                 <th>Phương thức thanh toán</th>
+                <th>Trạng thái thanh toán</th>
                 <th>Trạng thái giao hàng</th>
                 <th>Ngày đặt</th>
                 <th>Sản phẩm</th>
@@ -54,8 +55,9 @@
                 return (
                     <tr key={order.orderId}>
                     <td>{order.orderId}</td>
-                    <td>{order.shippingMethod}</td>
-                    <td>{order.paymentMethod}</td>
+                    <td>{order.shippingMethod.toUpperCase()}</td>
+                    <td>{order.paymentMethod.toUpperCase()}</td>
+                    <td>{order.paymentStatus || "Chưa xác định"}</td>
                     <td>{order.statusName || "Không xác định"}</td> {/* Lấy trực tiếp statusName */}
                     <td>{new Date(order.orderDate).toLocaleString()}</td>
                     <td>

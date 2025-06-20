@@ -18,14 +18,14 @@ const OAuth2RedirectHandler = () => {
     isMounted.current = true;
 
     const params = new URLSearchParams(location.search);
-    const accessToken = params.get("accessToken");
+    const accessToken = params.get("token");
     const refreshToken = params.get("refreshToken");
     const error = params.get("error");
 
     const handleLogin = async () => {
       if (accessToken) {
         // Lưu cookie token
-        Cookies.set("accessToken", accessToken, { expires: 1 });
+        Cookies.set("token", accessToken, { expires: 1 });
         Cookies.set("refreshToken", refreshToken, { expires: 7 });
 
         try {

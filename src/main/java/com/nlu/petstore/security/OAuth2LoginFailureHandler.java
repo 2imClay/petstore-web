@@ -18,7 +18,7 @@ public class OAuth2LoginFailureHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
         String redirectUri = "http://localhost:3000/oauth2/redirect?error="
-                + java.net.URLEncoder.encode("Đăng nhập bằng Google thất bại. Vui lòng thử lại.", "UTF-8");
+                + java.net.URLEncoder.encode("Đăng nhập bằng thất bại. Vui lòng thử lại.", "UTF-8");
 
         response.sendRedirect(redirectUri);
     }
