@@ -74,17 +74,17 @@ export default function ResetPassword() {
                     <h1 className="form-heading">Đổi mật khẩu</h1>
                     <div className="form-group">
                             <div className="input-wrapper">
-                            <i className="fas fa-lock"></i>
-                            <input
-                                type={showNewPassword ? 'text' : 'password'}
-                                className="form-input"
-                                placeholder="Mật khẩu mới"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                            />
-                            <div id="eye" onClick={() => setShowNewPassword(prev => !prev)} style={{ cursor: 'pointer' }}>
-                                <i className={`fas ${showNewPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
-                            </div>
+                                <i className="fas fa-lock"></i>
+                                <input
+                                    type={showNewPassword ? 'text' : 'password'}
+                                    className="form-input"
+                                    placeholder="Mật khẩu mới"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                />
+                                <div id="eye" onClick={() => setShowNewPassword(prev => !prev)} style={{ cursor: 'pointer' }}>
+                                    <i className={`fas ${showNewPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                                </div>
                             </div>
                             {passwordError && <span className="error-message">{passwordError}</span>}
                     </div>

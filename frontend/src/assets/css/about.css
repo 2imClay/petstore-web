@@ -1,0 +1,42 @@
+
+.about-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  line-height: 1.8;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.about-container h1 {
+  font-size: 32px;
+  color: #ff6f61;
+  margin-bottom: 20px;
+}
+
+.about-container h2 {
+  font-size: 24px;
+  color: #444;
+  margin-top: 30px;
+  font-weight: bold;
+}
+
+.about-container p {
+  font-size: 16px;
+}
+
+.about-container ul {
+  padding-left: 20px;
+}
+
+.about-container li {
+  margin-bottom: 10px;
+}
+
+.closing-text {
+  margin-top: 30px;
+  font-style: italic;
+  font-size: 18px;
+  color: #555;
+  font-weight: bold;
+}
