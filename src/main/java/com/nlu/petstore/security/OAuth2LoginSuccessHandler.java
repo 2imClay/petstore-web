@@ -75,7 +75,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         //  Redirect về frontend với accessToken + refreshToken
         String redirectUri = "http://localhost:3000/oauth2/redirect"
-                + "?accessToken=" + accessToken
+                + "?token=" + accessToken
                 + "&refreshToken=" + refreshToken.getRefreshToken();
 
         response.sendRedirect(redirectUri);
